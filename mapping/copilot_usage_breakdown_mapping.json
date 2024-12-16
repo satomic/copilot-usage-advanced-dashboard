@@ -1,0 +1,52 @@
+{
+    "mappings" : {
+      "properties" : {
+        "acceptances_count" : {
+          "type" : "long"
+        },
+        "active_users" : {
+          "type" : "long"
+        },
+        "day" : {
+          "type" : "date"
+        },
+        "editor" : {
+          "type" : "keyword"
+        },
+        "language" : {
+          "type" : "keyword"
+        },
+        "last_updated_at" : {
+          "type" : "text",
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
+          }
+        },
+        "lines_accepted" : {
+          "type" : "long"
+        },
+        "lines_suggested" : {
+          "type" : "long"
+        },
+        "organization_slug" : {
+          "type" : "keyword"
+        },
+        "suggestions_count" : {
+          "type" : "long"
+        },
+        "team_slug" : {
+          "type" : "keyword"
+        },
+        "position_in_tree" : {
+          "type" : "keyword"
+        },
+        "unique_hash" : {
+          "type" : "keyword"
+        }
+      }
+    }
+  }
+

@@ -1,0 +1,57 @@
+{
+    "mappings" : {
+      "properties" : {
+        "day" : {
+          "type" : "date"
+        },
+        "last_updated_at" : {
+          "type" : "text",
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
+          }
+        },
+        "organization_slug" : {
+          "type" : "keyword"
+        },
+        "seat_management_setting" : {
+          "type" : "keyword"
+        },
+        "public_code_suggestions" : {
+          "type" : "keyword"
+        },
+        "ide_chat" : {
+          "type" : "keyword"
+        },
+        "cli" : {
+          "type" : "keyword"
+        },
+        "plan_type" : {
+          "type" : "keyword"
+        },
+        "seat_total" : {
+          "type" : "long"
+        },
+        "seat_added_this_cycle" : {
+          "type" : "long"
+        },
+        "seat_pending_invitation" : {
+          "type" : "long"
+        },
+        "seat_pending_cancellation" : {
+          "type" : "long"
+        },
+		    "seat_active_this_cycle" : {
+          "type" : "long"
+        },
+		    "seat_inactive_this_cycle" : {
+          "type" : "long"
+        },
+        "unique_hash" : {
+          "type" : "keyword"
+        }
+      }
+    }
+}

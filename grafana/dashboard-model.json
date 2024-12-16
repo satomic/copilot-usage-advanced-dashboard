@@ -1,0 +1,4627 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 4,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 14,
+        "panels": [],
+        "title": "Copilot Seat Info & Top Languages",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "e3bae9f9-7a51-4467-ad59-85177114bcde"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "blue",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Seats",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 3,
+          "x": 0,
+          "y": 1
+        },
+        "id": 38,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "colorByField": "plan_type",
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "orientation": "vertical",
+          "showValue": "always",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "plan_type",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "e3bae9f9-7a51-4467-ad59-85177114bcde"
+            },
+            "metrics": [
+              {
+                "id": "1",
+                "type": "count"
+              }
+            ],
+            "query": "organization_slug: $organization_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Copilot Plan Type",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "blue",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 3,
+          "y": 1
+        },
+        "id": 15,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+            },
+            "metrics": [
+              {
+                "field": "seat_total",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Total",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "yellow",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 6,
+          "y": 1
+        },
+        "id": 19,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+            },
+            "metrics": [
+              {
+                "field": "seat_active_this_cycle",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Active in this Cycle",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "red",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 9,
+          "y": 1
+        },
+        "id": 20,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+            },
+            "metrics": [
+              {
+                "field": "seat_inactive_this_cycle",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Inactive in this Cycle",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "f9e96f03-9527-4789-bd8c-170799ebd87e"
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 12,
+          "x": 12,
+          "y": 1
+        },
+        "id": 41,
+        "links": [
+          {
+            "targetBlank": true,
+            "title": "Tutorials & Feedback",
+            "url": "https://github.com/satomic/copilot-usage-advanced-dashboard"
+          }
+        ],
+        "options": {
+          "code": {
+            "language": "plaintext",
+            "showLineNumbers": false,
+            "showMiniMap": false
+          },
+          "content": "",
+          "mode": "markdown"
+        },
+        "pluginVersion": "10.1.1",
+        "title": "For 📖tutorials & 💖feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click👉",
+        "type": "text"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 2
+        },
+        "id": 5,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.95,
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "orientation": "auto",
+          "showValue": "always",
+          "stacking": "normal",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xField": "Time",
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": -100
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "1d",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_active_chat_users",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND NOT position_in_tree: \"root_team\"",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "1d"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "total_active_users",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND NOT position_in_tree: \"root_team\"",
+            "refId": "B",
+            "timeField": "day"
+          }
+        ],
+        "timeShift": "0h",
+        "title": "Total Active & Chat Users (Sum of Every Non-Root Teams)",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "text",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 3,
+          "y": 6
+        },
+        "id": 18,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+            },
+            "metrics": [
+              {
+                "field": "seat_added_this_cycle",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Added this Cycle",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "text",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 6,
+          "y": 6
+        },
+        "id": 16,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+            },
+            "metrics": [
+              {
+                "field": "seat_pending_invitation",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Pending Invation",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "text",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 5,
+          "w": 3,
+          "x": 9,
+          "y": 6
+        },
+        "id": 17,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+            },
+            "metrics": [
+              {
+                "field": "seat_pending_cancellation",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Pending Cancellation",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "e3bae9f9-7a51-4467-ad59-85177114bcde"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-red",
+              "mode": "continuous-GrYlRd"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Days",
+              "axisPlacement": "right",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 24,
+          "w": 5,
+          "x": 0,
+          "y": 11
+        },
+        "id": 39,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "colorByField": "Sum",
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "orientation": "horizontal",
+          "showValue": "always",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "assignee_login",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "e3bae9f9-7a51-4467-ad59-85177114bcde"
+            },
+            "metrics": [
+              {
+                "field": "days_since_last_activity",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND days_since_last_activity: [1 TO *]",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Ranking of User Inactive Days ",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "e3bae9f9-7a51-4467-ad59-85177114bcde"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "red",
+              "mode": "fixed"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "mode": "basic",
+                "type": "color-background"
+              },
+              "filterable": true,
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 24,
+          "w": 3,
+          "x": 5,
+          "y": 11
+        },
+        "id": 40,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "enablePagination": true,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": true
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "assignee_login",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "e3bae9f9-7a51-4467-ad59-85177114bcde"
+            },
+            "metrics": [
+              {
+                "field": "days_since_last_activity",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND days_since_last_activity: [-1 TO -1]",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Number of Never Active Users",
+        "transformations": [
+          {
+            "id": "renameByRegex",
+            "options": {
+              "regex": "assignee_login",
+              "renamePattern": "User's GitHub ID"
+            }
+          },
+          {
+            "id": "renameByRegex",
+            "options": {
+              "regex": "Sum",
+              "renamePattern": "Bad Count"
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 4,
+          "x": 8,
+          "y": 11
+        },
+        "id": 27,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "sortBy": "Value",
+            "sortDesc": true,
+            "values": [
+              "value"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "acceptances_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B",
+            "hide": false,
+            "refId": "·",
+            "type": "math"
+          }
+        ],
+        "title": "Top Languages by Accepted Rate (Count)",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 4,
+          "x": 12,
+          "y": 11
+        },
+        "id": 28,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "sortBy": "Value",
+            "sortDesc": true,
+            "values": [
+              "value"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "lines_accepted",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B",
+            "hide": false,
+            "refId": "·",
+            "type": "math"
+          }
+        ],
+        "title": "Top Languages by Accepted Rate (Lines)",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 4,
+          "x": 16,
+          "y": 11
+        },
+        "id": 30,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "sortBy": "Value",
+            "sortDesc": true,
+            "values": [
+              "value"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          }
+        ],
+        "title": "Top Languages by Suggested Count",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 4,
+          "x": 20,
+          "y": 11
+        },
+        "id": 29,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "sortBy": "Value",
+            "sortDesc": true,
+            "values": [
+              "value"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          }
+        ],
+        "title": "Top Languages by Suggested Lines",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 4,
+          "x": 8,
+          "y": 23
+        },
+        "id": 34,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "sortBy": "Value",
+            "sortDesc": true,
+            "values": [
+              "value"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "team_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "acceptances_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "team_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B",
+            "hide": false,
+            "refId": "·",
+            "type": "math"
+          }
+        ],
+        "title": "Top Teams by Accepted Rate (Count)",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 4,
+          "x": 12,
+          "y": 23
+        },
+        "id": 35,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "sortBy": "Value",
+            "sortDesc": true,
+            "values": [
+              "value"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "team_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "lines_accepted",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "team_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B",
+            "hide": false,
+            "refId": "·",
+            "type": "math"
+          }
+        ],
+        "title": "Top Teams by Accepted Rate (Lines)",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 4,
+          "x": 16,
+          "y": 23
+        },
+        "id": 36,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "sortBy": "Value",
+            "sortDesc": true,
+            "values": [
+              "value"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "team_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          }
+        ],
+        "title": "Top Teams by Suggested Count",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 4,
+          "x": 20,
+          "y": 23
+        },
+        "id": 37,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "sortBy": "Value",
+            "sortDesc": true,
+            "values": [
+              "value"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "team_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "0"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          }
+        ],
+        "title": "Top Teams by Suggested Lines",
+        "type": "piechart"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 35
+        },
+        "id": 9,
+        "panels": [],
+        "title": "Copilot Usage Total Insight",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "green",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 36
+        },
+        "id": 1,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "desc"
+          }
+        },
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_acceptances_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "total_suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "B",
+            "timeField": "day"
+          }
+        ],
+        "timeShift": "0h",
+        "title": "Total Accept & Suggest Count",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "green",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 12,
+          "y": 36
+        },
+        "id": 23,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_acceptances_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B",
+            "hide": false,
+            "refId": "C",
+            "type": "math"
+          }
+        ],
+        "title": "Average Accepted Rate (Count)",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "green",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 16,
+          "y": 36
+        },
+        "id": 22,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_acceptances_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Cumulative Number of Accepted Count",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "green",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 36
+        },
+        "id": 21,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Cumulative Number of Suggestions Count",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "yellow",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 12,
+          "y": 40
+        },
+        "id": 24,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_lines_accepted",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B",
+            "hide": false,
+            "refId": "C",
+            "type": "math"
+          }
+        ],
+        "title": "Average Accepted Rate (Lines)",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "yellow",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 16,
+          "y": 40
+        },
+        "id": 25,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_lines_accepted",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Cumulative Number of Accepted Lines",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "yellow",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 40
+        },
+        "id": 26,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Cumulative Number of Suggestions Lines",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "yellow",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 44
+        },
+        "id": 3,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "desc"
+          }
+        },
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_lines_accepted",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "total_lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "B",
+            "timeField": "day"
+          }
+        ],
+        "timeShift": "0h",
+        "title": "Total Accept & Suggest Lines",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-blue",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 12,
+          "y": 44
+        },
+        "id": 31,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_chat_acceptances",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_chat_turns",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B",
+            "hide": false,
+            "refId": "C",
+            "type": "math"
+          }
+        ],
+        "title": "Average Accepted Rate (Chat)",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-blue",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 16,
+          "y": 44
+        },
+        "id": 32,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_chat_acceptances",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Cumulative Number of Accepted Chats",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-blue",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 44
+        },
+        "id": 33,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "organization_slug",
+                "id": "2",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "_term",
+                  "size": "10"
+                },
+                "type": "terms"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_chat_turns",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Cumulative Number of  Chat Turns",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic",
+              "seriesBy": "last"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "line"
+              }
+            },
+            "mappings": [],
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0.2
+                }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 12,
+          "x": 12,
+          "y": 48
+        },
+        "id": 2,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "desc"
+          }
+        },
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_acceptances_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B ",
+            "hide": false,
+            "refId": "Total Accept Rate by Count",
+            "type": "math"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_lines_accepted",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "C",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "D",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$C / $D",
+            "hide": false,
+            "refId": "Total Accept Rate by Lines",
+            "type": "math"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_chat_acceptances",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "E",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "total_chat_turns",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "F",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$E / $F",
+            "hide": false,
+            "refId": "Total Accept Rate by Chats",
+            "type": "math"
+          }
+        ],
+        "timeShift": "0h",
+        "title": "Total Accept Rate by Count & Lines & Chat Turns",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "light-blue",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 52
+        },
+        "id": 4,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "desc"
+          }
+        },
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "metrics": [
+              {
+                "field": "total_chat_acceptances",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "total_chat_turns",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name",
+            "refId": "B",
+            "timeField": "day"
+          }
+        ],
+        "timeShift": "0h",
+        "title": "Total Accept & Chat Turns",
+        "type": "timeseries"
+      },
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 60
+        },
+        "id": 10,
+        "panels": [],
+        "title": "Copilot Usage Breakdown Insight",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-RdYlGr"
+            },
+            "custom": {
+              "fillOpacity": 70,
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "transparent",
+                    "index": 0,
+                    "text": "·"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "max": 5,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 12,
+          "x": 0,
+          "y": 61
+        },
+        "id": 8,
+        "options": {
+          "colWidth": 0.9,
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "rowHeight": 0.9,
+          "showValue": "auto",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "active_users",
+                "id": "1",
+                "settings": {},
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Active Users Count by Language",
+        "transformations": [],
+        "type": "status-history"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-RdYlGr"
+            },
+            "custom": {
+              "fillOpacity": 70,
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1
+            },
+            "mappings": [
+              {
+                "options": {
+                  "0": {
+                    "color": "transparent",
+                    "index": 0,
+                    "text": "·"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "max": 5,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 12,
+          "x": 12,
+          "y": 61
+        },
+        "id": 11,
+        "options": {
+          "colWidth": 0.9,
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "rowHeight": 0.9,
+          "showValue": "auto",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "editor",
+                "id": "4",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": false,
+            "metrics": [
+              {
+                "field": "active_users",
+                "id": "1",
+                "settings": {},
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          }
+        ],
+        "title": "Active Users Count by Editor",
+        "transformations": [],
+        "type": "status-history"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-RdYlGr"
+            },
+            "custom": {
+              "fillOpacity": 70,
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1
+            },
+            "mappings": [
+              {
+                "options": {
+                  "NaN": {
+                    "color": "transparent",
+                    "index": 0,
+                    "text": "·"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "max": 30,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 20
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 12,
+          "x": 0,
+          "y": 74
+        },
+        "id": 7,
+        "options": {
+          "colWidth": 0.9,
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "rowHeight": 0.9,
+          "showValue": "auto",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "acceptances_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B * 100",
+            "hide": false,
+            "refId": "·",
+            "type": "math"
+          }
+        ],
+        "title": "Accept Rate by Count & Language (%)",
+        "type": "status-history"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-RdYlGr"
+            },
+            "custom": {
+              "fillOpacity": 70,
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1
+            },
+            "mappings": [
+              {
+                "options": {
+                  "NaN": {
+                    "color": "transparent",
+                    "index": 0,
+                    "text": "·"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "max": 30,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 20
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 12,
+          "x": 12,
+          "y": 74
+        },
+        "id": 12,
+        "options": {
+          "colWidth": 0.9,
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "rowHeight": 0.9,
+          "showValue": "auto",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "editor",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "acceptances_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "editor",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "suggestions_count",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B * 100",
+            "hide": false,
+            "refId": "·",
+            "type": "math"
+          }
+        ],
+        "title": "Accept Rate by Count & Editor (%)",
+        "type": "status-history"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-RdYlGr"
+            },
+            "custom": {
+              "fillOpacity": 70,
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1
+            },
+            "mappings": [
+              {
+                "options": {
+                  "NaN": {
+                    "color": "transparent",
+                    "index": 0,
+                    "text": "·"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "max": 30,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red"
+                },
+                {
+                  "color": "green",
+                  "value": 20
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 12,
+          "x": 0,
+          "y": 87
+        },
+        "id": 6,
+        "options": {
+          "colWidth": 0.9,
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "rowHeight": 0.9,
+          "showValue": "auto",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "lines_accepted",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "language",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B *100",
+            "hide": false,
+            "refId": "·",
+            "type": "math"
+          }
+        ],
+        "title": "Accept Rate by Lines  & Language (%)",
+        "type": "status-history"
+      },
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-RdYlGr"
+            },
+            "custom": {
+              "fillOpacity": 70,
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1
+            },
+            "mappings": [
+              {
+                "options": {
+                  "NaN": {
+                    "color": "transparent",
+                    "index": 0,
+                    "text": "·"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "max": 30,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red"
+                },
+                {
+                  "color": "green",
+                  "value": 20
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 12,
+          "x": 12,
+          "y": 87
+        },
+        "id": 13,
+        "options": {
+          "colWidth": 0.9,
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "rowHeight": 0.9,
+          "showValue": "auto",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.1.1",
+        "targets": [
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "editor",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto",
+                  "min_doc_count": "0",
+                  "timeZone": "utc",
+                  "trimEdges": "0"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "lines_accepted",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "A",
+            "timeField": "day"
+          },
+          {
+            "alias": "",
+            "bucketAggs": [
+              {
+                "field": "editor",
+                "id": "3",
+                "settings": {
+                  "min_doc_count": "1",
+                  "order": "desc",
+                  "orderBy": "1",
+                  "size": "0"
+                },
+                "type": "terms"
+              },
+              {
+                "field": "day",
+                "id": "2",
+                "settings": {
+                  "interval": "auto"
+                },
+                "type": "date_histogram"
+              }
+            ],
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+            },
+            "hide": true,
+            "metrics": [
+              {
+                "field": "lines_suggested",
+                "id": "1",
+                "type": "sum"
+              }
+            ],
+            "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+            "refId": "B",
+            "timeField": "day"
+          },
+          {
+            "datasource": {
+              "name": "Expression",
+              "type": "__expr__",
+              "uid": "__expr__"
+            },
+            "expression": "$A / $B *100",
+            "hide": false,
+            "refId": "·",
+            "type": "math"
+          }
+        ],
+        "title": "Accept Rate by Lines  & Editor(%)",
+        "type": "status-history"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [
+      "copilot"
+    ],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "ee0ba8c7-e4a7-45ea-8c42-62edaa9ffb70"
+          },
+          "definition": "{\"find\": \"terms\", \"field\":  \"organization_slug\", \"query\": \"organization_slug:*\"}",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Organization",
+          "multi": false,
+          "name": "organization_name",
+          "options": [],
+          "query": "{\"find\": \"terms\", \"field\":  \"organization_slug\", \"query\": \"organization_slug:*\"}",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "b1325904-034d-4693-a146-2b52cb433cfe"
+          },
+          "definition": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Team",
+          "multi": false,
+          "name": "team_name",
+          "options": [],
+          "query": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
+          "refresh": 1,
+          "regex": "team.*",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+          },
+          "definition": "{\"find\": \"terms\", \"field\":  \"language\", \"query\": \"language:*\"}",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Language",
+          "multi": false,
+          "name": "language_name",
+          "options": [],
+          "query": "{\"find\": \"terms\", \"field\":  \"language\", \"query\": \"language:*\"}",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "a6f5abc0-0198-4b92-8003-5219388876c7"
+          },
+          "definition": "{\"find\": \"terms\", \"field\":  \"editor\", \"query\": \"editor:*\"}",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Editor",
+          "multi": false,
+          "name": "editor_name",
+          "options": [],
+          "query": "{\"find\": \"terms\", \"field\":  \"editor\", \"query\": \"editor:*\"}",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-30d",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Copilot Usage Advanced Dashboard",
+    "uid": "a98455d6-b401-4a53-80ad-7af9f97be6f4",
+    "version": 103,
+    "weekStart": ""
+  }

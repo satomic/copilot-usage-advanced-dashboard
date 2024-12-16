@@ -1,0 +1,1 @@
+docker build -t satomic/cpuad-updater:`date +'%Y%m%d'` .
