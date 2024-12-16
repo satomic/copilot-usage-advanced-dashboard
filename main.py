@@ -493,10 +493,13 @@ def main(organization_slug):
 
 if __name__ == '__main__':
     
-    # 对 Paras.organization_slugs 进行分割，然后对每个组织进行处理，风格后记得把空格去掉
-    organization_slugs = Paras.organization_slugs.split(',')
-    for organization_slug in organization_slugs:
-        main(organization_slug)
-
-    logger.info('-----------------Finished-----------------')
-    # exit(0)
+    try:
+        # 对 Paras.organization_slugs 进行分割，然后对每个组织进行处理，风格后记得把空格去掉
+        organization_slugs = Paras.organization_slugs.split(',')
+        for organization_slug in organization_slugs:
+            main(organization_slug)
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+    finally:
+        logger.info('-----------------Finished-----------------')
+        exit(0)
