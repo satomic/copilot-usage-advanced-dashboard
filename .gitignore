@@ -1,0 +1,22 @@
+# PyCharm
+.idea/
+*.iws
+hs_err_pid*
+
+# python cache
+*.pyc
+__pycache__/
+
+# release
+*.zip
+dist/
+*.spec
+zips/
+
+# tmp
+tmp/
+.DS_Store
+try*
+logs/
+docker_run.sh
+
