@@ -323,7 +323,7 @@ class GitHubOrganizationManager:
         teams = github_api_request_handler(url, error_return_value=[])
         # if credential is expired, the return value is:
         # {'message': 'Bad credentials', 'documentation_url': 'https://docs.github.com/rest', 'status': '401'}
-        if teams.get('status') == '401':
+        if isinstance(teams, dict) and teams.get('status') == '401':
             logger.error(f"Bad credentials for organization: {self.organization_slug}")
             return []
         
