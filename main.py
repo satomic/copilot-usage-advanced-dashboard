@@ -321,6 +321,12 @@ class GitHubOrganizationManager:
         
         url = f"https://api.github.com/orgs/{self.organization_slug}/teams"
         teams = github_api_request_handler(url, error_return_value=[])
+        # if credential is expired, the return value is:
+        # {'message': 'Bad credentials', 'documentation_url': 'https://docs.github.com/rest', 'status': '401'}
+        if teams.get('status') == '401':
+            logger.error(f"Bad credentials for organization: {self.organization_slug}")
+            return []
+        
         teams = self._add_fullpath_slug(teams)
         teams = assign_position_in_tree(teams)
         dict_save_to_json_file(teams, f'{self.organization_slug}_all_teams', save_to_json=save_to_json)
@@ -509,5 +515,6 @@ if __name__ == '__main__':
                 time.sleep(3600)
         except Exception as e:
             logger.error(f"An error occurred: {e}")
+            time.sleep(5)
         finally:
             logger.info('-----------------Finished-----------------')
