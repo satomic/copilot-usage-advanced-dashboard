@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 """
-日志工具
+Log utilities
 """
 log_format = '%(asctime)s - [%(levelname)s] - %(message)s'
 logging.basicConfig(level=logging.INFO, format=log_format)
@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO, format=log_format)
 
 def configure_logger(log_path="logs"):
 
-    # 获取是否开启debug
+    # Get whether to enable debug
     debug = True
 
     if not os.path.exists(log_path):
