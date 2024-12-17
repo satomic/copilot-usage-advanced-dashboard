@@ -287,6 +287,10 @@ class GitHubOrganizationManager:
 
             # assignee sub dict
             seat['assignee_login'] = seat.get('assignee', {}).get('login')
+            # if organization_slug is CopilotNext, then 把assignee_login中的每一个字母都往后移一位
+            if self.organization_slug == 'CopilotNext':
+                seat['assignee_login'] = ''.join([chr(ord(c) + 1) for c in seat['assignee_login']])
+
             seat['assignee_html_url'] = seat.get('assignee', {}).get('html_url')
             seat.pop('assignee', None)
 
