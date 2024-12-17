@@ -2,7 +2,7 @@
 
 ## How to deploy & use this 
 - 中文 [Copilot Usage Advanced Dashboard 教程](https://www.wolai.com/tNxKtCqCfb6DR2cuaxmJDZ)
-- English [Copilot Usage Advanced Dashboard Tutorial](https://www.wolai.com/tNxKtCqCfb6DR2cuaxmJDZ) (to be Translated, but you can still read the Chinese version with browser translation, you can understand the steps by the screenshots)
+- English [Copilot Usage Advanced Dashboard Tutorial](https://www.wolai.com/9jZxkDowXScZnbuS1dzvs)
 
 ## Online Demo Environment ✨ 
 > just try it out, before you deploy it by yourself
