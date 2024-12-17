@@ -19,6 +19,9 @@ mapping_output_path = f'{grafana_folder}/dashboard-model-data_sources_name_uid_m
 grafana_url = os.getenv('GRAFANA_URL', 'http://localhost:3000/')
 grafana_token = os.getenv('GRAFANA_TOKEN')
 
+if not grafana_token:
+    raise ValueError("Please set the GRAFANA_TOKEN environment variable")
+
 headers = {
         "Accept": "application/vnd.github+json",
         "Authorization": f"Bearer {grafana_token}",
@@ -62,7 +65,6 @@ for data_resource in data_resources:
     uid = data_resource['uid']
     data_sources_name_uid_mapping[name] = uid
 
-# 保存映射关系的json文件，空格缩进为4
 with open(mapping_output_path, 'w') as f:
     json.dump(data_sources_name_uid_mapping, f, indent=4)
 

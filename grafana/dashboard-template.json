@@ -439,6 +439,7 @@
                 "type": "elasticsearch",
                 "uid": "elasticsearch-total-uid"
             },
+            "description": "If teams are nested, there may be duplicate calculations. Please refer to the tutorial information above.",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -572,7 +573,7 @@
                 }
             ],
             "timeShift": "0h",
-            "title": "Total Active & Chat Users (Sum of Every Teams)",
+            "title": "Total Active & Chat Users (Sum of Every Teams, Nested teams may cause duplicate calculations. For solutions, refer to the link above)",
             "type": "barchart"
         },
         {
@@ -3636,8 +3637,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3756,8 +3756,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3875,8 +3874,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -4042,8 +4040,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -4209,8 +4206,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -4377,8 +4373,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -4544,7 +4539,7 @@
             },
             {
                 "current": {
-                    "selected": false,
+                    "selected": true,
                     "text": "All",
                     "value": "$__all"
                 },
@@ -4561,7 +4556,7 @@
                 "options": [],
                 "query": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
                 "refresh": 1,
-                "regex": "team.*",
+                "regex": "",
                 "skipUrlSync": false,
                 "sort": 0,
                 "type": "query"
@@ -4624,6 +4619,6 @@
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "a98455d6-b401-4a53-80ad-7af9f97be6f4",
-    "version": 106,
+    "version": 108,
     "weekStart": ""
 }
