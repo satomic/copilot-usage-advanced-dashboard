@@ -81,3 +81,4 @@ for data_source_name in data_source_names:
 
 with open(model_output_path, 'w') as output_file:
     output_file.write(template_content)
+    print(f"Model saved to {model_output_path}, please import it to Grafana")
