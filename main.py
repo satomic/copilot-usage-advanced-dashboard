@@ -299,7 +299,7 @@ class GitHubOrganizationManager:
             seat['day'] = current_time()[:10]
             seat['unique_hash'] = generate_unique_hash(
                 seat, 
-                key_properties=['organization_slug', 'day', 'assignee_login']
+                key_properties=['organization_slug', 'assignee_login']
             )
             
             last_activity_at = seat.get('last_activity_at')
