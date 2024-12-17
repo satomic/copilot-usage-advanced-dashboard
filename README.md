@@ -1,5 +1,8 @@
 # Copilot Usage Advanced Dashboard
 
+![](image/cpuad_full.png)
+
+
 ## Key Features
 1. Save all historical data, and refresh historical data if there is an update later.
 2. Display usage by Organization and Team
@@ -23,8 +26,11 @@ Everything else is based on existing stuff, or based on open source software, no
 - GitHub Organzations with Copilot enabled (I believe, you already have it)
 - Elasticsearch (Community Version is enough)
 - Grafana (Community Version is enough, do not need Grafana Cloud Account)
-- This project (MIT license)
+- CPUAD-Updater build from this project (MIT license)
 
+
+## Architecture diagram
+![](image/image_QLLjUQqaMA.png)
 
 ## Online Demo Environment ✨ 
 > just try it out, before you deploy it by yourself
