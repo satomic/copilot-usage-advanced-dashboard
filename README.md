@@ -29,9 +29,9 @@ Everything else is based on existing stuff, or based on open source software, no
 ## Online Demo Environment ✨ 
 > just try it out, before you deploy it by yourself
 
-- [http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard](http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard "http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard") (will be shutdown in the night)
-  - username: `demouser`
-  - password: `demouser`
+- Link: [http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard](http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard)
+- username: `demouser`
+- password: `demouser`
 
 
 ## How to deploy (about 20 mins is enough) & use this 
