@@ -18,9 +18,8 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 4,
+    "id": 2,
     "links": [],
-    "liveNow": false,
     "panels": [
         {
             "collapsed": false,
@@ -47,6 +46,7 @@
                         "mode": "fixed"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "Seats",
@@ -112,7 +112,7 @@
                 "xTickLabelRotation": 0,
                 "xTickLabelSpacing": 0
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -187,6 +187,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -194,9 +195,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -272,6 +275,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -279,9 +283,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -357,6 +363,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -364,9 +371,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -403,9 +412,9 @@
             "type": "stat"
         },
         {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "f9e96f03-9527-4789-bd8c-170799ebd87e"
+            "fieldConfig": {
+                "defaults": {},
+                "overrides": []
             },
             "gridPos": {
                 "h": 1,
@@ -430,7 +439,7 @@
                 "content": "",
                 "mode": "markdown"
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "title": "For 📖tutorials & 💖feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click👉",
             "type": "text"
         },
@@ -446,7 +455,8 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
-                        "axisCenteredZero": false,
+                        "axisBorderShow": false,
+                        "axisCenteredZero": true,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
@@ -493,7 +503,7 @@
                 "barRadius": 0,
                 "barWidth": 0.95,
                 "fullHighlight": false,
-                "groupWidth": 0.7,
+                "groupWidth": 0.75,
                 "legend": {
                     "calcs": [],
                     "displayMode": "list",
@@ -509,9 +519,9 @@
                 },
                 "xField": "Time",
                 "xTickLabelRotation": 0,
-                "xTickLabelSpacing": -100
+                "xTickLabelSpacing": 100
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -532,10 +542,14 @@
                         "type": "elasticsearch",
                         "uid": "elasticsearch-total-uid"
                     },
+                    "hide": false,
                     "metrics": [
                         {
                             "field": "total_active_chat_users",
                             "id": "1",
+                            "settings": {
+                                "script": "_value * -1"
+                            },
                             "type": "sum"
                         }
                     ],
@@ -564,6 +578,7 @@
                         {
                             "field": "total_active_users",
                             "id": "1",
+                            "settings": {},
                             "type": "sum"
                         }
                     ],
@@ -616,6 +631,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -623,9 +639,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -701,6 +719,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -708,9 +727,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -786,6 +807,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -793,9 +815,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -843,6 +867,7 @@
                         "mode": "continuous-GrYlRd"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "Days",
@@ -908,7 +933,7 @@
                 "xTickLabelRotation": 0,
                 "xTickLabelSpacing": 0
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -1001,7 +1026,7 @@
                 },
                 "showHeader": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -1107,7 +1132,7 @@
                     "sort": "desc"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -1205,7 +1230,7 @@
                         }
                     },
                     "mappings": [],
-                    "unit": "percentunit"
+                    "unit": "none"
                 },
                 "overrides": []
             },
@@ -1213,6 +1238,98 @@
                 "h": 12,
                 "w": 4,
                 "x": 12,
+                "y": 11
+            },
+            "id": 30,
+            "options": {
+                "displayLabels": [],
+                "legend": {
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "sortBy": "Value",
+                    "sortDesc": true,
+                    "values": [
+                        "value"
+                    ]
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "desc"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "language",
+                            "id": "2",
+                            "settings": {
+                                "min_doc_count": "1",
+                                "order": "desc",
+                                "orderBy": "_term",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "datasource": {
+                        "type": "elasticsearch",
+                        "uid": "elasticsearch-breakdown-uid"
+                    },
+                    "hide": false,
+                    "metrics": [
+                        {
+                            "field": "suggestions_count",
+                            "id": "1",
+                            "type": "sum"
+                        }
+                    ],
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "refId": "B",
+                    "timeField": "day"
+                }
+            ],
+            "title": "Top Languages by Suggested Count",
+            "type": "piechart"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "elasticsearch-breakdown-uid"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": [],
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 12,
+                "w": 4,
+                "x": 16,
                 "y": 11
             },
             "id": 28,
@@ -1241,7 +1358,7 @@
                     "sort": "desc"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -1346,98 +1463,6 @@
             "gridPos": {
                 "h": 12,
                 "w": 4,
-                "x": 16,
-                "y": 11
-            },
-            "id": 30,
-            "options": {
-                "displayLabels": [],
-                "legend": {
-                    "displayMode": "table",
-                    "placement": "right",
-                    "showLegend": true,
-                    "sortBy": "Value",
-                    "sortDesc": true,
-                    "values": [
-                        "value"
-                    ]
-                },
-                "pieType": "pie",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "desc"
-                }
-            },
-            "pluginVersion": "10.1.1",
-            "targets": [
-                {
-                    "alias": "",
-                    "bucketAggs": [
-                        {
-                            "field": "language",
-                            "id": "2",
-                            "settings": {
-                                "min_doc_count": "1",
-                                "order": "desc",
-                                "orderBy": "_term",
-                                "size": "0"
-                            },
-                            "type": "terms"
-                        }
-                    ],
-                    "datasource": {
-                        "type": "elasticsearch",
-                        "uid": "elasticsearch-breakdown-uid"
-                    },
-                    "hide": false,
-                    "metrics": [
-                        {
-                            "field": "suggestions_count",
-                            "id": "1",
-                            "type": "sum"
-                        }
-                    ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
-                    "refId": "B",
-                    "timeField": "day"
-                }
-            ],
-            "title": "Top Languages by Suggested Count",
-            "type": "piechart"
-        },
-        {
-            "datasource": {
-                "type": "elasticsearch",
-                "uid": "elasticsearch-breakdown-uid"
-            },
-            "description": "",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        }
-                    },
-                    "mappings": [],
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 12,
-                "w": 4,
                 "x": 20,
                 "y": 11
             },
@@ -1467,7 +1492,7 @@
                     "sort": "desc"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -1558,7 +1583,7 @@
                     "sort": "desc"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -1656,7 +1681,7 @@
                         }
                     },
                     "mappings": [],
-                    "unit": "percentunit"
+                    "unit": "none"
                 },
                 "overrides": []
             },
@@ -1664,6 +1689,98 @@
                 "h": 12,
                 "w": 4,
                 "x": 12,
+                "y": 23
+            },
+            "id": 36,
+            "options": {
+                "displayLabels": [],
+                "legend": {
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "sortBy": "Value",
+                    "sortDesc": true,
+                    "values": [
+                        "value"
+                    ]
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "desc"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "team_slug",
+                            "id": "2",
+                            "settings": {
+                                "min_doc_count": "1",
+                                "order": "desc",
+                                "orderBy": "_term",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "datasource": {
+                        "type": "elasticsearch",
+                        "uid": "elasticsearch-breakdown-uid"
+                    },
+                    "hide": false,
+                    "metrics": [
+                        {
+                            "field": "suggestions_count",
+                            "id": "1",
+                            "type": "sum"
+                        }
+                    ],
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "refId": "B",
+                    "timeField": "day"
+                }
+            ],
+            "title": "Top Teams by Suggested Count",
+            "type": "piechart"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "elasticsearch-breakdown-uid"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": [],
+                    "unit": "percentunit"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 12,
+                "w": 4,
+                "x": 16,
                 "y": 23
             },
             "id": 35,
@@ -1692,7 +1809,7 @@
                     "sort": "desc"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -1797,98 +1914,6 @@
             "gridPos": {
                 "h": 12,
                 "w": 4,
-                "x": 16,
-                "y": 23
-            },
-            "id": 36,
-            "options": {
-                "displayLabels": [],
-                "legend": {
-                    "displayMode": "table",
-                    "placement": "right",
-                    "showLegend": true,
-                    "sortBy": "Value",
-                    "sortDesc": true,
-                    "values": [
-                        "value"
-                    ]
-                },
-                "pieType": "pie",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "desc"
-                }
-            },
-            "pluginVersion": "10.1.1",
-            "targets": [
-                {
-                    "alias": "",
-                    "bucketAggs": [
-                        {
-                            "field": "team_slug",
-                            "id": "2",
-                            "settings": {
-                                "min_doc_count": "1",
-                                "order": "desc",
-                                "orderBy": "_term",
-                                "size": "0"
-                            },
-                            "type": "terms"
-                        }
-                    ],
-                    "datasource": {
-                        "type": "elasticsearch",
-                        "uid": "elasticsearch-breakdown-uid"
-                    },
-                    "hide": false,
-                    "metrics": [
-                        {
-                            "field": "suggestions_count",
-                            "id": "1",
-                            "type": "sum"
-                        }
-                    ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
-                    "refId": "B",
-                    "timeField": "day"
-                }
-            ],
-            "title": "Top Teams by Suggested Count",
-            "type": "piechart"
-        },
-        {
-            "datasource": {
-                "type": "elasticsearch",
-                "uid": "elasticsearch-breakdown-uid"
-            },
-            "description": "",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        }
-                    },
-                    "mappings": [],
-                    "unit": "none"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 12,
-                "w": 4,
                 "x": 20,
                 "y": 23
             },
@@ -1918,7 +1943,7 @@
                     "sort": "desc"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -1980,11 +2005,13 @@
                         "mode": "fixed"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -2046,6 +2073,7 @@
                     "sort": "desc"
                 }
             },
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -2151,6 +2179,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -2158,9 +2187,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -2279,6 +2310,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -2286,9 +2318,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -2364,6 +2398,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -2371,9 +2406,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -2450,6 +2487,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -2457,9 +2495,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -2578,6 +2618,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -2585,9 +2626,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -2663,6 +2706,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -2670,9 +2714,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -2720,11 +2766,13 @@
                         "mode": "fixed"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -2786,6 +2834,7 @@
                     "sort": "desc"
                 }
             },
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -2891,6 +2940,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "horizontal",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -2898,9 +2948,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -3019,6 +3071,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -3026,9 +3079,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -3104,6 +3159,7 @@
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -3111,9 +3167,11 @@
                     "fields": "",
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -3161,11 +3219,13 @@
                         "seriesBy": "last"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -3229,6 +3289,7 @@
                     "sort": "desc"
                 }
             },
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -3457,11 +3518,13 @@
                         "mode": "fixed"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -3523,6 +3586,7 @@
                     "sort": "desc"
                 }
             },
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -3637,7 +3701,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -3669,7 +3734,7 @@
                     "sort": "none"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -3715,8 +3780,7 @@
                     "timeField": "day"
                 }
             ],
-            "title": "Active Users Count by Language",
-            "transformations": [],
+            "title": "Active Users Count (Group by Language)",
             "type": "status-history"
         },
         {
@@ -3756,7 +3820,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -3788,7 +3853,7 @@
                     "sort": "none"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -3834,8 +3899,7 @@
                     "timeField": "day"
                 }
             ],
-            "title": "Active Users Count by Editor",
-            "transformations": [],
+            "title": "Active Users Count (Group by Editor)",
             "type": "status-history"
         },
         {
@@ -3874,14 +3938,16 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
                                 "value": 20
                             }
                         ]
-                    }
+                    },
+                    "unit": "percent"
                 },
                 "overrides": []
             },
@@ -3906,7 +3972,7 @@
                     "sort": "none"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -4001,7 +4067,7 @@
                     "type": "math"
                 }
             ],
-            "title": "Accept Rate by Count & Language (%)",
+            "title": "Accept Rate by Count (%)",
             "type": "status-history"
         },
         {
@@ -4040,14 +4106,16 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
                                 "value": 20
                             }
                         ]
-                    }
+                    },
+                    "unit": "percent"
                 },
                 "overrides": []
             },
@@ -4072,7 +4140,7 @@
                     "sort": "none"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -4167,7 +4235,7 @@
                     "type": "math"
                 }
             ],
-            "title": "Accept Rate by Count & Editor (%)",
+            "title": "Accept Rate by Count(%)",
             "type": "status-history"
         },
         {
@@ -4206,7 +4274,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -4239,7 +4308,7 @@
                     "sort": "none"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -4334,7 +4403,7 @@
                     "type": "math"
                 }
             ],
-            "title": "Accept Rate by Lines  & Language (%)",
+            "title": "Accept Rate by Lines (%)",
             "type": "status-history"
         },
         {
@@ -4373,7 +4442,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red"
+                                "color": "red",
+                                "value": null
                             },
                             {
                                 "color": "green",
@@ -4406,7 +4476,7 @@
                     "sort": "none"
                 }
             },
-            "pluginVersion": "10.1.1",
+            "pluginVersion": "11.4.0",
             "targets": [
                 {
                     "alias": "",
@@ -4501,13 +4571,13 @@
                     "type": "math"
                 }
             ],
-            "title": "Accept Rate by Lines  & Editor(%)",
+            "title": "Accept Rate by Lines (%)",
             "type": "status-history"
         }
     ],
+    "preload": false,
     "refresh": "",
-    "schemaVersion": 38,
-    "style": "dark",
+    "schemaVersion": 40,
     "tags": [
         "copilot"
     ],
@@ -4515,7 +4585,6 @@
         "list": [
             {
                 "current": {
-                    "selected": true,
                     "text": "All",
                     "value": "$__all"
                 },
@@ -4524,22 +4593,17 @@
                     "uid": "elasticsearch-seat-info-settings-uid"
                 },
                 "definition": "{\"find\": \"terms\", \"field\":  \"organization_slug\", \"query\": \"organization_slug:*\"}",
-                "hide": 0,
                 "includeAll": true,
                 "label": "Organization",
-                "multi": false,
                 "name": "organization_name",
                 "options": [],
                 "query": "{\"find\": \"terms\", \"field\":  \"organization_slug\", \"query\": \"organization_slug:*\"}",
                 "refresh": 1,
                 "regex": "",
-                "skipUrlSync": false,
-                "sort": 0,
                 "type": "query"
             },
             {
                 "current": {
-                    "selected": true,
                     "text": "All",
                     "value": "$__all"
                 },
@@ -4548,22 +4612,17 @@
                     "uid": "elasticsearch-total-uid"
                 },
                 "definition": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
-                "hide": 0,
                 "includeAll": true,
                 "label": "Team",
-                "multi": false,
                 "name": "team_name",
                 "options": [],
                 "query": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
                 "refresh": 1,
                 "regex": "",
-                "skipUrlSync": false,
-                "sort": 0,
                 "type": "query"
             },
             {
                 "current": {
-                    "selected": false,
                     "text": "All",
                     "value": "$__all"
                 },
@@ -4572,22 +4631,17 @@
                     "uid": "elasticsearch-breakdown-uid"
                 },
                 "definition": "{\"find\": \"terms\", \"field\":  \"language\", \"query\": \"language:*\"}",
-                "hide": 0,
                 "includeAll": true,
                 "label": "Language",
-                "multi": false,
                 "name": "language_name",
                 "options": [],
                 "query": "{\"find\": \"terms\", \"field\":  \"language\", \"query\": \"language:*\"}",
                 "refresh": 1,
                 "regex": "",
-                "skipUrlSync": false,
-                "sort": 0,
                 "type": "query"
             },
             {
                 "current": {
-                    "selected": false,
                     "text": "All",
                     "value": "$__all"
                 },
@@ -4596,17 +4650,13 @@
                     "uid": "elasticsearch-breakdown-uid"
                 },
                 "definition": "{\"find\": \"terms\", \"field\":  \"editor\", \"query\": \"editor:*\"}",
-                "hide": 0,
                 "includeAll": true,
                 "label": "Editor",
-                "multi": false,
                 "name": "editor_name",
                 "options": [],
                 "query": "{\"find\": \"terms\", \"field\":  \"editor\", \"query\": \"editor:*\"}",
                 "refresh": 1,
                 "regex": "",
-                "skipUrlSync": false,
-                "sort": 0,
                 "type": "query"
             }
         ]
@@ -4619,6 +4669,6 @@
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "a98455d6-b401-4a53-80ad-7af9f97be6f4",
-    "version": 108,
+    "version": 12,
     "weekStart": ""
 }
