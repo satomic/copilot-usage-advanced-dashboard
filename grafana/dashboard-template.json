@@ -3672,6 +3672,439 @@
             "fieldConfig": {
                 "defaults": {
                     "color": {
+                        "mode": "palette-classic-by-name"
+                    },
+                    "custom": {
+                        "align": "center",
+                        "cellOptions": {
+                            "type": "gauge"
+                        },
+                        "filterable": false,
+                        "inspect": false
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byRegexp",
+                            "options": "/Acceptance Rate by.*/"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "percentunit"
+                            },
+                            {
+                                "id": "custom.cellOptions",
+                                "value": {
+                                    "type": "color-text"
+                                }
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "mode": "continuous-RdYlGr"
+                                }
+                            },
+                            {
+                                "id": "max",
+                                "value": 0.3
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "editor"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.cellOptions",
+                                "value": {
+                                    "type": "auto",
+                                    "wrapText": false
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 61
+            },
+            "id": 44,
+            "options": {
+                "cellHeight": "sm",
+                "footer": {
+                    "countRows": false,
+                    "enablePagination": true,
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": true,
+                "sortBy": [
+                    {
+                        "desc": true,
+                        "displayName": "Sum suggestions_count"
+                    }
+                ]
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "editor",
+                            "id": "2",
+                            "settings": {
+                                "min_doc_count": "1",
+                                "order": "desc",
+                                "orderBy": "3",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "hide": false,
+                    "metrics": [
+                        {
+                            "field": "acceptances_count",
+                            "id": "1",
+                            "type": "sum"
+                        },
+                        {
+                            "field": "suggestions_count",
+                            "id": "3",
+                            "type": "sum"
+                        },
+                        {
+                            "field": "lines_accepted",
+                            "id": "4",
+                            "type": "sum"
+                        },
+                        {
+                            "field": "lines_suggested",
+                            "id": "5",
+                            "type": "sum"
+                        }
+                    ],
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "refId": "Acceped Prompts",
+                    "timeField": "day"
+                }
+            ],
+            "title": "Editors Breakdown",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "Acceptance Rate by Count",
+                        "binary": {
+                            "left": {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "Sum acceptances_count"
+                                }
+                            },
+                            "operator": "/",
+                            "right": {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "Sum suggestions_count"
+                                }
+                            }
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "include": [
+                                "Sum acceptances_count",
+                                "Sum suggestions_count"
+                            ],
+                            "reducer": "lastNotNull"
+                        },
+                        "window": {
+                            "field": "Sum acceptances_count",
+                            "reducer": "mean",
+                            "windowAlignment": "trailing",
+                            "windowSize": 0.1,
+                            "windowSizeMode": "percentage"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "Acceptance Rate by Lines",
+                        "binary": {
+                            "left": {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "Sum lines_accepted"
+                                }
+                            },
+                            "operator": "/",
+                            "right": {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "Sum lines_suggested"
+                                }
+                            }
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "elasticsearch-breakdown-uid"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic-by-name"
+                    },
+                    "custom": {
+                        "align": "center",
+                        "cellOptions": {
+                            "mode": "gradient",
+                            "type": "gauge"
+                        },
+                        "filterable": false,
+                        "inspect": false
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byRegexp",
+                            "options": "/Acceptance Rate by.*/"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "percentunit"
+                            },
+                            {
+                                "id": "custom.cellOptions",
+                                "value": {
+                                    "type": "color-text"
+                                }
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "mode": "continuous-RdYlGr"
+                                }
+                            },
+                            {
+                                "id": "max",
+                                "value": 0.3
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "language"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.cellOptions",
+                                "value": {
+                                    "type": "auto",
+                                    "wrapText": false
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 19,
+                "w": 24,
+                "x": 0,
+                "y": 69
+            },
+            "id": 43,
+            "options": {
+                "cellHeight": "sm",
+                "footer": {
+                    "countRows": false,
+                    "enablePagination": true,
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": true,
+                "sortBy": [
+                    {
+                        "desc": true,
+                        "displayName": "Sum suggestions_count"
+                    }
+                ]
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "language",
+                            "id": "2",
+                            "settings": {
+                                "min_doc_count": "1",
+                                "order": "desc",
+                                "orderBy": "3",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "hide": false,
+                    "metrics": [
+                        {
+                            "field": "acceptances_count",
+                            "id": "1",
+                            "type": "sum"
+                        },
+                        {
+                            "field": "suggestions_count",
+                            "id": "3",
+                            "type": "sum"
+                        },
+                        {
+                            "field": "lines_accepted",
+                            "id": "4",
+                            "type": "sum"
+                        },
+                        {
+                            "field": "lines_suggested",
+                            "id": "5",
+                            "type": "sum"
+                        }
+                    ],
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "refId": "Acceped Prompts",
+                    "timeField": "day"
+                }
+            ],
+            "title": "Languages Breakdown",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "Acceptance Rate by Count",
+                        "binary": {
+                            "left": {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "Sum acceptances_count"
+                                }
+                            },
+                            "operator": "/",
+                            "right": {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "Sum suggestions_count"
+                                }
+                            }
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "include": [
+                                "Sum acceptances_count",
+                                "Sum suggestions_count"
+                            ],
+                            "reducer": "lastNotNull"
+                        },
+                        "window": {
+                            "field": "Sum acceptances_count",
+                            "reducer": "mean",
+                            "windowAlignment": "trailing",
+                            "windowSize": 0.1,
+                            "windowSizeMode": "percentage"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "Acceptance Rate by Lines",
+                        "binary": {
+                            "left": {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "Sum lines_accepted"
+                                }
+                            },
+                            "operator": "/",
+                            "right": {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "Sum lines_suggested"
+                                }
+                            }
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "elasticsearch-breakdown-uid"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
                         "mode": "continuous-RdYlGr"
                     },
                     "custom": {
@@ -3717,7 +4150,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 0,
-                "y": 61
+                "y": 88
             },
             "id": 8,
             "options": {
@@ -3836,7 +4269,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 12,
-                "y": 61
+                "y": 88
             },
             "id": 11,
             "options": {
@@ -3955,7 +4388,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 0,
-                "y": 74
+                "y": 101
             },
             "id": 7,
             "options": {
@@ -4123,7 +4556,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 12,
-                "y": 74
+                "y": 101
             },
             "id": 12,
             "options": {
@@ -4291,7 +4724,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 0,
-                "y": 87
+                "y": 114
             },
             "id": 6,
             "options": {
@@ -4459,7 +4892,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 12,
-                "y": 87
+                "y": 114
             },
             "id": 13,
             "options": {
@@ -4669,6 +5102,6 @@
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "a98455d6-b401-4a53-80ad-7af9f97be6f4",
-    "version": 12,
+    "version": 33,
     "weekStart": ""
 }
