@@ -99,5 +99,8 @@ You can analyze the total number of recommendations and adoption rate trends bas
 ![](image/image_bluZwpomO9.png)
 
 ### Copilot Usage Breakdown Insight
+Table of Editors breakdown and Languages breakdown
+![](image/breakdown_languages_editors.png)
+
 You can analyze the effect of Copilot in different languages ​​and different editor combinations.
 ![](image/image_eWtBO-2X0X.png)
