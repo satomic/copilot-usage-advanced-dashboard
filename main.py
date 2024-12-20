@@ -392,6 +392,15 @@ class DataSplitter:
                 breakdown_entry_with_day = breakdown_entry.copy()
                 breakdown_entry_with_day['day'] = day
                 breakdown_entry_with_day = breakdown_entry_with_day | self.additional_properties
+
+                # Normalize editor and language values to lowercase
+                breakdown_entry_with_day['editor'] = breakdown_entry_with_day.get('editor', '').lower()
+                breakdown_entry_with_day['language'] = breakdown_entry_with_day.get('language', '').lower()
+
+                # Unify `json` and `json with comments` to `json`
+                if breakdown_entry_with_day['language'] == 'json with comments':
+                    breakdown_entry_with_day['language'] = 'json'
+
                 breakdown_entry_with_day['unique_hash'] = generate_unique_hash(
                     breakdown_entry_with_day, 
                     key_properties=['organization_slug', 'team_slug', 'day', 'language', 'editor']
