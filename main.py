@@ -8,13 +8,10 @@ from log_utils import *
 import time
 
 
-def current_time():
-    return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-
-
 class Paras:
 
-    date_str = current_time()[:10]
+    def date_str():
+        return current_time()[:10]
 
     # GitHub
     github_pat = os.getenv('GITHUB_PAT')
@@ -25,7 +22,9 @@ class Paras:
     elasticsearch_url = os.getenv('ELASTICSEARCH_URL', 'http://localhost:9200')
     
     # Log path
-    log_path = os.path.join(os.getenv('LOG_PATH', 'logs'), date_str)
+    log_path = os.getenv('LOG_PATH', 'logs')
+    def get_log_path(self):
+        return os.path.join(self.log_path, self.date_str())
 
     # Execution interval HOURS
     execution_interval = int(os.getenv('EXECUTION_INTERVAL', 6))
@@ -69,13 +68,13 @@ def github_api_request_handler(url, error_return_value=[]):
         return error_return_value
     return data
 
-def dict_save_to_json_file(data, file_name, logs_path=Paras.log_path, save_to_json=True):
+def dict_save_to_json_file(data, file_name, logs_path=Paras.get_log_path(), save_to_json=True):
     if save_to_json:
         if not os.path.exists(logs_path):
             os.makedirs(logs_path)
-        with open(f'{logs_path}/{file_name}_{Paras.date_str}.json', 'w', encoding='utf8') as f:
+        with open(f'{logs_path}/{file_name}_{Paras.date_str()}.json', 'w', encoding='utf8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
-        logger.info(f"Data saved to {logs_path}/{file_name}_{Paras.date_str}.json")
+        logger.info(f"Data saved to {logs_path}/{file_name}_{Paras.date_str()}.json")
 
 def generate_unique_hash(data, key_properties=[]):
     key_string = '-'.join([data.get(key_propertie) for key_propertie in key_properties])

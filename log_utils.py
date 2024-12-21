@@ -3,6 +3,10 @@ import logging
 from datetime import datetime
 
 
+def current_time():
+    return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+
+
 """
 Log utilities
 """
@@ -10,7 +14,11 @@ log_format = '%(asctime)s - [%(levelname)s] - %(message)s'
 logging.basicConfig(level=logging.INFO, format=log_format)
 
 
-def configure_logger(log_path="logs"):
+def configure_logger(log_path="logs", with_date_folder=True):
+
+    if with_date_folder:
+        log_path = os.path.join(log_path, current_time()[:10])
+
 
     # Get whether to enable debug
     debug = True
