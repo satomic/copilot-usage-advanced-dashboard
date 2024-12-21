@@ -47,13 +47,6 @@
 
 ---
 
-| Ver      | Notice                   | By      | Date     |
-| -------- | ------------------------ | ------- | -------- |
-| 1.0&#xA; | doc creation             | Xuefeng | 20241217 |
-| 1.1      | some update              | Xuefeng | 20241218 |
-| 1.2      | add new grafana template | Xuefeng | 20241221 |
-
----
 
 # Introduction
 
