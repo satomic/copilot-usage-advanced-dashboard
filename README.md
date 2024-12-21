@@ -50,12 +50,12 @@
 
 # Introduction
 
-[Copilot Usage Advanced Dashboard](https://github.com/satomic/copilot-usage-advanced-dashboard "Copilot Usage Advanced Dashboard") is a single data panel display that almost fully utilizes data from Copilot APIs, The APIs used are:
+[Copilot Usage Advanced Dashboard](https://github.com/satomic/copilot-usage-advanced-dashboard) is a single data panel display that almost fully utilizes data from Copilot APIs, The APIs used are:
 
-- [List teams of an onganization](https://docs.github.com/en/enterprise-cloud@latest/rest/teams/teams?apiVersion=2022-11-28#list-teams "List teams of an onganization")
-- [Get a summary of Copilot usage for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-a-team "Get a summary of Copilot usage for a team")
-- [Get Copilot seat information and settings for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#get-copilot-seat-information-and-settings-for-an-organization "Get Copilot seat information and settings for an organization")
-- [List all Copilot seat assignments for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#list-all-copilot-seat-assignments-for-an-organization "List all Copilot seat assignments for an organization")
+- [List teams of an onganization](https://docs.github.com/en/enterprise-cloud@latest/rest/teams/teams?apiVersion=2022-11-28#list-teams)
+- [Get a summary of Copilot usage for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-a-team)
+- [Get Copilot seat information and settings for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#get-copilot-seat-information-and-settings-for-an-organization)
+- [List all Copilot seat assignments for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#list-all-copilot-seat-assignments-for-an-organization)
 
 representing Copilot usage in multi organizations & teams from different dimensions. The features are summarized as follows:
 - Data is persisted in Elasticsearch and visualized in Grafana, **not just the past 28 days**. So you can freely choose the time period you want to visualize, such as the past year or a specific month.
@@ -75,9 +75,9 @@ representing Copilot usage in multi organizations & teams from different dimensi
 
 > Copilot Metrics Viewer compatible dashboard
 
-> If you are familiar with the [copilot-metrics-viewer](<\[github-copilot-resources/copilot-metrics-viewer: Tool to visualize the Copilot metrics provided via the Copilot Business Metrics API (current in public beta)](https://github.com/github-copilot-resources/copilot-metrics-viewer)> "copilot-metrics-viewer") project, then please try this dashboard and use it in subsequent deployments.
+> If you are familiar with the [copilot-metrics-viewer](https://github.com/github-copilot-resources/copilot-metrics-viewer) project, then please try this dashboard and use it in subsequent deployments.
 
-- link: [http://20.89.179.123:3000/d/be7hpbvvhst8gc/copilot-usage-advanced-dashboard](http://20.89.179.123:3000/d/be7hpbvvhst8gc/copilot-usage-advanced-dashboard "http://20.89.179.123:3000/d/be7hpbvvhst8gc/copilot-usage-advanced-dashboard")
+- link: [http://20.89.179.123:3000/d/be7hpbvvhst8gc/copilot-usage-advanced-dashboard](http://20.89.179.123:3000/d/be7hpbvvhst8gc/copilot-usage-advanced-dashboard)
 - username：`demouser`
 - password：`demouser`
 
@@ -87,7 +87,7 @@ representing Copilot usage in multi organizations & teams from different dimensi
 
 > New designed dashboard&#x20;
 
-- Link: [http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard](http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard "http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard")
+- Link: [http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard](http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard)
 - username：`demouser`
 - password：`demouser`
 
@@ -206,7 +206,7 @@ Everything else is based on existing stuff, or based on open source software, no
 
 ## Docker
 
-For installation instructions, refer to [Install Docker Engine](https://docs.docker.com/engine/install/ "Install Docker Engine"). For Ubuntu 22.04, you can use the following command
+For installation instructions, refer to [Install Docker Engine](https://docs.docker.com/engine/install/). For Ubuntu 22.04, you can use the following command
 
 ```bash
 apt install docker.io
@@ -253,7 +253,7 @@ Server:
 
 ## Download source code
 
-Put all the work in the `/srv` directory, click [download zip archive](https://github.com/satomic/copilot-usage-advanced-dashboard/archive/refs/heads/main.zip "download zip archive"), unzip and rename the folder to `copilot-usage-advanced-dashboard`, or directly `git clone`
+Put all the work in the `/srv` directory, click [download zip archive](https://github.com/satomic/copilot-usage-advanced-dashboard/archive/refs/heads/main.zip), unzip and rename the folder to `copilot-usage-advanced-dashboard`, or directly `git clone`
 
 ```bash
 cd /srv
