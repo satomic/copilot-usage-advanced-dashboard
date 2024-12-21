@@ -1,6 +1,7 @@
 import json
 import requests
 import os
+import argparse
 from datetime import datetime
 
 
@@ -12,9 +13,16 @@ data_source_names = [
 ]
 
 grafana_folder = 'grafana'
-template_path = f'{grafana_folder}/dashboard-template.json'
+default_template_path = f'{grafana_folder}/dashboard-template.json'
 model_output_path = f'{grafana_folder}/dashboard-model-{datetime.today().strftime("%Y-%m-%d")}.json'
 mapping_output_path = f'{grafana_folder}/dashboard-model-data_sources_name_uid_mapping-{datetime.today().strftime("%Y-%m-%d")}.json'
+
+# Parse command-line arguments
+parser = argparse.ArgumentParser(description='Generate Grafana dashboard model.')
+parser.add_argument('--template', type=str, default=default_template_path, help='Path to the dashboard template JSON file')
+args = parser.parse_args()
+
+template_path = args.template
 
 grafana_url = os.getenv('GRAFANA_URL', 'http://localhost:3000/')
 grafana_token = os.getenv('GRAFANA_TOKEN')
