@@ -10,6 +10,7 @@ import time
 
 class Paras:
 
+    @staticmethod
     def date_str():
         return current_time()[:10]
 
@@ -23,8 +24,10 @@ class Paras:
     
     # Log path
     log_path = os.getenv('LOG_PATH', 'logs')
-    def get_log_path(self):
-        return os.path.join(self.log_path, self.date_str())
+
+    @staticmethod
+    def get_log_path():
+        return os.path.join(Paras.log_path, Paras.date_str())
 
     # Execution interval HOURS
     execution_interval = int(os.getenv('EXECUTION_INTERVAL', 6))
