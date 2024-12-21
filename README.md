@@ -407,10 +407,10 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
 
 ### Create Admin Token
 
-1. admin visit \*\*Administration \*\*→ **Users and access** → **Service accounts**
+1. admin visit **Administration** → **Users and access** → **Service accounts**
 
    ![](image/image_KY8b0hv5g1.png)
-2. input\*\* Display name\*\*，**Role **select`Admin`**, Create**
+2. input **Display name**，**Role** select `Admin`, **Create**
 
    ![](image/image_wjIjr2vLYJ.png)
 3. click **Add service account token**
