@@ -5,7 +5,7 @@
 ## Table of contents
 
 - [Introduction](#Introduction)
-  - [Online Demo Environment](#Online-Demo-Environment)
+  - [Online Demo Environment ✨](#Online-Demo-Environment)
     - [Copilot Usage Advanced Dashboard](#Copilot-Usage-Advanced-Dashboard)
     - [Copilot Usage Advanced Dashboard Original](#Copilot-Usage-Advanced-Dashboard-Original)
 - [Variables](#Variables)
@@ -39,9 +39,9 @@
     - [Generate Dashboard Json Model](#Generate-Dashboard-Json-Model)
     - [Import the generated Json to create a Dashboard](#Import-the-generated-Json-to-create-a-Dashboard)
   - [cpuad-updater](#cpuad-updater)
-    - [Option 1. Run in docker mode (recommended)](#Option-1-Run-in-docker-mode-recommended)
+    - [Option 1. Run in docker mode (recommended) ✨](#Option-1-Run-in-docker-mode-recommended)
     - [Option 2. Run in source code mode](#Option-2-Run-in-source-code-mode)
-- [Congratulations](#Congratulations)
+- [Congratulations 🎉](#Congratulations)
   - [Current application running status in the VM](#Current-application-running-status-in-the-VM)
   - [View Dashboard](#View-Dashboard)
 
@@ -460,7 +460,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
    python3 gen_grafana_model.py --template=grafana/dashboard-template.json
 
    # Generate Copilot Usage Advanced Dashboard Original
-   python3 gen_grafana_model.py --template=grafana/dashboard-template-original.jso
+   python3 gen_grafana_model.py --template=grafana/dashboard-template-original.json
 
    ```
    Get the output
