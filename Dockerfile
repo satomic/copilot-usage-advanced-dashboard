@@ -16,19 +16,19 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy the scripts to the working directory
-COPY main.py /app/
-COPY log_utils.py /app/
-
-# Copy mapping folder to the working directory
-COPY mapping /app/mapping
-
 # Copy requirements.txt and install Python packages
 COPY requirements.txt /app/
 
 # if you are in China, use this command to speed up the installation
 # RUN pip3 install -i https://mirrors.cloud.tencent.com/pypi/simple --no-cache-dir -r requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy mapping folder to the working directory
+COPY mapping /app/mapping
+
+# Copy the scripts to the working directory
+COPY log_utils.py /app/
+COPY main.py /app/
 
 # Run the command one time
 CMD ["python3", "main.py"]
