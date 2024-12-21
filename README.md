@@ -64,7 +64,13 @@
 - [Get Copilot seat information and settings for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#get-copilot-seat-information-and-settings-for-an-organization "Get Copilot seat information and settings for an organization")
 - [List all Copilot seat assignments for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#list-all-copilot-seat-assignments-for-an-organization "List all Copilot seat assignments for an organization")
 
-representing Copilot usage in multi organizations & teams from different dimensions.
+representing Copilot usage in multi organizations & teams from different dimensions. The features are summarized as follows:
+- Data is persisted in Elasticsearch and visualized in Grafana, **not just the past 28 days**. So you can freely choose the time period you want to visualize, such as the past year or a specific month.
+- All stored data includes Organization and Team fields, which is convenient for data filtering through variable filters.
+- Generate a unique hash key for each piece of data, and update the stored data every time the latest data is obtained.
+- Visualizations in Grafana dashboards can be adjusted or deleted according to actual needs.
+- Based on Grafana's built-in alerting function, you can set alert rules for some inappropriate usage behaviors, such as sending alerts to users who have been inactive for a long time.
+- It can be easily integrated with third-party systems, whether it is extracting data from Elasticsearch to other data visualization platforms for data visualization, or adding other data sources in the Copilot Usage Advanced Dashboard for joint data visualization.
 
 ## Online Demo Environment
 
