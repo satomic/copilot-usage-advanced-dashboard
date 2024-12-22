@@ -3485,7 +3485,7 @@
                 }
             ],
             "timeShift": "0h",
-            "title": "Total Active Users (Sum of Every Teams, Nested teams may cause duplicate calculations. For solutions, refer to the link above)",
+            "title": "Total Active Copilot Chat Users",
             "type": "barchart"
         },
         {
@@ -4025,6 +4025,7 @@
                             "mode": "off"
                         }
                     },
+                    "decimals": 0,
                     "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
@@ -4038,7 +4039,8 @@
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "none"
                 },
                 "overrides": []
             },
@@ -4099,12 +4101,12 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND days_since_last_activity: [1 TO *]",
+                    "query": "organization_slug: $organization_name AND days_since_last_activity: [2 TO *]",
                     "refId": "A",
                     "timeField": "day"
                 }
             ],
-            "title": "Ranking of Users' Inactive Days ",
+            "title": "Ranking of Inactive Users ( ≥ 2 days )",
             "type": "barchart"
         },
         {
@@ -5444,6 +5446,6 @@
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "be7hpbvvhst8gc",
-    "version": 22,
+    "version": 30,
     "weekStart": ""
 }
