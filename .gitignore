@@ -22,3 +22,4 @@ docker_run.sh
 gen_grafana_template.py
 dashboard-model-*
 .vscode/
+*bak*

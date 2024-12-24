@@ -1,6 +1,15 @@
 # Copilot Usage Advanced Dashboard Tutorial
 
-- 中文版 [Copilot Usage Advanced Dashboard 教程](https://www.wolai.com/tNxKtCqCfb6DR2cuaxmJDZ)
+中文版 [Copilot Usage Advanced Dashboard 教程](https://www.wolai.com/tNxKtCqCfb6DR2cuaxmJDZ)
+
+|**Version**|**Update Notes**|**Date**|
+|-|-|-|
+|1.0 |Document creation |20241217|
+|1.1|Some updates|20241218|
+|1.1|Add new templates|20241221|
+|1.2|Support Copilot Standalone, thanks [sombaner](https://github.com/sombaner)'s great feedback |20241224|
+
+
 
 ## Table of contents
 
@@ -490,9 +499,11 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
 Parameter description
 
 - `GITHUB_PAT`: Your GitHub PAT, which needs to have Owner permissions for Organizations. Please replace `<YOUR_GITHUB_PAT>` with the actual value.
-- `ORGANIZATION_SLUGS`: The Slugs of all Organizations that you want to monitor, which can be one or multiple separated by `,` (English symbol). Please replace `<YOUR_ORGANIZATION_SLUGS>` with the actual value. For example, the following types of values are supported:
+- `ORGANIZATION_SLUGS`: The Slugs of all Organizations that you want to monitor, which can be one or multiple separated by `,` (English symbol). If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`. Please replace `<YOUR_ORGANIZATION_SLUGS>` with the actual value. For example, the following types of values are supported:
   - `myOrg1`
   - `myOrg1,myOrg2`
+  - `standalone:myStandaloneSlug`
+  - `myOrg1,standalone:myStandaloneSlug`
 - `LOG_PATH`: Log storage location, not recommended to modify. If modified, you need to modify the `-v` data volume mapping simultaneously.
 - `EXECUTION_INTERVAL`: Update interval, the default is to update the program every `1` hours.
 
@@ -520,7 +531,7 @@ satomic/cpuad-updater
    ```bash
    python3 -m pip install -r requirements.txt
    ```
-3. Setting Environment Variables
+3. Setting Environment Variables. If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`.
    ```bash
    export GITHUB_PAT="<YOUR_GITHUB_PAT>"
    export ORGANIZATION_SLUGS="<YOUR_ORGANIZATION_SLUGS>"

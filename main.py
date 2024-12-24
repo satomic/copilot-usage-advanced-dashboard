@@ -3,7 +3,7 @@ import requests
 import os
 import hashlib
 from elasticsearch import Elasticsearch, NotFoundError
-from datetime import datetime
+from datetime import datetime, timedelta
 from log_utils import *
 import time
 
@@ -194,21 +194,23 @@ class GitHubEnterpriseManager:
 
 class GitHubOrganizationManager:
 
-    def __init__(self, organization_slug, save_to_json=True):
+    def __init__(self, organization_slug, save_to_json=True, is_standalone=False):
+        self.slug_type = 'Standalone' if is_standalone else 'Organization'
+        self.api_type = 'enterprises' if is_standalone else 'orgs'
         self.organization_slug = organization_slug
         self.teams = self._fetch_all_teams(save_to_json=save_to_json)
-        logger.info(f"Initialized GitHubOrganizationManager for organization: {organization_slug}")
+        logger.info(f"Initialized GitHubOrganizationManager for {self.slug_type}: {organization_slug}")
 
     def get_copilot_usages(self, team_slug='all', save_to_json=True, position_in_tree='leaf_team'):
-        urls = { self.organization_slug, (position_in_tree, f"https://api.github.com/orgs/{self.organization_slug}/copilot/usage") }
+        urls = { self.organization_slug, (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/usage") }
         if team_slug:
             if team_slug != 'all':
-                urls = { team_slug: (position_in_tree, f"https://api.github.com/orgs/{self.organization_slug}/teams/{team_slug}/copilot/usage") }
+                urls = { team_slug: (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/teams/{team_slug}/copilot/usage") }
             else:
-                urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/orgs/{self.organization_slug}/teams/{team['slug']}/copilot/usage") for team in self.teams }
+                urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/teams/{team['slug']}/copilot/usage") for team in self.teams }
         
         datas = {}
-        logger.info(f"Fetching Copilot usages for organization: {self.organization_slug}, team: {team_slug}")
+        logger.info(f"Fetching Copilot usages for {self.slug_type}: {self.organization_slug}, team: {team_slug}")
         for _team_slug, position_in_tree_and_url in urls.items():
             position_in_tree, url = position_in_tree_and_url
             data = github_api_request_handler(url, error_return_value={})
@@ -223,13 +225,70 @@ class GitHubOrganizationManager:
             dict_save_to_json_file(datas, f'{self.organization_slug}_all_teams_copilot_usage', save_to_json=save_to_json)
 
         return datas
-    
+
+    def get_seat_info_settings_standalone(self, save_to_json=True):
+        # only for Standalone
+        # todo: no API for Standalone, need to caculate the data from other APIs
+        url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/billing/seats"
+        data_seats = github_api_request_handler(url, error_return_value={})
+        if not data_seats:
+            return data_seats
+        
+        data = {
+            "seat_management_setting": "assign_selected",
+            "public_code_suggestions": "allow",
+            "ide_chat": "enabled",
+            "cli": "enabled",
+            "plan_type": "business",
+            "seat_total": data_seats.get('total_seats', 0),
+            "seat_added_this_cycle": 0, # caculated
+            "seat_pending_invitation": 0, # always 0
+            "seat_pending_cancellation": 0, # caculated
+            "seat_active_this_cycle": 0, # caculated
+            "seat_inactive_this_cycle": 0,
+        }
+
+        for data_seat in data_seats.get('seats', []):
+            # format: 2024-07-03T03:02:57+08:00
+            seat_created_at = data_seat.get('created_at')
+            if seat_created_at:
+                created_date = datetime.strptime(seat_created_at, '%Y-%m-%dT%H:%M:%S%z')
+                start_of_yesterday = (datetime.now(created_date.tzinfo).replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1))
+                if created_date >= start_of_yesterday:
+                    data['seat_added_this_cycle'] += 1
+            
+            seat_pending_cancellation_date = data_seat.get('pending_cancellation_date')
+            if seat_pending_cancellation_date:
+                data['seat_pending_cancellation'] += 1
+            
+            seat_last_activity_at = data_seat.get('last_activity_at')
+            if seat_last_activity_at:
+                last_activity_date = datetime.strptime(seat_last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
+                start_of_yesterday = (datetime.now(last_activity_date.tzinfo).replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1))
+                if last_activity_date >= start_of_yesterday:
+                    data['seat_active_this_cycle'] += 1
+
+        data['seat_inactive_this_cycle'] = data['seat_total'] - data['seat_active_this_cycle']
+
+        # Inject organization_slug and today's date in the format 2024-12-15, and a hash value based on these two values
+        data['organization_slug'] = self.organization_slug
+        data['day'] = current_time()[:10]
+        data['unique_hash'] = generate_unique_hash(
+            data, 
+            key_properties=['organization_slug', 'day']
+        )
+
+        dict_save_to_json_file(data, f'{self.organization_slug}_seat_info_settings', save_to_json=save_to_json)
+        logger.info(f"Fetching seat info settings for {self.slug_type}: {self.organization_slug}")
+        return data
+
+
     def get_seat_info_settings(self, save_to_json=True):
-        url = f"https://api.github.com/orgs/{self.organization_slug}/copilot/billing"
+        # only for organization
+        url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/billing"
         data = github_api_request_handler(url, error_return_value={})
         if not data:
             return data
-
         # sample
         # {
         #     "seat_breakdown": {
@@ -277,11 +336,11 @@ class GitHubOrganizationManager:
         )
 
         dict_save_to_json_file(data, f'{self.organization_slug}_seat_info_settings', save_to_json=save_to_json)
-        logger.info(f"Fetching seat info settings for organization: {self.organization_slug}")
+        logger.info(f"Fetching seat info settings for {self.slug_type}: {self.organization_slug}")
         return data
 
     def get_seat_assignments(self, save_to_json=True):
-        url = f"https://api.github.com/orgs/{self.organization_slug}/copilot/billing/seats"
+        url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/billing/seats"
         data = github_api_request_handler(url, error_return_value={})
         datas = []
         seats = data.get('seats', [])
@@ -319,24 +378,24 @@ class GitHubOrganizationManager:
             datas.append(seat)
 
         dict_save_to_json_file(datas, f'{self.organization_slug}_seat_assignments', save_to_json=save_to_json)
-        logger.info(f"Fetching seat assignments for organization: {self.organization_slug}")
+        logger.info(f"Fetching seat assignments for {self.slug_type}: {self.organization_slug}")
         return datas
 
     def _fetch_all_teams(self, save_to_json=True):
         # Teams under the same org are essentially at the same level because the URL does not reflect the nested relationship, so team names cannot be duplicated
         
-        url = f"https://api.github.com/orgs/{self.organization_slug}/teams"
+        url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/teams"
         teams = github_api_request_handler(url, error_return_value=[])
         # if credential is expired, the return value is:
         # {'message': 'Bad credentials', 'documentation_url': 'https://docs.github.com/rest', 'status': '401'}
         if isinstance(teams, dict) and teams.get('status') == '401':
-            logger.error(f"Bad credentials for organization: {self.organization_slug}")
+            logger.error(f"Bad credentials for {self.slug_type}: {self.organization_slug}")
             return []
         
         teams = self._add_fullpath_slug(teams)
         teams = assign_position_in_tree(teams)
         dict_save_to_json_file(teams, f'{self.organization_slug}_all_teams', save_to_json=save_to_json)
-        logger.info(f"Fetching all teams for organization: {self.organization_slug}")
+        logger.info(f"Fetching all teams for {self.slug_type}: {self.organization_slug}")
 
         return teams
 
@@ -456,33 +515,42 @@ class ElasticsearchManager:
 
 def main(organization_slug):
     logger.info(f"==========================================================================================================")
-    logger.info(f"Starting data processing for organization: {organization_slug}")
-    github_org_manager = GitHubOrganizationManager(organization_slug) 
+
+    # organization_slug 2 types:
+    # 1. Organization in a GHEC, like "YOUR_ORG_SLUG"
+    # 2. Standalone Slug, must be starts with "standalone:", like "standalone:YOUR_STANDALONE_SLUG"
+
+    is_standalone = True if organization_slug.startswith('standalone:') else False
+    slug_type = 'Standalone' if is_standalone else 'Organization'
+    organization_slug = organization_slug.replace('standalone:', '')
+
+    logger.info(f"Starting data processing for {slug_type}: {organization_slug}")
+    github_org_manager = GitHubOrganizationManager(organization_slug, is_standalone=is_standalone) 
     es_manager = ElasticsearchManager()
 
 
     # Process seat info and settings
-    logger.info(f"Processing Copilot seat info & settings for organization: {organization_slug}")
-    data_seat_info_settings = github_org_manager.get_seat_info_settings()
+    logger.info(f"Processing Copilot seat info & settings for {slug_type}: {organization_slug}")
+    data_seat_info_settings = github_org_manager.get_seat_info_settings() if not is_standalone else github_org_manager.get_seat_info_settings_standalone()
     if not data_seat_info_settings:
-        logger.warning(f"No Copilot seat info & settings found for organization: {organization_slug}")
+        logger.warning(f"No Copilot seat info & settings found for {slug_type}: {organization_slug}")
     else:
         es_manager.write_to_es(Indexes.index_seat_info, data_seat_info_settings)
-        logger.info(f"Data processing completed for organization: {organization_slug}")
+        logger.info(f"Data processing completed for {slug_type}: {organization_slug}")
 
     # Process seat assignments
-    logger.info(f"Processing Copilot seat assignments for organization: {organization_slug}")
+    logger.info(f"Processing Copilot seat assignments for {slug_type}: {organization_slug}")
     data_seat_assignments = github_org_manager.get_seat_assignments()
     if not data_seat_assignments:
-        logger.warning(f"No Copilot seat assignments found for organization: {organization_slug}")
+        logger.warning(f"No Copilot seat assignments found for {slug_type}: {organization_slug}")
     else:
         for seat_assignment in data_seat_assignments:
             es_manager.write_to_es(Indexes.index_seat_assignments, seat_assignment)
-        logger.info(f"Data processing completed for organization: {organization_slug}")
+        logger.info(f"Data processing completed for {slug_type}: {organization_slug}")
 
     # Process usage data
     copilot_usage_datas = github_org_manager.get_copilot_usages(team_slug='all')
-    logger.info(f"Processing Copilot usage data for organization: {organization_slug}")
+    logger.info(f"Processing Copilot usage data for {slug_type}: {organization_slug}")
     for team_slug, data_with_position in copilot_usage_datas.items():
         logger.info(f"Processing Copilot usage data for team: {team_slug}")
 
