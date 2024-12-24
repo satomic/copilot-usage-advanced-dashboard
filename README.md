@@ -499,7 +499,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
 Parameter description
 
 - `GITHUB_PAT`: Your GitHub PAT, which needs to have Owner permissions for Organizations. Please replace `<YOUR_GITHUB_PAT>` with the actual value.
-- `ORGANIZATION_SLUGS`: The Slugs of all Organizations that you want to monitor, which can be one or multiple separated by `,` (English symbol). If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`. Please replace `<YOUR_ORGANIZATION_SLUGS>` with the actual value. For example, the following types of values are supported:
+- `ORGANIZATION_SLUGS`: The Slugs of all Organizations that you want to monitor, which can be one or multiple separated by `,` (English symbol). **If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`**. Please replace `<YOUR_ORGANIZATION_SLUGS>` with the actual value. For example, the following types of values are supported:
   - `myOrg1`
   - `myOrg1,myOrg2`
   - `standalone:myStandaloneSlug`
@@ -531,7 +531,7 @@ satomic/cpuad-updater
    ```bash
    python3 -m pip install -r requirements.txt
    ```
-3. Setting Environment Variables. If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`.
+3. Setting Environment Variables. **If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`**.
    ```bash
    export GITHUB_PAT="<YOUR_GITHUB_PAT>"
    export ORGANIZATION_SLUGS="<YOUR_ORGANIZATION_SLUGS>"
