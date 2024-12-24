@@ -110,10 +110,10 @@
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
-                        "lastNotNull"
+                        "sum"
                     ],
                     "fields": "",
-                    "values": false
+                    "values": true
                 },
                 "showPercentChange": false,
                 "textMode": "auto",
@@ -191,7 +191,7 @@
                     },
                     "expression": "$A / $B",
                     "hide": false,
-                    "refId": "C",
+                    "refId": "·",
                     "type": "math"
                 }
             ],
@@ -241,7 +241,7 @@
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
-                        "lastNotNull"
+                        "sum"
                     ],
                     "fields": "",
                     "values": false
@@ -329,7 +329,7 @@
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
-                        "lastNotNull"
+                        "sum"
                     ],
                     "fields": "",
                     "values": false
@@ -417,7 +417,7 @@
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
-                        "lastNotNull"
+                        "sum"
                     ],
                     "fields": "",
                     "values": false
@@ -3295,7 +3295,7 @@
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
-                        "lastNotNull"
+                        "sum"
                     ],
                     "fields": "",
                     "values": false
@@ -3531,7 +3531,7 @@
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
-                        "lastNotNull"
+                        "sum"
                     ],
                     "fields": "",
                     "values": false
@@ -4390,7 +4390,7 @@
                             "type": "raw_data"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND assignee_team_slug: $team_name",
+                    "query": "organization_slug: $organization_name",
                     "refId": "Acceped Prompts",
                     "timeField": "day"
                 }
@@ -5381,8 +5381,12 @@
             },
             {
                 "current": {
-                    "text": "All",
-                    "value": "$__all"
+                    "text": [
+                        "All"
+                    ],
+                    "value": [
+                        "$__all"
+                    ]
                 },
                 "datasource": {
                     "type": "elasticsearch",
@@ -5391,6 +5395,7 @@
                 "definition": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
                 "includeAll": true,
                 "label": "Team",
+                "multi": true,
                 "name": "team_name",
                 "options": [],
                 "query": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
@@ -5446,6 +5451,6 @@
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "be7hpbvvhst8gc",
-    "version": 30,
+    "version": 32,
     "weekStart": ""
 }
