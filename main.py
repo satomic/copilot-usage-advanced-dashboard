@@ -72,6 +72,9 @@ def github_api_request_handler(url, error_return_value=[]):
     return data
 
 def dict_save_to_json_file(data, file_name, logs_path=Paras.get_log_path(), save_to_json=True):
+    if not data:
+        logger.warning(f"No data to save for {file_name}")
+        return
     if save_to_json:
         if not os.path.exists(logs_path):
             os.makedirs(logs_path)
@@ -205,9 +208,9 @@ class GitHubOrganizationManager:
         urls = { self.organization_slug, (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/usage") }
         if team_slug:
             if team_slug != 'all':
-                urls = { team_slug: (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/teams/{team_slug}/copilot/usage") }
+                urls = { team_slug: (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team_slug}/copilot/usage") }
             else:
-                urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/teams/{team['slug']}/copilot/usage") for team in self.teams }
+                urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team['slug']}/copilot/usage") for team in self.teams }
         
         datas = {}
         logger.info(f"Fetching Copilot usages for {self.slug_type}: {self.organization_slug}, team: {team_slug}")
