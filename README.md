@@ -120,30 +120,87 @@ The choice of variables is dynamically associated with the data display
 ## Copilot Usage Advanced Dashboard
 
 ### 1. Organization
+> First, based on [List teams of an onganization](https://docs.github.com/en/enterprise-cloud@latest/rest/teams/teams?apiVersion=2022-11-28#list-teams), get all the teams under the Organization, and then based on [Get a summary of Copilot usage for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-a-team), sum and calculate the data of all teams under the Organization to get complete Organization-level data.
+
+- Acceptance Rate Average = `sum(total_acceptances_count) / sum(total_suggestions_count)`
+- Cumulative Number of Acceptence (Count) = `sum(total_acceptances_count)`
+- Cumulative Number of Suggestions (Count) = `sum(total_suggestions_count)`
+- Cumulative Number of Lines of Code Accepted = `sum(total_lines_accepted)`
+- Acceptance Rate (%) = `total_acceptances_count / total_suggestions_count`
+- Total Active Users = `total_active_users`
+- Total Suggestions & Acceptances Count = `total_suggestions_count` & `total_acceptances_count`
+- Total Lines Suggested & Accepted = `total_lines_suggested `& `total_lines_accepted`
 
 ![](image/image_WVNHVnb2OZ.png)
 
 ### 2. Teams
+> Based on the breakdown data in [Get a summary of Copilot usage for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-a-team), the data is aggregated by Teams to obtain data comparisons of different Teams.
+
+- Number of Teams = `unique_count(team_slug)`
+- Top Teams by Accepted Prompts = `sum(acceptances_count).groupby(team_slug)`
+- Top Teams by Acceptance Rate = `sum(acceptances_count).groupby(team_slug) / sum(suggestions_count).groupby(team_slug)`
+- Team Breakdown = `sum(*).groupby(team_slug)`
 
 ![](image/image_TGcs3tD7Cs.png)
 
 ### 3. Languages
 
+> Based on the breakdown data in [Get a summary of Copilot usage for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-a-team), the data is aggregated according to Languages ​​to obtain data comparisons for different Languages.
+
+- Number of Languages= `unique_count(language)`
+- Top Languages by Accepted Prompts = `sum(acceptances_count).groupby(language)`
+- Top Languages by Acceptance Rate = `sum(acceptances_count).groupby(language) / sum(suggestions_count).groupby(language)`
+- Languages Breakdown = `sum(*).groupby(language)`
+
 ![](image/image_YHXpu1wRf2.png)
 
 ### 4. Editors
+
+> Based on the breakdown data in [Get a summary of Copilot usage for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-a-team), the data is aggregated by Editors to obtain data comparisons for different Editors.
+
+- Number of Editors = `unique_count(editor)`
+- Top Editors by Accepted Prompts = `sum(acceptances_count).groupby(editor)`
+- Top Editors by Acceptance Rate = `sum(acceptances_count).groupby(editor) / sum(suggestions_count).groupby(editor)`
+- Editors Breakdown = `sum(*).groupby(editor)`
 
 ![](image/image_9P1zJxBMaO.png)
 
 ### 5. Copilot Chat
 
+> Based on the data from [Get a summary of Copilot usage for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-a-team), we can get the usage of Copilot Chat.
+
+- Acceptance Rate Average = `sum(total_chat_acceptances) / sum(total_chat_turns)`
+- Cumulative Number of Acceptances = `sum(total_chat_acceptances)`
+- Cumulative Number of Turns = `sum(total_chat_turns)`
+- Total Acceptances | Total Turns Count = `total_chat_acceptances` | `total_chat_turns`
+- Total Active Copilot Chat Users = `total_active_chat_users`
+
 ![](image/image_MzSdsbHdmw.png)
 
 ### 6. Seat Analysis
 
+> Based on the data analysis of [Get Copilot seat information and settings for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#get-copilot-seat-information-and-settings-for-an-organization) and [List all Copilot seat assignments for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#list-all-copilot-seat-assignments-for-an-organization), the seat allocation and usage are presented in a unified manner.
+
+- Copilot Plan Type = `count(seats).groupby(plan_type)`
+- Total = `seat_breakdown.total`
+- Active in this Cycle = `seat_breakdown.active_this_cycle`
+- Assigned But Never Used = `last_activity_at.isnan()`
+- Inactive in this Cycle = `seat_breakdown.inactive_this_cycle`
+- Ranking of Inactive Users ( ≥ 2 days ) =  `today - last_activity_at`
+- All assigned seats = `*`
+
 ![](image/image_vNpkYpc-xW.png)
 
 ### 7. Breakdown Heatmap
+
+> Based on the breakdown data in [Get a summary of Copilot usage for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-a-team), we analyze the data from two dimensions: Languages ​​and Editors. We can clearly see what combination of Languages ​​and Editors can achieve the best Copilot usage effect.
+
+- Active Users Count (Group by Language) = `active_users.groupby(language)`
+- Accept Rate by Count (%) = `sum(acceptances_count).groupby(language) / sum(suggestions_count).groupby(language)`
+- Accept Rate by Lines (%) = `sum(lines_accepted).groupby(language) / sum(lines_suggested).groupby(language)`
+- Active Users Count (Group by Editor) = `active_users.groupby(editor)`
+- Accept Rate by Count (%) = `sum(acceptances_count).groupby(editor) / sum(suggestions_count).groupby(editor)`
+- Accept Rate by Lines (%) = `sum(lines_accepted).groupby(editor) / sum(lines_suggested).groupby(editor)`
 
 ![](image/image_i7-wXGj-UA.png)
 
