@@ -86,7 +86,7 @@ representing Copilot usage in multi organizations & teams from different dimensi
 
 > If you are familiar with the [copilot-metrics-viewer](https://github.com/github-copilot-resources/copilot-metrics-viewer) project, then please try this dashboard and use it in subsequent deployments.
 
-- link: [http://20.89.179.123:3000/d/be7hpbvvhst8gc/copilot-usage-advanced-dashboard](http://20.89.179.123:3000/d/be7hpbvvhst8gc/copilot-usage-advanced-dashboard)
+- link: [copilot-usage-advanced-dashboard](https://softrin.com/d/be7hpbvvhst8gc/copilot-usage-advanced-dashboard)
 - username：`demouser`
 - password：`demouser`
 
@@ -96,7 +96,7 @@ representing Copilot usage in multi organizations & teams from different dimensi
 
 > New designed dashboard&#x20;
 
-- Link: [http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard](http://20.89.179.123:3000/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard)
+- Link: [copilot-usage-advanced-dashboard-original](https://softrin.com/d/a98455d6-b401-4a53-80ad-7af9f97be6f4/copilot-usage-advanced-dashboard-original)
 - username：`demouser`
 - password：`demouser`
 
