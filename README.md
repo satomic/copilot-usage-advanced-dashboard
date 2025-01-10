@@ -1,5 +1,11 @@
 # Copilot Usage Advanced Dashboard Tutorial
 
+
+> ⚠️**Disclaimer**: This project is open sourced to solve problems that are critical to some users, and the functions provided may not be natively provided by GitHub Copilot. Therefore the contents,  opinions and views expressed in this project are solely mine do not necessarly refect the views of my employer, These are my personal notes based on myunderstanding of the code and trial deployments to GitHub Copilot. If anything is wrong with this article, please let me know through the [issues](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/new). l appreciate your help in correcting my understanding.
+
+> ✅**Risk Warning**: This project uses the standard Copilot REST API to obtain data, aggregate data, and visualize it, without any potential risks.
+
+
 中文版 [Copilot Usage Advanced Dashboard 教程](https://www.wolai.com/tNxKtCqCfb6DR2cuaxmJDZ)
 
 |**Version**|**Update Notes**|**Date**|
@@ -68,6 +74,7 @@
 
 representing Copilot usage in multi organizations & teams from different dimensions. The features are summarized as follows:
 - Data is persisted in Elasticsearch and visualized in Grafana, **not just the past 28 days**. So you can freely choose the time period you want to visualize, such as the past year or a specific month.
+- You can freely adjust the style and theme of the chart, everything is a mature feature of Grafana.
 - All stored data includes Organization and Team fields, which is convenient for data filtering through variable filters.
 - Generate a unique hash key for each piece of data, and update the stored data every time the latest data is obtained.
 - Visualizations in Grafana dashboards can be adjusted or deleted according to actual needs.
