@@ -373,7 +373,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
    ```
 2. Grant read and write permissions.
    ```bash
-   chown -R 777 /srv/elasticsearch/
+   chown -R a+rw /srv/elasticsearch/
    ```
 3. Create the `elasticsearch.yml` configuration file in the `/srv/elasticsearch/config/`directory:
    ```bash
@@ -463,7 +463,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
 1. Creating a Data Path
    ```bash
    mkdir -p /srv/grafana/data
-   chmod 777 /srv/grafana/data
+   chmod -R a+rw /srv/grafana/data
    ```
 2. run
    ```bash
