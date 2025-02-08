@@ -29,6 +29,7 @@ COPY mapping /app/mapping
 # Copy the scripts to the working directory
 COPY log_utils.py /app/
 COPY main.py /app/
+COPY metrics_2_usage_convertor.py /app/
 
 # Run the command one time
 CMD ["python3", "main.py"]
