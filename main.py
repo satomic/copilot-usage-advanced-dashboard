@@ -6,6 +6,7 @@ from elasticsearch import Elasticsearch, NotFoundError
 from datetime import datetime, timedelta
 from log_utils import *
 import time
+from metrics_2_usage_convertor import convert_metrics_to_usage
 
 
 class Paras:
@@ -204,19 +205,20 @@ class GitHubOrganizationManager:
         self.teams = self._fetch_all_teams(save_to_json=save_to_json)
         logger.info(f"Initialized GitHubOrganizationManager for {self.slug_type}: {organization_slug}")
 
-    def get_copilot_usages(self, team_slug='all', save_to_json=True, position_in_tree='leaf_team'):
-        urls = { self.organization_slug, (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/usage") }
+    def get_copilot_usages(self, team_slug='all', save_to_json=True, position_in_tree='leaf_team', usage_or_metrics='metrics'):
+        urls = { self.organization_slug, (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/{usage_or_metrics}") }
         if team_slug:
             if team_slug != 'all':
-                urls = { team_slug: (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team_slug}/copilot/usage") }
+                urls = { team_slug: (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team_slug}/copilot/{usage_or_metrics}") }
             else:
-                urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team['slug']}/copilot/usage") for team in self.teams }
+                urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team['slug']}/copilot/{usage_or_metrics}") for team in self.teams }
         
         datas = {}
         logger.info(f"Fetching Copilot usages for {self.slug_type}: {self.organization_slug}, team: {team_slug}")
         for _team_slug, position_in_tree_and_url in urls.items():
             position_in_tree, url = position_in_tree_and_url
             data = github_api_request_handler(url, error_return_value={})
+            data = convert_metrics_to_usage(data)
             dict_save_to_json_file(data, f'{self.organization_slug}_{_team_slug}_copilot_usage', save_to_json=save_to_json)
             datas[_team_slug] = {
                 'position_in_tree': position_in_tree,
