@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from log_utils import *
 import time
 from metrics_2_usage_convertor import convert_metrics_to_usage
+import traceback
 
 
 class Paras:
@@ -602,7 +603,7 @@ if __name__ == '__main__':
                 logger.info("Heartbeat: still running...")
                 time.sleep(3600)
         except Exception as e:
-            logger.error(f"An error occurred: {e}")
+            logger.error(f"An error occurred: {traceback.format_exc(e)}")
             time.sleep(5)
         finally:
             logger.info('-----------------Finished-----------------')
