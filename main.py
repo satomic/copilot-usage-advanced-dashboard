@@ -66,10 +66,9 @@ def github_api_request_handler(url, error_return_value=[]):
     }
     response = requests.get(url, headers=headers)
     data = response.json()
-    # logger.info(f"Response received: {data}")
 
-    if isinstance(data, dict) and data.get('status', '200') == '404':
-        logger.warning(f"URL not found: {url}")
+    if isinstance(data, dict) and data.get('status', '200') != '200':
+        logger.error(f"Request failed reason: {data}")
         return error_return_value
     return data
 
@@ -347,41 +346,48 @@ class GitHubOrganizationManager:
 
     def get_seat_assignments(self, save_to_json=True):
         url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/billing/seats"
-        data = github_api_request_handler(url, error_return_value={})
         datas = []
-        seats = data.get('seats', [])
-        for seat in seats:
+        page = 1
+        per_page = 50
+        while True:
+            paginated_url = f"{url}?page={page}&per_page={per_page}"
+            data = github_api_request_handler(paginated_url, error_return_value={})
+            seats = data.get('seats', [])
+            logger.info(f"Current page seats count: {len(seats)}")
+            if not seats:
+                break
+            for seat in seats:
+                # assignee sub dict
+                seat['assignee_login'] = seat.get('assignee', {}).get('login')
+                # if organization_slug is CopilotNext, then 把assignee_login中的每一个字母都往后移一位
+                if self.organization_slug == 'CopilotNext':
+                    seat['assignee_login'] = ''.join([chr(ord(c) + 1) for c in seat['assignee_login']])
 
-            # assignee sub dict
-            seat['assignee_login'] = seat.get('assignee', {}).get('login')
-            # if organization_slug is CopilotNext, then 把assignee_login中的每一个字母都往后移一位
-            if self.organization_slug == 'CopilotNext':
-                seat['assignee_login'] = ''.join([chr(ord(c) + 1) for c in seat['assignee_login']])
+                seat['assignee_html_url'] = seat.get('assignee', {}).get('html_url')
+                seat.pop('assignee', None)
 
-            seat['assignee_html_url'] = seat.get('assignee', {}).get('html_url')
-            seat.pop('assignee', None)
+                # assigning_team sub dict
+                seat['assignee_team_slug'] = seat.get('assigning_team', {}).get('slug')
+                seat['assignee_team_html_url'] = seat.get('assigning_team', {}).get('html_url')
+                seat.pop('assigning_team', None)
+                
+                seat['organization_slug'] = self.organization_slug
+                seat['day'] = current_time()[:10]
+                seat['unique_hash'] = generate_unique_hash(
+                    seat, 
+                    key_properties=['organization_slug', 'assignee_login']
+                )
+                
+                last_activity_at = seat.get('last_activity_at')
+                if last_activity_at:
+                    last_activity_date = datetime.strptime(last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
+                    days_since_last_activity = (datetime.now(last_activity_date.tzinfo) - last_activity_date).days
+                else:
+                    days_since_last_activity = -1
+                seat['days_since_last_activity'] = days_since_last_activity
 
-            # assigning_team sub dict
-            seat['assignee_team_slug'] = seat.get('assigning_team', {}).get('slug')
-            seat['assignee_team_html_url'] = seat.get('assigning_team', {}).get('html_url')
-            seat.pop('assigning_team', None)
-            
-            seat['organization_slug'] = self.organization_slug
-            seat['day'] = current_time()[:10]
-            seat['unique_hash'] = generate_unique_hash(
-                seat, 
-                key_properties=['organization_slug', 'assignee_login']
-            )
-            
-            last_activity_at = seat.get('last_activity_at')
-            if last_activity_at:
-                last_activity_date = datetime.strptime(last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
-                days_since_last_activity = (datetime.now(last_activity_date.tzinfo) - last_activity_date).days
-            else:
-                days_since_last_activity = -1
-            seat['days_since_last_activity'] = days_since_last_activity
-
-            datas.append(seat)
+                datas.append(seat)
+            page += 1  # 获取下一页数据
 
         dict_save_to_json_file(datas, f'{self.organization_slug}_seat_assignments', save_to_json=save_to_json)
         logger.info(f"Fetching seat assignments for {self.slug_type}: {self.organization_slug}")
@@ -391,12 +397,22 @@ class GitHubOrganizationManager:
         # Teams under the same org are essentially at the same level because the URL does not reflect the nested relationship, so team names cannot be duplicated
         
         url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/teams"
-        teams = github_api_request_handler(url, error_return_value=[])
-        # if credential is expired, the return value is:
-        # {'message': 'Bad credentials', 'documentation_url': 'https://docs.github.com/rest', 'status': '401'}
-        if isinstance(teams, dict) and teams.get('status') == '401':
-            logger.error(f"Bad credentials for {self.slug_type}: {self.organization_slug}")
-            return []
+        teams = []
+        page = 1
+        per_page = 50
+        while True:
+            paginated_url = f"{url}?page={page}&per_page={per_page}"
+            page_teams = github_api_request_handler(paginated_url, error_return_value=[])
+            logger.info(f"Current page teams count: {len(page_teams)}")
+            # if credential is expired, the return value is:
+            # {'message': 'Bad credentials', 'documentation_url': 'https://docs.github.com/rest', 'status': '401'}
+            if isinstance(page_teams, dict) and page_teams.get('status') == '401':
+                logger.error(f"Bad credentials for {self.slug_type}: {self.organization_slug}")
+                return []
+            if not page_teams:
+                break
+            teams.extend(page_teams)
+            page += 1  # 获取下一页数据
         
         teams = self._add_fullpath_slug(teams)
         teams = assign_position_in_tree(teams)
