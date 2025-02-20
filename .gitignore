@@ -23,3 +23,5 @@ gen_grafana_template.py
 dashboard-model-*
 .vscode/
 *bak*
+
+debug_*
