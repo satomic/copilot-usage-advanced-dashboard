@@ -20,13 +20,15 @@ def convert_day(metrics_day):
         for editor in editors:
             editor_name = editor.get("name", "unknown")
             for model in editor.get("models", []):
+                model_name = model.get("name", "unknown")
                 for lang in model.get("languages", []):
                     lang_name = lang.get("name", "unknown")
-                    key = (editor_name, lang_name)
+                    key = (editor_name, model_name, lang_name)
                     if key not in breakdown_dict:
                         breakdown_dict[key] = {
-                            "language": lang_name,
                             "editor": editor_name,
+                            "model": model_name,
+                            "language": lang_name,
                             "suggestions_count": 0,
                             "acceptances_count": 0,
                             "lines_suggested": 0,

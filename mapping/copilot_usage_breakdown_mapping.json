@@ -13,6 +13,9 @@
         "editor" : {
           "type" : "keyword"
         },
+        "model" : {
+          "type" : "keyword"
+        },
         "language" : {
           "type" : "keyword"
         },
