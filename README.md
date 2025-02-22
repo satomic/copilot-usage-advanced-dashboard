@@ -515,7 +515,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
    ```
 3. Visit the Grafana UI to confirm that the addition was successful
 
-   ![](image/image_Rz9qwfv9X2.png)
+   ![](image/image_data_source.png)
 
 ### Generate Dashboard Json Model
 
