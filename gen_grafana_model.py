@@ -7,6 +7,7 @@ from datetime import datetime
 
 data_source_names = [
     "elasticsearch-breakdown",
+    "elasticsearch-breakdown-chat",
     "elasticsearch-seat-assignments",
     "elasticsearch-seat-info-settings",
     "elasticsearch-total",

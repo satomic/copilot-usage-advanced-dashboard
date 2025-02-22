@@ -69,7 +69,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -96,12 +96,12 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 6,
                 "w": 6,
                 "x": 0,
                 "y": 2
             },
-            "id": 23,
+            "id": 69,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
@@ -138,17 +138,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": true,
                     "metrics": [
                         {
-                            "field": "total_acceptances_count",
+                            "field": "acceptances_count",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -169,17 +169,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": true,
                     "metrics": [
                         {
-                            "field": "total_suggestions_count",
+                            "field": "suggestions_count",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -201,7 +201,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -227,7 +227,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 6,
                 "w": 6,
                 "x": 6,
                 "y": 2
@@ -256,29 +256,29 @@
                     "alias": "",
                     "bucketAggs": [
                         {
-                            "field": "organization_slug",
+                            "field": "day",
                             "id": "2",
                             "settings": {
-                                "min_doc_count": "1",
-                                "order": "desc",
-                                "orderBy": "_term",
-                                "size": "10"
+                                "interval": "auto",
+                                "min_doc_count": "0",
+                                "timeZone": "utc",
+                                "trimEdges": "0"
                             },
-                            "type": "terms"
+                            "type": "date_histogram"
                         }
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "metrics": [
                         {
-                            "field": "total_acceptances_count",
+                            "field": "acceptances_count",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -289,7 +289,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -315,7 +315,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 6,
                 "w": 6,
                 "x": 12,
                 "y": 2
@@ -344,29 +344,29 @@
                     "alias": "",
                     "bucketAggs": [
                         {
-                            "field": "organization_slug",
+                            "field": "day",
                             "id": "2",
                             "settings": {
-                                "min_doc_count": "1",
-                                "order": "desc",
-                                "orderBy": "_term",
-                                "size": "10"
+                                "interval": "auto",
+                                "min_doc_count": "0",
+                                "timeZone": "utc",
+                                "trimEdges": "0"
                             },
-                            "type": "terms"
+                            "type": "date_histogram"
                         }
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "metrics": [
                         {
-                            "field": "total_suggestions_count",
+                            "field": "suggestions_count",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -377,7 +377,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -403,7 +403,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 6,
                 "w": 6,
                 "x": 18,
                 "y": 2
@@ -432,29 +432,29 @@
                     "alias": "",
                     "bucketAggs": [
                         {
-                            "field": "organization_slug",
+                            "field": "day",
                             "id": "2",
                             "settings": {
-                                "min_doc_count": "1",
-                                "order": "desc",
-                                "orderBy": "_term",
-                                "size": "10"
+                                "interval": "auto",
+                                "min_doc_count": "0",
+                                "timeZone": "utc",
+                                "trimEdges": "0"
                             },
-                            "type": "terms"
+                            "type": "date_histogram"
                         }
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "metrics": [
                         {
-                            "field": "total_lines_accepted",
+                            "field": "lines_accepted",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -465,7 +465,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -528,7 +528,7 @@
                 "h": 10,
                 "w": 12,
                 "x": 0,
-                "y": 7
+                "y": 8
             },
             "id": 2,
             "options": {
@@ -562,17 +562,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": true,
                     "metrics": [
                         {
-                            "field": "total_acceptances_count",
+                            "field": "acceptances_count",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -590,17 +590,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": true,
                     "metrics": [
                         {
-                            "field": "total_suggestions_count",
+                            "field": "suggestions_count",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -632,17 +632,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": true,
                     "metrics": [
                         {
-                            "field": "total_lines_accepted",
+                            "field": "lines_accepted",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "C",
                     "timeField": "day"
                 },
@@ -660,17 +660,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": true,
                     "metrics": [
                         {
-                            "field": "total_lines_suggested",
+                            "field": "lines_suggested",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "D",
                     "timeField": "day"
                 },
@@ -702,7 +702,7 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": true,
                     "metrics": [
@@ -730,7 +730,7 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": true,
                     "metrics": [
@@ -813,7 +813,7 @@
                 "h": 10,
                 "w": 12,
                 "x": 12,
-                "y": 7
+                "y": 8
             },
             "id": 5,
             "options": {
@@ -840,40 +840,6 @@
             },
             "pluginVersion": "11.4.0",
             "targets": [
-                {
-                    "alias": "",
-                    "bucketAggs": [
-                        {
-                            "field": "day",
-                            "id": "2",
-                            "settings": {
-                                "interval": "1d",
-                                "min_doc_count": "0",
-                                "timeZone": "utc",
-                                "trimEdges": "0"
-                            },
-                            "type": "date_histogram"
-                        }
-                    ],
-                    "datasource": {
-                        "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
-                    },
-                    "hide": true,
-                    "metrics": [
-                        {
-                            "field": "total_active_chat_users",
-                            "id": "1",
-                            "settings": {
-                                "script": "_value * -1"
-                            },
-                            "type": "sum"
-                        }
-                    ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
-                    "refId": "A",
-                    "timeField": "day"
-                },
                 {
                     "alias": "",
                     "bucketAggs": [
@@ -911,7 +877,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -971,7 +937,7 @@
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "Sum total_acceptances_count"
+                            "options": "Sum acceptances_count"
                         },
                         "properties": [
                             {
@@ -989,7 +955,7 @@
                 "h": 9,
                 "w": 12,
                 "x": 0,
-                "y": 17
+                "y": 18
             },
             "id": 1,
             "options": {
@@ -1023,16 +989,16 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "metrics": [
                         {
-                            "field": "total_acceptances_count",
+                            "field": "acceptances_count",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -1050,17 +1016,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": false,
                     "metrics": [
                         {
-                            "field": "total_suggestions_count",
+                            "field": "suggestions_count",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 }
@@ -1072,7 +1038,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -1132,7 +1098,7 @@
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "Sum total_lines_accepted"
+                            "options": "Sum lines_accepted"
                         },
                         "properties": [
                             {
@@ -1150,7 +1116,7 @@
                 "h": 9,
                 "w": 12,
                 "x": 12,
-                "y": 17
+                "y": 18
             },
             "id": 46,
             "options": {
@@ -1184,16 +1150,16 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "metrics": [
                         {
-                            "field": "total_lines_accepted",
+                            "field": "lines_accepted",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -1211,17 +1177,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-uid"
                     },
                     "hide": false,
                     "metrics": [
                         {
-                            "field": "total_lines_suggested",
+                            "field": "lines_suggested",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 }
@@ -1236,7 +1202,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 26
+                "y": 27
             },
             "id": 49,
             "panels": [],
@@ -1296,7 +1262,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 0,
-                "y": 27
+                "y": 28
             },
             "id": 15,
             "options": {
@@ -1352,7 +1318,7 @@
                             "type": "cardinality"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -1387,7 +1353,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 8,
-                "y": 27
+                "y": 28
             },
             "id": 51,
             "options": {
@@ -1444,7 +1410,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 }
@@ -1478,7 +1444,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 16,
-                "y": 27
+                "y": 28
             },
             "id": 34,
             "options": {
@@ -1535,7 +1501,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -1566,7 +1532,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -1669,7 +1635,7 @@
                 "h": 13,
                 "w": 24,
                 "x": 0,
-                "y": 37
+                "y": 38
             },
             "id": 43,
             "options": {
@@ -1731,7 +1697,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "Acceped Prompts",
                     "timeField": "day"
                 }
@@ -1808,7 +1774,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 50
+                "y": 51
             },
             "id": 47,
             "panels": [],
@@ -1868,7 +1834,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 0,
-                "y": 51
+                "y": 52
             },
             "id": 50,
             "options": {
@@ -1924,7 +1890,7 @@
                             "type": "cardinality"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -1959,7 +1925,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 8,
-                "y": 51
+                "y": 52
             },
             "id": 30,
             "options": {
@@ -2016,7 +1982,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 }
@@ -2050,7 +2016,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 16,
-                "y": 51
+                "y": 52
             },
             "id": 27,
             "options": {
@@ -2107,7 +2073,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -2138,7 +2104,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -2241,7 +2207,7 @@
                 "h": 13,
                 "w": 24,
                 "x": 0,
-                "y": 61
+                "y": 62
             },
             "id": 52,
             "options": {
@@ -2303,7 +2269,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "Acceped Prompts",
                     "timeField": "day"
                 }
@@ -2380,7 +2346,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 74
+                "y": 75
             },
             "id": 53,
             "panels": [],
@@ -2440,7 +2406,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 0,
-                "y": 75
+                "y": 76
             },
             "id": 54,
             "options": {
@@ -2496,7 +2462,7 @@
                             "type": "cardinality"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -2531,7 +2497,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 8,
-                "y": 75
+                "y": 76
             },
             "id": 55,
             "options": {
@@ -2588,7 +2554,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 }
@@ -2622,7 +2588,7 @@
                 "h": 10,
                 "w": 8,
                 "x": 16,
-                "y": 75
+                "y": 76
             },
             "id": 56,
             "options": {
@@ -2679,7 +2645,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -2710,7 +2676,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -2753,8 +2719,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2813,7 +2778,7 @@
                 "h": 13,
                 "w": 24,
                 "x": 0,
-                "y": 85
+                "y": 86
             },
             "id": 57,
             "options": {
@@ -2875,7 +2840,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "Acceped Prompts",
                     "timeField": "day"
                 }
@@ -2952,7 +2917,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 98
+                "y": 99
             },
             "id": 59,
             "panels": [],
@@ -2962,7 +2927,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-chat-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -2975,8 +2940,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2992,7 +2956,7 @@
                 "h": 7,
                 "w": 6,
                 "x": 0,
-                "y": 99
+                "y": 100
             },
             "id": 64,
             "options": {
@@ -3031,17 +2995,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-chat-uid"
                     },
                     "hide": true,
                     "metrics": [
                         {
-                            "field": "total_chat_acceptances",
+                            "field": "chat_acceptances",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -3062,17 +3026,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-chat-uid"
                     },
                     "hide": true,
                     "metrics": [
                         {
-                            "field": "total_chat_turns",
+                            "field": "chat_turns",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -3084,7 +3048,7 @@
                     },
                     "expression": "$A / $B",
                     "hide": false,
-                    "refId": "C",
+                    "refId": "·",
                     "type": "math"
                 }
             ],
@@ -3094,7 +3058,7 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-chat-uid"
             },
             "fieldConfig": {
                 "defaults": {
@@ -3140,8 +3104,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3154,7 +3117,7 @@
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "Sum total_chat_acceptances"
+                            "options": "Sum chat_acceptances"
                         },
                         "properties": [
                             {
@@ -3172,7 +3135,7 @@
                 "h": 10,
                 "w": 18,
                 "x": 6,
-                "y": 99
+                "y": 100
             },
             "id": 61,
             "options": {
@@ -3206,16 +3169,16 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-chat-uid"
                     },
                     "metrics": [
                         {
-                            "field": "total_chat_acceptances",
+                            "field": "chat_acceptances",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -3233,17 +3196,17 @@
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-chat-uid"
                     },
                     "hide": false,
                     "metrics": [
                         {
-                            "field": "total_chat_turns",
+                            "field": "chat_turns",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 }
@@ -3255,12 +3218,12 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-chat-uid"
             },
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "fixedColor": "purple",
+                        "fixedColor": "yellow",
                         "mode": "fixed"
                     },
                     "mappings": [],
@@ -3268,8 +3231,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3282,9 +3244,9 @@
             },
             "gridPos": {
                 "h": 7,
-                "w": 6,
+                "w": 3,
                 "x": 0,
-                "y": 106
+                "y": 107
             },
             "id": 63,
             "options": {
@@ -3310,29 +3272,116 @@
                     "alias": "",
                     "bucketAggs": [
                         {
-                            "field": "organization_slug",
+                            "field": "day",
                             "id": "2",
                             "settings": {
-                                "min_doc_count": "1",
-                                "order": "desc",
-                                "orderBy": "_term",
-                                "size": "10"
+                                "interval": "auto",
+                                "min_doc_count": "0",
+                                "timeZone": "utc",
+                                "trimEdges": "0"
                             },
-                            "type": "terms"
+                            "type": "date_histogram"
                         }
                     ],
                     "datasource": {
                         "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
+                        "uid": "elasticsearch-breakdown-chat-uid"
                     },
                     "metrics": [
                         {
-                            "field": "total_chat_acceptances",
+                            "field": "chat_insertion_events",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "refId": "A",
+                    "timeField": "day"
+                }
+            ],
+            "title": "No. of Insert",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "elasticsearch-breakdown-chat-uid"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "fixedColor": "purple",
+                        "mode": "fixed"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 7,
+                "w": 3,
+                "x": 3,
+                "y": 107
+            },
+            "id": 67,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "day",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": "0",
+                                "timeZone": "utc",
+                                "trimEdges": "0"
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "datasource": {
+                        "type": "elasticsearch",
+                        "uid": "elasticsearch-breakdown-chat-uid"
+                    },
+                    "metrics": [
+                        {
+                            "field": "chat_acceptances",
+                            "id": "1",
+                            "type": "sum"
+                        }
+                    ],
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -3377,8 +3426,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3393,7 +3441,7 @@
                 "h": 11,
                 "w": 18,
                 "x": 6,
-                "y": 109
+                "y": 110
             },
             "id": 62,
             "options": {
@@ -3453,35 +3501,6 @@
                     "query": "organization_slug: $organization_name AND team_slug: $team_name",
                     "refId": "A",
                     "timeField": "day"
-                },
-                {
-                    "alias": "",
-                    "bucketAggs": [
-                        {
-                            "field": "day",
-                            "id": "2",
-                            "settings": {
-                                "interval": "1d"
-                            },
-                            "type": "date_histogram"
-                        }
-                    ],
-                    "datasource": {
-                        "type": "elasticsearch",
-                        "uid": "elasticsearch-total-uid"
-                    },
-                    "hide": true,
-                    "metrics": [
-                        {
-                            "field": "total_active_users",
-                            "id": "1",
-                            "settings": {},
-                            "type": "sum"
-                        }
-                    ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
-                    "refId": "B",
-                    "timeField": "day"
                 }
             ],
             "timeShift": "0h",
@@ -3491,12 +3510,12 @@
         {
             "datasource": {
                 "type": "elasticsearch",
-                "uid": "elasticsearch-total-uid"
+                "uid": "elasticsearch-breakdown-chat-uid"
             },
             "fieldConfig": {
                 "defaults": {
                     "color": {
-                        "fixedColor": "blue",
+                        "fixedColor": "light-red",
                         "mode": "fixed"
                     },
                     "mappings": [],
@@ -3504,8 +3523,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3518,11 +3536,11 @@
             },
             "gridPos": {
                 "h": 7,
-                "w": 6,
+                "w": 3,
                 "x": 0,
-                "y": 113
+                "y": 114
             },
-            "id": 60,
+            "id": 66,
             "options": {
                 "colorMode": "value",
                 "graphMode": "area",
@@ -3546,15 +3564,99 @@
                     "alias": "",
                     "bucketAggs": [
                         {
-                            "field": "organization_slug",
+                            "field": "day",
                             "id": "2",
                             "settings": {
-                                "min_doc_count": "1",
-                                "order": "desc",
-                                "orderBy": "_term",
-                                "size": "10"
+                                "interval": "auto",
+                                "min_doc_count": "0",
+                                "timeZone": "utc",
+                                "trimEdges": "0"
                             },
-                            "type": "terms"
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "datasource": {
+                        "type": "elasticsearch",
+                        "uid": "elasticsearch-breakdown-chat-uid"
+                    },
+                    "metrics": [
+                        {
+                            "field": "chat_copy_events",
+                            "id": "1",
+                            "type": "sum"
+                        }
+                    ],
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "refId": "A",
+                    "timeField": "day"
+                }
+            ],
+            "title": "No. of Copy",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "elasticsearch",
+                "uid": "elasticsearch-breakdown-chat-uid"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "fixedColor": "blue",
+                        "mode": "fixed"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green"
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 7,
+                "w": 3,
+                "x": 3,
+                "y": 114
+            },
+            "id": 68,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "sum"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "day",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto"
+                            },
+                            "type": "date_histogram"
                         }
                     ],
                     "datasource": {
@@ -3563,12 +3665,12 @@
                     },
                     "metrics": [
                         {
-                            "field": "total_chat_turns",
+                            "field": "chat_turns",
                             "id": "1",
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -3582,7 +3684,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 120
+                "y": 121
             },
             "id": 14,
             "panels": [],
@@ -3626,8 +3728,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3642,7 +3743,7 @@
                 "h": 10,
                 "w": 3,
                 "x": 0,
-                "y": 121
+                "y": 122
             },
             "id": 38,
             "options": {
@@ -3718,8 +3819,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3734,7 +3834,7 @@
                 "h": 5,
                 "w": 3,
                 "x": 3,
-                "y": 121
+                "y": 122
             },
             "id": 48,
             "options": {
@@ -3806,8 +3906,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3822,7 +3921,7 @@
                 "h": 5,
                 "w": 3,
                 "x": 6,
-                "y": 121
+                "y": 122
             },
             "id": 17,
             "options": {
@@ -3833,7 +3932,7 @@
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
-                        "lastNotNull"
+                        "sum"
                     ],
                     "fields": "",
                     "values": false
@@ -3873,7 +3972,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND assignee_team_slug: $team_name AND days_since_last_activity: [-1 TO -1]",
+                    "query": "organization_slug: $organization_name AND days_since_last_activity: [-1 TO -1]",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -3906,8 +4005,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3922,7 +4020,7 @@
                 "h": 10,
                 "w": 3,
                 "x": 9,
-                "y": 121
+                "y": 122
             },
             "id": 40,
             "options": {
@@ -4031,8 +4129,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -4048,7 +4145,7 @@
                 "h": 10,
                 "w": 12,
                 "x": 12,
-                "y": 121
+                "y": 122
             },
             "id": 39,
             "options": {
@@ -4125,8 +4222,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -4141,7 +4237,7 @@
                 "h": 5,
                 "w": 3,
                 "x": 3,
-                "y": 126
+                "y": 127
             },
             "id": 19,
             "options": {
@@ -4213,8 +4309,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -4229,7 +4324,7 @@
                 "h": 5,
                 "w": 3,
                 "x": 6,
-                "y": 126
+                "y": 127
             },
             "id": 20,
             "options": {
@@ -4310,8 +4405,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -4349,7 +4443,7 @@
                 "h": 18,
                 "w": 24,
                 "x": 0,
-                "y": 131
+                "y": 132
             },
             "id": 65,
             "options": {
@@ -4434,7 +4528,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 149
+                "y": 150
             },
             "id": 10,
             "panels": [],
@@ -4478,8 +4572,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -4494,7 +4587,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 0,
-                "y": 150
+                "y": 151
             },
             "id": 8,
             "options": {
@@ -4552,7 +4645,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -4597,8 +4690,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -4613,7 +4705,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 12,
-                "y": 150
+                "y": 151
             },
             "id": 11,
             "options": {
@@ -4671,7 +4763,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -4715,8 +4807,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -4732,7 +4823,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 0,
-                "y": 163
+                "y": 164
             },
             "id": 7,
             "options": {
@@ -4789,7 +4880,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -4828,7 +4919,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -4883,8 +4974,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -4900,7 +4990,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 12,
-                "y": 163
+                "y": 164
             },
             "id": 12,
             "options": {
@@ -4957,7 +5047,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -4996,7 +5086,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -5051,8 +5141,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -5068,7 +5157,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 0,
-                "y": 176
+                "y": 177
             },
             "id": 6,
             "options": {
@@ -5125,7 +5214,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -5164,7 +5253,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -5219,8 +5308,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -5236,7 +5324,7 @@
                 "h": 13,
                 "w": 12,
                 "x": 12,
-                "y": 176
+                "y": 177
             },
             "id": 13,
             "options": {
@@ -5293,7 +5381,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -5332,7 +5420,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND language: $language_name AND editor: $editor_name AND model: $model_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -5381,12 +5469,8 @@
             },
             {
                 "current": {
-                    "text": [
-                        "All"
-                    ],
-                    "value": [
-                        "$__all"
-                    ]
+                    "text": "All",
+                    "value": "$__all"
                 },
                 "datasource": {
                     "type": "elasticsearch",
@@ -5400,7 +5484,7 @@
                 "options": [],
                 "query": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
                 "refresh": 1,
-                "regex": "",
+                "regex": "/^(?!.*dewu).*$/",
                 "type": "query"
             },
             {
@@ -5440,17 +5524,37 @@
                 "refresh": 1,
                 "regex": "",
                 "type": "query"
+            },
+            {
+                "current": {
+                    "text": [
+                        "default"
+                    ],
+                    "value": [
+                        "default"
+                    ]
+                },
+                "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
+                "includeAll": true,
+                "label": "Model",
+                "multi": true,
+                "name": "model_name",
+                "options": [],
+                "query": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
+                "refresh": 1,
+                "regex": "",
+                "type": "query"
             }
         ]
     },
     "time": {
-        "from": "now-30d",
+        "from": "now-90d",
         "to": "now"
     },
     "timepicker": {},
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "be7hpbvvhst8gc",
-    "version": 32,
+    "version": 61,
     "weekStart": ""
 }

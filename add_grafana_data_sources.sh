@@ -20,6 +20,30 @@ curl -X POST http://localhost:3000/api/datasources \
   }
 }'
 
+
+curl -X POST http://localhost:3000/api/datasources \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer $GRAFANA_TOKEN" \
+-d '{
+  "name": "elasticsearch-breakdown-chat",
+  "type": "elasticsearch",
+  "access": "proxy",
+  "url": "http://localhost:9200",
+  "basicAuth": false,
+  "withCredentials": false,
+  "isDefault": false,
+  "jsonData": {
+    "includeFrozen": false,
+    "index": "copilot_usage_breakdown_chat",
+    "logLevelField": "",
+    "logMessageField": "",
+    "maxConcurrentShardRequests": 5,
+    "timeField": "day",
+    "timeInterval": "1d"
+  }
+}'
+
+
 curl -X POST http://localhost:3000/api/datasources \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $GRAFANA_TOKEN" \

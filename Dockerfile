@@ -30,6 +30,7 @@ COPY mapping /app/mapping
 COPY log_utils.py /app/
 COPY main.py /app/
 COPY metrics_2_usage_convertor.py /app/
+COPY version /app/
 
 # Run the command one time
 CMD ["python3", "main.py"]

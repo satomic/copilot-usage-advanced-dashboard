@@ -31,6 +31,12 @@
         "total_active_users" : {
           "type" : "long"
         },
+        "total_chat_copy_events" : {
+          "type" : "long"
+        },
+        "total_chat_insertion_events" : {
+          "type" : "long"
+        },
         "total_chat_acceptances" : {
           "type" : "long"
         },
