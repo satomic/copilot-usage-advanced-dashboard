@@ -40,6 +40,7 @@ class Indexes:
     index_seat_assignments = os.getenv('INDEX_SEAT_ASSIGNMENTS', 'copilot_seat_assignments')
     index_name_total = os.getenv('INDEX_NAME_TOTAL', 'copilot_usage_total')
     index_name_breakdown = os.getenv('INDEX_NAME_BREAKDOWN', 'copilot_usage_breakdown')
+    index_name_breakdown_chat = os.getenv('INDEX_NAME_BREAKDOWN_CHAT', 'copilot_usage_breakdown_chat')
 
 
 
@@ -487,7 +488,7 @@ class DataSplitter:
 
                 breakdown_entry_with_day['unique_hash'] = generate_unique_hash(
                     breakdown_entry_with_day, 
-                    key_properties=['organization_slug', 'team_slug', 'day', 'language', 'editor']
+                    key_properties=['organization_slug', 'team_slug', 'day', 'language', 'editor', 'model']
                 )
 
                 # If the denominator value is 0, it is corrected to a uniform value
@@ -496,6 +497,27 @@ class DataSplitter:
 
                 breakdown_list.append(breakdown_entry_with_day)
         return breakdown_list
+
+    def get_breakdown_chat_list(self):
+        breakdown_chat_list = []
+        logger.info(f"Generating breakdown chat list from data")
+        for entry in self.data:
+            day = entry.get('day')
+            for breakdown_chat_entry in entry.get('breakdown_chat', []):
+                breakdown_chat_entry_with_day = breakdown_chat_entry.copy()
+                breakdown_chat_entry_with_day['day'] = day
+                breakdown_chat_entry_with_day = breakdown_chat_entry_with_day | self.additional_properties
+
+                breakdown_chat_entry_with_day['unique_hash'] = generate_unique_hash(
+                    breakdown_chat_entry_with_day,
+                    key_properties=['organization_slug', 'team_slug', 'day', 'editor', 'model']
+                )
+
+                # If the denominator value is 0, it is corrected to a uniform value
+                breakdown_chat_entry_with_day['chat_turns'] = self.correction_for_0 if breakdown_chat_entry_with_day['chat_turns'] == 0 else breakdown_chat_entry_with_day['chat_turns']
+
+                breakdown_chat_list.append(breakdown_chat_entry_with_day)
+        return breakdown_chat_list
 
 
 
@@ -592,17 +614,27 @@ def main(organization_slug):
             'position_in_tree': position_in_tree
         })
 
+        # get total_list, breakdown_list, breakdown_chat_list from data_splitter
+        # and save to json file
         total_list = data_splitter.get_total_list()
         dict_save_to_json_file(total_list, f'{team_slug}_total_list')
+        
         breakdown_list = data_splitter.get_breakdown_list()
         dict_save_to_json_file(breakdown_list, f'{team_slug}_breakdown_list')
 
-        
+        breakdown_chat_list = data_splitter.get_breakdown_chat_list()
+        dict_save_to_json_file(breakdown_chat_list, f'{team_slug}_breakdown_chat_list')
+
+        # Write to ES
         for total_data in total_list:
             es_manager.write_to_es(Indexes.index_name_total, total_data)
         
         for breakdown_data in breakdown_list:
             es_manager.write_to_es(Indexes.index_name_breakdown, breakdown_data)
+
+        for breakdown_chat_data in breakdown_chat_list:
+            es_manager.write_to_es(Indexes.index_name_breakdown_chat, breakdown_chat_data)
+        
         logger.info(f"Data processing completed for team: {team_slug}")
 
 

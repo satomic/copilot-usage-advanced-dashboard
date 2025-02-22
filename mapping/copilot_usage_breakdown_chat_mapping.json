@@ -1,23 +1,26 @@
 {
-  "mappings" : {
-    "properties" : {
-      "acceptances_count" : {
-        "type" : "long"
+  "mappings": {
+    "properties": {
+      "editor": {
+        "type": "keyword"
       },
-      "active_users" : {
-        "type" : "long"
+      "model": {
+        "type": "keyword"
       },
-      "day" : {
-        "type" : "date"
+      "chat_turns": {
+        "type": "long"
       },
-      "editor" : {
-        "type" : "keyword"
+      "chat_copy_events": {
+        "type": "long"
       },
-      "model" : {
-        "type" : "keyword"
+      "chat_insertion_events": {
+        "type": "long"
       },
-      "language" : {
-        "type" : "keyword"
+      "chat_acceptances": {
+        "type": "long"
+      },
+      "active_users": {
+        "type": "long"
       },
       "last_updated_at" : {
         "type" : "text",
@@ -28,17 +31,11 @@
           }
         }
       },
-      "lines_accepted" : {
-        "type" : "long"
-      },
-      "lines_suggested" : {
-        "type" : "long"
+      "day" : {
+        "type" : "date"
       },
       "organization_slug" : {
         "type" : "keyword"
-      },
-      "suggestions_count" : {
-        "type" : "long"
       },
       "team_slug" : {
         "type" : "keyword"
@@ -52,4 +49,3 @@
     }
   }
 }
-

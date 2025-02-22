@@ -52,16 +52,44 @@ def convert_day(metrics_day):
     total_chat_acceptances = 0
     total_chat_turns = 0
     total_active_chat_users = 0
+    total_chat_copy_events = 0
+    total_chat_insertion_events = 0
+
+    breakdown_chat_dict = {}
 
     if chat:
         total_active_chat_users = chat.get("total_engaged_users", 0)
         for editor in chat.get("editors", []):
+            editor_name = editor.get("name", "unknown")
             for model in editor.get("models", []):
+                model_name = model.get("name", "unknown")
+                key = (editor_name, model_name)
+                if key not in breakdown_chat_dict:
+                    breakdown_chat_dict[key] = {
+                        "editor": editor_name,
+                        "model": model_name,
+                        "chat_turns": 0,
+                        "chat_copy_events": 0,
+                        "chat_insertion_events": 0,
+                        "chat_acceptances": 0,
+                        "active_users": model.get("total_engaged_users", 0)
+                    }
+                total_chat_copy_events += model.get("total_chat_copy_events", 0)
+                total_chat_insertion_events += model.get("total_chat_insertion_events", 0)
                 total_chat_acceptances += (
                     model.get("total_chat_insertion_events", 0) +
                     model.get("total_chat_copy_events", 0)
                 )
                 total_chat_turns += model.get("total_chats", 0)
+                breakdown_chat_dict[key]["chat_turns"] += model.get("total_chats", 0)
+                breakdown_chat_dict[key]["chat_copy_events"] += model.get("total_chat_copy_events", 0)
+                breakdown_chat_dict[key]["chat_insertion_events"] += model.get("total_chat_insertion_events", 0)
+                breakdown_chat_dict[key]["chat_acceptances"] += (
+                    model.get("total_chat_insertion_events", 0) +
+                    model.get("total_chat_copy_events", 0)
+                )
+
+    breakdown_chat_list = list(breakdown_chat_dict.values())
 
     usage = {
         "day": day,
@@ -73,7 +101,10 @@ def convert_day(metrics_day):
         "total_chat_acceptances": total_chat_acceptances,
         "total_chat_turns": total_chat_turns,
         "total_active_chat_users": total_active_chat_users,
-        "breakdown": breakdown_list
+        "total_chat_copy_events": total_chat_copy_events,
+        "total_chat_insertion_events": total_chat_insertion_events,
+        "breakdown": breakdown_list,
+        "breakdown_chat": breakdown_chat_list
     }
     return usage
 
@@ -85,7 +116,7 @@ def main():
     # if len(sys.argv) < 3:
     #     print("Usage: python conversion.py input.json output.json")
     #     sys.exit(1)
-    input_file = 'logs/2025-02-08/nekoaru_all_teams_copilot_usage_2025-02-08.json'  # sys.argv[1]
+    input_file = 'logs/2025-02-22/nekoaru_level1-team1_copilot_metrics_2025-02-22.json'  # sys.argv[1]
     output_file = 'tmp/output.json'  # sys.argv[2]
 
     with open(input_file, "r", encoding="utf-8") as f:
