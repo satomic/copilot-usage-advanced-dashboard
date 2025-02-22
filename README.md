@@ -15,7 +15,7 @@
 |1.1|Add new templates|20241221|
 |1.2|Support Copilot Standalone, thanks [sombaner](https://github.com/sombaner)'s great feedback |20241224|
 |1.3|Compatible with metrics API|20250208|
-
+|1.4|1. [Distinguish between insert and copy events of chat](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/8)<br>2. [Add model filter variables](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/6)<br>3. Fixed some bugs, for upgrades to older versions before 20250220, please refer to [Old version (`<=20250220`) upgrade steps](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)|20250222|
 
 
 ## Table of contents
@@ -438,6 +438,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
    ```json
    {"acknowledged":true,"shards_acknowledged":true,"index":"copilot_usage_total"}
    {"acknowledged":true,"shards_acknowledged":true,"index":"copilot_usage_breakdown"}
+   {"acknowledged":true,"shards_acknowledged":true,"index":"copilot_usage_breakdown_chat"}
    {"acknowledged":true,"shards_acknowledged":true,"index":"copilot_seat_info_settings"}
    {"acknowledged":true,"shards_acknowledged":true,"index":"copilot_seat_assignments"}
    ```
@@ -447,11 +448,12 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
    ```
    The following content is obtained, indicating ok
    ```markdown
-   health status index                      uuid                   pri rep docs.count docs.deleted store.size pri.store.size dataset.size
-   yellow open   copilot_usage_total        XrOEfAngTS60VsuUz3Lbrw   1   1          0            0       227b           227b         227b
-   yellow open   copilot_seat_info_settings WtOBdBNUQRqua7wi7VANeQ   1   1          0            0       227b           227b         227b
-   yellow open   copilot_seat_assignments   lK5t4SwASZizPQ_W4NX4KQ   1   1          0            0       227b           227b         227b
-   yellow open   copilot_usage_breakdown    xE6tkg5GQEOP-EP8pwAkYg   1   1          0            0       227b           227b         227b
+   health status index                        uuid                   pri rep docs.count docs.deleted store.size pri.store.size dataset.size
+   yellow open   copilot_usage_total          XrOEfAngTS60VsuUz3Lbrw   1   1          0            0       227b           227b         227b
+   yellow open   copilot_seat_info_settings   WtOBdBNUQRqua7wi7VANeQ   1   1          0            0       227b           227b         227b
+   yellow open   copilot_seat_assignments     lK5t4SwASZizPQ_W4NX4KQ   1   1          0            0       227b           227b         227b
+   yellow open   copilot_usage_breakdown      xE6tkg5GQEOP-EP8pwAkYg   1   1          0            0       227b           227b         227b
+   yellow open   copilot_usage_breakdown_chat 6R_1cdlIQQOCv4BoHPqXCw   1   1          0            0       227b           227b         227b
 
    ```
 
