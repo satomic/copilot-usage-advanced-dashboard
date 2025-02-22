@@ -454,6 +454,7 @@ class DataSplitter:
         for entry in self.data:
             total_data = entry.copy()
             total_data.pop('breakdown', None)
+            total_data.pop('breakdown_chat', None)
             total_data = total_data | self.additional_properties
             total_data['unique_hash'] = generate_unique_hash(
                 total_data, 
