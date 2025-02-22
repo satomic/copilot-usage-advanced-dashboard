@@ -212,8 +212,13 @@ class GitHubOrganizationManager:
             if team_slug != 'all':
                 urls = { team_slug: (position_in_tree, f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team_slug}/copilot/{usage_or_metrics}") }
             else:
-                urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team['slug']}/copilot/{usage_or_metrics}") for team in self.teams }
-        
+                if self.teams:
+                    logger.info(f"Fetching Copilot usages for all teams, team count: {len(self.teams)}")
+                    urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team['slug']}/copilot/{usage_or_metrics}") for team in self.teams }
+                else:
+                    logger.info(f"No teams found for {self.slug_type}: {self.organization_slug}, fetching {self.slug_type} usage. mock team slug: no-team. strongly recommend to create teams for the {self.slug_type} to get more accurate data.")
+                    urls = { 'no-team': ('root_team', f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/{usage_or_metrics}")}
+
         datas = {}
         logger.info(f"Fetching Copilot usages for {self.slug_type}: {self.organization_slug}, team: {team_slug}")
         for _team_slug, position_in_tree_and_url in urls.items():
