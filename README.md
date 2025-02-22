@@ -15,7 +15,7 @@
 |1.1|Add new templates|20241221|
 |1.2|Support Copilot Standalone, thanks [sombaner](https://github.com/sombaner)'s great feedback |20241224|
 |1.3|Compatible with metrics API|20250208|
-|1.4|1. [Distinguish between insert and copy events of chat](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/8)<br>2. [Add model filter variables](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/6)<br>3. Fixed some bugs, for upgrades to older versions before 20250220, please refer to [Old version (`<=20250220`) upgrade steps](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)|20250222|
+|1.4|1. [Distinguish between insert and copy events of chat](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/8)<br>2. [Add model filter variables](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/6)<br>3. Fixed some bugs, for upgrades to older versions before `20250220`, please refer to [Old version (`<=20250220`) upgrade steps](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)|20250222|
 
 
 ## Table of contents
@@ -121,7 +121,7 @@ Supports four filtering varibales, namely
 
 The choice of variables is dynamically associated with the data display
 
-![](image/image_5IjYRz7UJC.png)
+![](image/image_filters.png)
 
 # Features
 
@@ -183,7 +183,7 @@ The choice of variables is dynamically associated with the data display
 - Total Acceptances | Total Turns Count = `total_chat_acceptances` | `total_chat_turns`
 - Total Active Copilot Chat Users = `total_active_chat_users`
 
-![](image/image_MzSdsbHdmw.png)
+![](image/image_chat.png)
 
 ### 6. Seat Analysis
 
