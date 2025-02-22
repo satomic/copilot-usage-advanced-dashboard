@@ -218,6 +218,7 @@ class GitHubOrganizationManager:
         for _team_slug, position_in_tree_and_url in urls.items():
             position_in_tree, url = position_in_tree_and_url
             data = github_api_request_handler(url, error_return_value={})
+            dict_save_to_json_file(data, f'{self.organization_slug}_{_team_slug}_copilot_metrics', save_to_json=save_to_json)
             data = convert_metrics_to_usage(data)
             dict_save_to_json_file(data, f'{self.organization_slug}_{_team_slug}_copilot_usage', save_to_json=save_to_json)
             datas[_team_slug] = {
