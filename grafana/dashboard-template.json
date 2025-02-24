@@ -3005,7 +3005,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_chat_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -3036,7 +3036,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_chat_name",
                     "refId": "B",
                     "timeField": "day"
                 },
@@ -3178,7 +3178,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_chat_name",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -3206,7 +3206,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_chat_name",
                     "refId": "B",
                     "timeField": "day"
                 }
@@ -3294,7 +3294,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_chat_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -3381,7 +3381,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_chat_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -3586,7 +3586,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_chat_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -3670,7 +3670,7 @@
                             "type": "sum"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_name",
+                    "query": "organization_slug: $organization_name AND team_slug: $team_name AND editor: $editor_name AND model: $model_chat_name",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -5527,18 +5527,36 @@
             },
             {
                 "current": {
-                    "text": [
-                        "default"
-                    ],
-                    "value": [
-                        "default"
-                    ]
+                    "text": "All",
+                    "value": "$__all"
+                },
+                "datasource": {
+                    "type": "elasticsearch",
+                    "uid": "elasticsearch-breakdown-uid"
                 },
                 "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
                 "includeAll": true,
                 "label": "Model",
-                "multi": true,
                 "name": "model_name",
+                "options": [],
+                "query": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
+                "refresh": 1,
+                "regex": "",
+                "type": "query"
+            },
+            {
+                "current": {
+                    "text": "All",
+                    "value": "$__all"
+                },
+                "datasource": {
+                    "type": "elasticsearch",
+                    "uid": "elasticsearch-breakdown-chat-uid"
+                },
+                "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
+                "includeAll": true,
+                "label": "Chat Model",
+                "name": "model_chat_name",
                 "options": [],
                 "query": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
                 "refresh": 1,
@@ -5548,13 +5566,13 @@
         ]
     },
     "time": {
-        "from": "now-90d",
+        "from": "now-30d",
         "to": "now"
     },
     "timepicker": {},
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "be7hpbvvhst8gc",
-    "version": 61,
+    "version": 64,
     "weekStart": ""
 }
