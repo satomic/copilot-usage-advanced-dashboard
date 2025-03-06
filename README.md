@@ -374,7 +374,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
    ```
 2. Grant read and write permissions.
    ```bash
-   chown -R a+rw /srv/elasticsearch/
+   chmod -R a+rw /srv/elasticsearch/
    ```
 3. Create the `elasticsearch.yml` configuration file in the `/srv/elasticsearch/config/`directory:
    ```bash
