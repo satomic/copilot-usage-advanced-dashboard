@@ -374,7 +374,7 @@ class GitHubOrganizationManager:
                 seat.pop('assignee', None)
 
                 # assigning_team sub dict
-                seat['assignee_team_slug'] = seat.get('assigning_team', {}).get('slug')
+                seat['assignee_team_slug'] = seat.get('assigning_team', {}).get('slug', 'no-team')
                 seat['assignee_team_html_url'] = seat.get('assigning_team', {}).get('html_url')
                 seat.pop('assigning_team', None)
                 
