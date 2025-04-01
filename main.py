@@ -382,15 +382,19 @@ class GitHubOrganizationManager:
                 seat['day'] = current_time()[:10]
                 seat['unique_hash'] = generate_unique_hash(
                     seat, 
-                    key_properties=['organization_slug', 'assignee_login']
+                    key_properties=['organization_slug', 'assignee_login', 'day']
                 )
                 
                 last_activity_at = seat.get('last_activity_at')
                 if last_activity_at:
                     last_activity_date = datetime.strptime(last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
                     days_since_last_activity = (datetime.now(last_activity_date.tzinfo) - last_activity_date).days
+                    last_activity_day = last_activity_at[:10]
+                    is_active_yesterday = 1 if last_activity_day == (datetime.strptime(seat['day'], '%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d') else 0
+                    seat['is_active_yesterday'] = is_active_yesterday
                 else:
                     days_since_last_activity = -1
+                    seat['is_active_yesterday'] = 0
                 seat['days_since_last_activity'] = days_since_last_activity
 
                 datas.append(seat)
