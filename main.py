@@ -8,6 +8,16 @@ from log_utils import *
 import time
 from metrics_2_usage_convertor import convert_metrics_to_usage
 import traceback
+from tzlocal import get_localzone
+
+
+def get_utc_offset():
+    local_tz = get_localzone()
+    offset_sec = local_tz.utcoffset(datetime.now()).total_seconds()
+    offset_hours = int(offset_sec // 3600)
+    offset_minutes = int((offset_sec % 3600) // 60)
+    offset_str = f"{offset_hours:+03}:{abs(offset_minutes):02}"
+    return offset_str
 
 
 class Paras:
@@ -204,6 +214,7 @@ class GitHubOrganizationManager:
         self.api_type = 'enterprises' if is_standalone else 'orgs'
         self.organization_slug = organization_slug
         self.teams = self._fetch_all_teams(save_to_json=save_to_json)
+        self.utc_offset = get_utc_offset()
         logger.info(f"Initialized GitHubOrganizationManager for {self.slug_type}: {organization_slug}")
 
     def get_copilot_usages(self, team_slug='all', save_to_json=True, position_in_tree='leaf_team', usage_or_metrics='metrics'):
@@ -379,7 +390,7 @@ class GitHubOrganizationManager:
                 seat.pop('assigning_team', None)
                 
                 seat['organization_slug'] = self.organization_slug
-                seat['day'] = seat['updated_at'][:10] #current_time()[:10] 2025-04-02T08:00:00+08:00
+                seat['day'] = current_time()[:10] # 2025-04-02T08:00:00+08:00 seat['updated_at'][:10]
                 seat['unique_hash'] = generate_unique_hash(
                     seat, 
                     key_properties=['organization_slug', 'assignee_login', 'day']
@@ -389,8 +400,10 @@ class GitHubOrganizationManager:
                 if last_activity_at:
                     last_activity_date = datetime.strptime(last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
                     days_since_last_activity = (datetime.now(last_activity_date.tzinfo) - last_activity_date).days
-                    updated_at_date = datetime.strptime(seat['updated_at'], '%Y-%m-%dT%H:%M:%S%z') 
+                    # updated_at_date = datetime.strptime(seat['updated_at'], '%Y-%m-%dT%H:%M:%S%z') 
+                    updated_at = datetime.now().strftime('%Y-%m-%dT%H:%M:%S') + self.utc_offset
                     # Check if last activity was within the past 24 hours from updated_at
+                    updated_at_date = datetime.strptime(updated_at, '%Y-%m-%dT%H:%M:%S%z')
                     is_active_yesterday = 1 if (updated_at_date - last_activity_date).total_seconds() <= 24 * 3600 else 0
                     seat['is_active_yesterday'] = is_active_yesterday
                 else:
