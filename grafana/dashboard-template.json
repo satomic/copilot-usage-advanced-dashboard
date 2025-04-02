@@ -82,8 +82,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -214,8 +213,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -302,8 +300,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -390,8 +387,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -511,8 +507,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -797,8 +792,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -923,8 +917,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1084,8 +1077,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1246,8 +1238,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1575,8 +1566,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1818,8 +1808,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -4516,7 +4505,7 @@
                     "mode": "single",
                     "sort": "none"
                 },
-                "xField": "Time-Yesterday",
+                "xField": "Time",
                 "xTickLabelRotation": 0,
                 "xTickLabelSpacing": 100
             },
@@ -4544,7 +4533,7 @@
                     "hide": false,
                     "metrics": [
                         {
-                            "field": "is_active_yesterday",
+                            "field": "is_active_today",
                             "id": "1",
                             "settings": {
                                 "script": "_value * 1"
@@ -4559,43 +4548,6 @@
             ],
             "timeShift": "0h",
             "title": "Number of Active Users in Everyday",
-            "transformations": [
-                {
-                    "id": "calculateField",
-                    "options": {
-                        "alias": "Time-Yesterday",
-                        "binary": {
-                            "left": {
-                                "matcher": {
-                                    "id": "byName",
-                                    "options": "Time"
-                                }
-                            },
-                            "operator": "-",
-                            "right": {
-                                "fixed": "86400000"
-                            }
-                        },
-                        "mode": "binary",
-                        "reduce": {
-                            "reducer": "sum"
-                        }
-                    }
-                },
-                {
-                    "id": "convertFieldType",
-                    "options": {
-                        "conversions": [
-                            {
-                                "dateFormat": "YYYY-MM-DD",
-                                "destinationType": "time",
-                                "targetField": "Time-Yesterday"
-                            }
-                        ],
-                        "fields": {}
-                    }
-                }
-            ],
             "type": "barchart"
         },
         {
@@ -4677,7 +4629,7 @@
                             "type": "count"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND is_active_yesterday: [1 TO 1]",
+                    "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND is_active_today: [1 TO 1]",
                     "refId": "A",
                     "timeField": "day"
                 }
@@ -4872,7 +4824,7 @@
                             "type": "count"
                         }
                     ],
-                    "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND is_active_yesterday: [1 TO 1]",
+                    "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND is_active_today: [1 TO 1]",
                     "refId": "A",
                     "timeField": "day"
                 },
@@ -5058,7 +5010,7 @@
                                 "last_updated_at",
                                 "organization_slug",
                                 "updated_at",
-                                "is_active_yesterday"
+                                "is_active_today"
                             ]
                         }
                     }
@@ -5361,8 +5313,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -5529,8 +5480,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -5697,8 +5647,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -5865,8 +5814,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "green",
@@ -6125,7 +6073,9 @@
             },
             {
                 "current": {
-                    "text": "All",
+                    "text": [
+                        "All"
+                    ],
                     "value": [
                         "$__all"
                     ]
@@ -6177,6 +6127,6 @@
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "be7hpbvvhst8gc",
-    "version": 82,
+    "version": 84,
     "weekStart": ""
 }
