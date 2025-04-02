@@ -565,17 +565,20 @@ class ElasticsearchManager:
             
             # Check update condition if provided
             if update_condition:
-                skip_update = True
+                should_preserve_fields = True
                 for field, value in update_condition.items():
                     if field not in existing_doc['_source'] or existing_doc['_source'][field] != value:
-                        skip_update = False
+                        should_preserve_fields = False
                         break
                 
-                if skip_update:
-                    logger.info(f'[skipped] update to [{index_name}]: {doc_id} - condition matched')
-                    return
+                if should_preserve_fields:
+                    # Preserve fields listed in update_condition by copying their values from existing document
+                    for field in update_condition.keys():
+                        if field in existing_doc['_source']:
+                            data[field] = existing_doc['_source'][field]
+                    logger.info(f'[partial update] to [{index_name}]: {doc_id} - preserving fields: {list(update_condition.keys())}')
             
-            # Update document if no condition or condition not met
+            # Always update document, possibly with some preserved fields
             self.es.update(index=index_name, id=doc_id, doc=data)
             logger.info(f'[updated] to [{index_name}]: {data}')
         except NotFoundError:
