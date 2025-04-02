@@ -554,19 +554,33 @@ class ElasticsearchManager:
                 else:
                     logger.info(f"Index already exists: {index_name}")
 
-    def write_to_es(self, index_name, data):
+    def write_to_es(self, index_name, data, update_condition=None):
         last_updated_at = current_time()
         data['last_updated_at'] = last_updated_at
         doc_id = data.get(self.primary_key)
         logger.info(f"Writing data to Elasticsearch index: {index_name}")
         try:
-            self.es.get(index=index_name, id=doc_id)
+            # Get existing document
+            existing_doc = self.es.get(index=index_name, id=doc_id)
+            
+            # Check update condition if provided
+            if update_condition:
+                skip_update = True
+                for field, value in update_condition.items():
+                    if field not in existing_doc['_source'] or existing_doc['_source'][field] != value:
+                        skip_update = False
+                        break
+                
+                if skip_update:
+                    logger.info(f'[skipped] update to [{index_name}]: {doc_id} - condition matched')
+                    return
+            
+            # Update document if no condition or condition not met
             self.es.update(index=index_name, id=doc_id, doc=data)
             logger.info(f'[updated] to [{index_name}]: {data}')
         except NotFoundError:
             self.es.index(index=index_name, id=doc_id, document=data)
             logger.info(f'[created] to [{index_name}]: {data}') 
- 
 
 def main(organization_slug):
     logger.info(f"==========================================================================================================")
@@ -600,7 +614,9 @@ def main(organization_slug):
         logger.warning(f"No Copilot seat assignments found for {slug_type}: {organization_slug}")
     else:
         for seat_assignment in data_seat_assignments:
-            es_manager.write_to_es(Indexes.index_seat_assignments, seat_assignment)
+            es_manager.write_to_es(Indexes.index_seat_assignments, seat_assignment, update_condition={
+                'is_active_yesterday': 1
+            })
         logger.info(f"Data processing completed for {slug_type}: {organization_slug}")
 
     # Process usage data
