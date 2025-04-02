@@ -9,7 +9,6 @@ import time
 from metrics_2_usage_convertor import convert_metrics_to_usage
 import traceback
 
-
 class Paras:
 
     @staticmethod
@@ -22,7 +21,7 @@ class Paras:
 
     # ElasticSearch
     primary_key = os.getenv('PRIMARY_KEY', 'unique_hash')
-    elasticsearch_url = os.getenv('ELASTICSEARCH_URL', 'http://localhost:9200')
+    elasticsearch_url = os.getenv('ELASTICSEARCH_URL', 'http://$ELASTICSEARCH_URL')
     
     # Log path
     log_path = os.getenv('LOG_PATH', 'logs')
@@ -192,7 +191,7 @@ class GitHubEnterpriseManager:
             logger.info(f"Fetched {len(all_orgs)} organizations")
             return all_orgs
         else:
-            print(f'request failed, error code：{response.status_code}')
+            print(f'request failed, error code: {response.status_code}')
             logger.error(f"Request failed with status code: {response.status_code}")
             return {}
 
@@ -366,7 +365,7 @@ class GitHubOrganizationManager:
             for seat in seats:
                 # assignee sub dict
                 seat['assignee_login'] = seat.get('assignee', {}).get('login')
-                # if organization_slug is CopilotNext, then 把assignee_login中的每一个字母都往后移一位
+                # if organization_slug is CopilotNext, then assignee_login
                 if self.organization_slug == 'CopilotNext':
                     seat['assignee_login'] = ''.join([chr(ord(c) + 1) for c in seat['assignee_login']])
 
@@ -394,7 +393,7 @@ class GitHubOrganizationManager:
                 seat['days_since_last_activity'] = days_since_last_activity
 
                 datas.append(seat)
-            page += 1  # 获取下一页数据
+            page += 1
 
         dict_save_to_json_file(datas, f'{self.organization_slug}_seat_assignments', save_to_json=save_to_json)
         logger.info(f"Fetching seat assignments for {self.slug_type}: {self.organization_slug}")
@@ -419,7 +418,7 @@ class GitHubOrganizationManager:
             if not page_teams:
                 break
             teams.extend(page_teams)
-            page += 1  # 获取下一页数据
+            page += 1
         
         teams = self._add_fullpath_slug(teams)
         teams = assign_position_in_tree(teams)
@@ -532,7 +531,10 @@ class ElasticsearchManager:
     def __init__(self, primary_key=Paras.primary_key):
         self.primary_key = primary_key
         self.es = Elasticsearch(
-            Paras.elasticsearch_url
+            hosts = Paras.elasticsearch_url,
+            max_retries= 10,
+            retry_on_timeout= True,
+            request_timeout= 30,
         )
         self.check_and_create_indexes()
 
@@ -562,7 +564,6 @@ class ElasticsearchManager:
         except NotFoundError:
             self.es.index(index=index_name, id=doc_id, document=data)
             logger.info(f'[created] to [{index_name}]: {data}') 
- 
 
 def main(organization_slug):
     logger.info(f"==========================================================================================================")
@@ -643,22 +644,13 @@ def main(organization_slug):
         
         logger.info(f"Data processing completed for team: {team_slug}")
 
-
-
 if __name__ == '__main__':
-    
-    while True:
-        try:
-            # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting
-            organization_slugs = Paras.organization_slugs.split(',')
-            for organization_slug in organization_slugs:
-                main(organization_slug.strip())
-            logger.info(f"Sleeping for {Paras.execution_interval} hours before next execution...")
-            for _ in range(Paras.execution_interval * 3600 // 3600):
-                logger.info("Heartbeat: still running...")
-                time.sleep(3600)
-        except Exception as e:
-            logger.error(f"An error occurred: {traceback.format_exc(e)}")
-            time.sleep(5)
-        finally:
-            logger.info('-----------------Finished-----------------')
+    try:
+        # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting
+        organization_slugs = Paras.organization_slugs.split(',')
+        for organization_slug in organization_slugs:
+            main(organization_slug.strip())
+    except Exception as e:
+        logger.error(f"An error occurred: {traceback.format_exc(e)}")
+    finally:
+        logger.info('-----------------Finished-----------------')

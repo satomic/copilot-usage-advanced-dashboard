@@ -241,7 +241,7 @@ Everything described in this article is based on the all-in-one architecture. In
 
 ## Architecture diagram
 
-![](image/image_oZJ-KGOxa5.png)
+![](image/architecture.drawio.png)
 
 ## Technology stack
 
@@ -401,7 +401,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
    ```
 5. verify
    ```bash
-   curl http://localhost:9200
+   curl http://$ELASTICSEARCH_URL
    ```
    The following content is obtained, indicating ok
    ```bash
@@ -444,7 +444,7 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
    ```
 3. verify
    ```bash
-   curl -X GET http://localhost:9200/_cat/indices?v
+   curl -X GET http://$ELASTICSEARCH_URL/_cat/indices?v
    ```
    The following content is obtained, indicating ok
    ```markdown
@@ -586,7 +586,7 @@ docker run -itd \
 -e ORGANIZATION_SLUGS="<YOUR_ORGANIZATION_SLUGS>" \
 -e LOG_PATH="logs" \
 -e EXECUTION_INTERVAL=1 \
--e ELASTICSEARCH_URL="http://localhost:9200" \
+-e ELASTICSEARCH_URL="http://$ELASTICSEARCH_URL" \
 -v /srv/cpuad-updater-logs:/app/logs \
 satomic/cpuad-updater
 ```
@@ -656,3 +656,11 @@ At this point, return to the Grafana page and refresh. You should be able to see
 or
 
 ![](image/image_wjdhYnlwOZ.png)
+
+## Deployment
+
+`azd env set GITHUB_PAT ...`
+
+`azd env set GITHUB_ORGANIZATION_SLUGS ...`
+
+`azd up`

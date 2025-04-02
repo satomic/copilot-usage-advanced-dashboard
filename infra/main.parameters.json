@@ -1,0 +1,107 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "environmentName": {
+        "value": "${AZURE_ENV_NAME}"
+      },
+      "location": {
+        "value": "${AZURE_LOCATION}"
+      },
+      "updateGrafanaExists": {
+        "value": "${SERVICE_UPDATEGRAFANA_RESOURCE_EXISTS=false}"
+      },
+      "cpuAdUpdaterExists": {
+        "value": "${SERVICE_CPUADUPDATER_RESOURCE_EXISTS=false}"
+      },
+      "elasticSearchExists": {
+        "value": "${SERVICE_ELASTICSEARCH_RESOURCE_EXISTS=false}"
+      },
+      "grafanaExists": {
+        "value": "${SERVICE_GRAFANA_RESOURCE_EXISTS=false}"
+      },
+      "updateGrafanaDefinition": {
+        "value": {
+          "cpu": "1.0",
+          "memory": "2.0Gi",
+          "triggerType": "Manual",
+          "settings": [
+            {
+              "name": "ELASTICSEARCH_URL",
+              "value": "http://elastic-search:80"
+            },
+            {
+              "name": "GRAFANA_URL",
+              "value": "http://grafana:80"
+            }
+          ]
+        }
+      },
+      "cpuAdUpdaterDefinition": {
+        "value": {
+          "cpu": "1.0",
+          "memory": "2.0Gi",
+          "triggerType": "Schedule",
+          "cronExpression": "0 */1 * * *",
+          "settings": [
+            {
+              "name": "LOG_PATH",
+              "value": "logs"
+            },
+            {
+              "name": "ELASTICSEARCH_URL",
+              "value": "http://elastic-search:80"
+            },
+            {
+              "name": "ORGANIZATION_SLUGS",
+              "value": "${GITHUB_ORGANIZATION_SLUGS}"
+            },
+            {
+              "name": "GITHUB_PAT",
+              "value": "${GITHUB_PAT}",
+              "secret": true
+            }
+          ]
+        }
+      },
+      "elasticSearchDefinition": {
+        "value": {
+          "cpu": "4.0",
+          "memory": "8.0Gi",
+          "settings": [
+            {
+              "name": "xpack.security.enabled",
+              "value": "false"
+            },
+            {
+              "name": "discovery.type",
+              "value": "single-node"
+            }
+          ]
+        }
+      },
+      "grafanaDefinition": {
+        "value": {
+          "cpu": "1.0",
+          "memory": "2.0Gi",
+          "settings": [
+            {
+              "name": "GF_LOG_LEVEL",
+              "value": "debug"
+            },
+            {
+              "name": "GF_SECURITY_ADMIN_USER__FILE",
+              "value": "/run/secrets/admin_user"
+            },
+            {
+              "name": "GF_SECURITY_ADMIN_PASSWORD__FILE",
+              "value": "/run/secrets/admin_password"
+            }
+          ]
+        }
+      },
+      "principalId": {
+        "value": "${AZURE_PRINCIPAL_ID}"
+      }
+    }
+}

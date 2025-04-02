@@ -1,0 +1,7 @@
+network.host: 0.0.0.0
+node.name: single-node
+cluster.name: es-docker-cluster
+path.data: /usr/share/elasticsearch/data
+path.logs: /usr/share/elasticsearch/logs
+discovery.type: single-node
+bootstrap.memory_lock: true

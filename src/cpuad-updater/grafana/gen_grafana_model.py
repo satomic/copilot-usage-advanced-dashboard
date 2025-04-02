@@ -25,7 +25,7 @@ args = parser.parse_args()
 
 template_path = args.template
 
-grafana_url = os.getenv('GRAFANA_URL', 'http://localhost:3000/')
+grafana_url = os.getenv('GRAFANA_URL', 'http://$GRAFANA_URL/')
 grafana_token = os.getenv('GRAFANA_TOKEN')
 
 if not grafana_token:
@@ -49,7 +49,7 @@ response = requests.get(grafana_url.rstrip('/')+'/api/datasources', headers=head
 #     "typeName": "Elasticsearch",
 #     "typeLogoUrl": "public/app/plugins/datasource/elasticsearch/img/elasticsearch.svg",
 #     "access": "proxy",
-#     "url": "http://localhost:9200",
+#     "url": "http://$ELASTICSEARCH_URL",
 #     "user": "",
 #     "database": "",
 #     "basicAuth": false,

@@ -1,0 +1,28 @@
+name: copilot-usage-advanced-dashboard
+services:
+    elastic-search:
+        project: src/elasticsearch
+        host: containerapp
+        language: python
+        docker:
+            path: Dockerfile
+            remoteBuild: true
+    grafana:
+        project: src/grafana
+        host: containerapp
+        language: python
+        docker:
+            path: Dockerfile
+            remoteBuild: true
+hooks:
+    postdeploy:
+        windows:
+            shell: pwsh
+            run: ./scripts/Deploy-AzureContainerAppJob-UpdateGrafana.ps1; ./scripts/Deploy-AzureContainerAppJob-CpuAdUpdater.ps1
+            continueOnError: false
+            interactive: true
+        posix:
+            shell: sh
+            run: ./scripts/deploy-azure-container-app-job-update-grafana.sh; ./scripts/deploy-azure-container-app-job-cpuad-updater.sh
+            continueOnError: false
+            interactive: true
