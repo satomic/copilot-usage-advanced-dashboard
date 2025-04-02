@@ -400,15 +400,13 @@ class GitHubOrganizationManager:
                 if last_activity_at:
                     last_activity_date = datetime.strptime(last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
                     days_since_last_activity = (datetime.now(last_activity_date.tzinfo) - last_activity_date).days
-                    # updated_at_date = datetime.strptime(seat['updated_at'], '%Y-%m-%dT%H:%M:%S%z') 
-                    updated_at = datetime.now().strftime('%Y-%m-%dT%H:%M:%S') + self.utc_offset
-                    # Check if last activity was within the past 24 hours from updated_at
-                    updated_at_date = datetime.strptime(updated_at, '%Y-%m-%dT%H:%M:%S%z')
-                    is_active_yesterday = 1 if (updated_at_date - last_activity_date).total_seconds() <= 24 * 3600 else 0
-                    seat['is_active_yesterday'] = is_active_yesterday
+                    # Create updated_at_date with the same timezone as last_activity_date
+                    updated_at_date = datetime.now(last_activity_date.tzinfo)
+                    is_active_today = 1 if (last_activity_date.date() == updated_at_date.date()) else 0
+                    seat['is_active_today'] = is_active_today
                 else:
                     days_since_last_activity = -1
-                    seat['is_active_yesterday'] = 0
+                    seat['is_active_today'] = 0
                 seat['days_since_last_activity'] = days_since_last_activity
                 datas.append(seat)
             page += 1  # 获取下一页数据
@@ -631,7 +629,7 @@ def main(organization_slug):
     else:
         for seat_assignment in data_seat_assignments:
             es_manager.write_to_es(Indexes.index_seat_assignments, seat_assignment, update_condition={
-                'is_active_yesterday': 1
+                'is_active_today': 1
             })
         logger.info(f"Data processing completed for {slug_type}: {organization_slug}")
 
