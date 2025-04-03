@@ -1566,7 +1566,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1808,7 +1809,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -4861,7 +4863,7 @@
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / $B",
+                    "expression": "$A / $B ",
                     "hide": false,
                     "refId": "C",
                     "type": "math"
@@ -4875,7 +4877,7 @@
                         "includeTimeField": false,
                         "mode": "reduceFields",
                         "reducers": [
-                            "sum"
+                            "lastNotNull"
                         ]
                     }
                 }
@@ -5076,8 +5078,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -5195,8 +5196,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -6073,9 +6073,7 @@
             },
             {
                 "current": {
-                    "text": [
-                        "All"
-                    ],
+                    "text": "All",
                     "value": [
                         "$__all"
                     ]
@@ -6127,6 +6125,6 @@
     "timezone": "",
     "title": "Copilot Usage Advanced Dashboard",
     "uid": "be7hpbvvhst8gc",
-    "version": 84,
+    "version": 85,
     "weekStart": ""
 }
