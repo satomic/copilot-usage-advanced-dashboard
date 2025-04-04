@@ -20,6 +20,9 @@
       "grafanaExists": {
         "value": "${SERVICE_GRAFANA_RESOURCE_EXISTS=false}"
       },
+      "githubPat": {
+        "value": "${GITHUB_PAT}"
+      },
       "updateGrafanaDefinition": {
         "value": {
           "cpu": "1.0",
@@ -68,15 +71,7 @@
         "value": {
           "cpu": "4.0",
           "memory": "8.0Gi",
-          "settings": [
-            {
-              "name": "xpack.security.enabled",
-              "value": "false"
-            },
-            {
-              "name": "discovery.type",
-              "value": "single-node"
-            }
+          "settings": [ 
           ]
         }
       },
@@ -96,6 +91,10 @@
             {
               "name": "GF_SECURITY_ADMIN_PASSWORD__FILE",
               "value": "/run/secrets/admin_password"
+            },
+            {
+              "name": "GF_SERVER_HTTP_PORT",
+              "value": "80"
             }
           ]
         }

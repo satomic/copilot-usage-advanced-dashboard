@@ -29,6 +29,9 @@ param grafanaUsername string
 @secure()
 param grafanaPassword string
 
+@secure()
+param githubPat string
+
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = uniqueString(subscription().id, resourceGroup().id, location)
 var elasticSearchFileShareName = 'elastic-search'
@@ -39,6 +42,7 @@ var grafanaUsernameSecretName = 'grafana-username'
 var grafanaUsernameSecretValue = grafanaUsername != '' ? grafanaUsername : uniqueString('grafanaUsername', subscription().id, resourceGroup().id, location, resourceToken)
 var grafanaPasswordSecretName = 'grafana-password'
 var grafanaPasswordSecretValue = grafanaPassword != '' ? grafanaPassword : uniqueString('grafanaPassword', subscription().id, resourceGroup().id, location, resourceToken)
+var githubPatSecretName = 'github-pat'
 
 module monitoring './modules/monitoring.bicep' = {
   name: 'monitoringDeployment'
@@ -87,6 +91,10 @@ module keyVault './modules/key-vault.bicep' = {
       {
         name: grafanaPasswordSecretName
         value: grafanaPasswordSecretValue
+      }
+      {
+        name: githubPatSecretName
+        value: githubPat
       }
     ]
   }
@@ -158,6 +166,19 @@ module cpuadUpdaterFetchLatestImage './modules/fetch-container-job-image.bicep' 
     name: 'cpuadUpdater'
   }
 }
+
+// var additionalCpuadUpdaterDefinition = {
+//   settings: union(
+//     [
+//       {
+//         name: githubPatSecretName
+//         value: grafanaUsernameSecretValue
+//         secret: true
+//       }
+//     ],
+//     cpuAdUpdaterDefinition.settings
+//   )
+// }
 
 module cpuadUpdater './modules/container-job.bicep' = {
   name: 'cpuadUpdaterDeployment'
@@ -248,6 +269,8 @@ module elasticSearchFetchLatestImage './modules/fetch-container-image.bicep' = {
   }
 }
 
+var elasticSearchPort = 9200
+
 module elasticSearch './modules/container-app.bicep' = {
   name: 'elasticSearchDeployment'
   params: {
@@ -259,7 +282,7 @@ module elasticSearch './modules/container-app.bicep' = {
     applicationInsightsConnectionString: monitoring.outputs.AZURE_RESOURCE_MONITORING_APP_INSIGHTS_CONNECTION_STRING
     definition: elasticSearchDefinition
     fetchLatestImage: cpuadUpdaterFetchLatestImage
-    ingressTargetPort: 9200
+    ingressTargetPort: elasticSearchPort
     userAssignedManagedIdentityResourceId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_ID
     userAssignedManagedIdentityClientId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_CLIENT_ID
     tags: tags
@@ -286,6 +309,38 @@ module elasticSearch './modules/container-app.bicep' = {
       }
     ]
     ingressExternal: false
+    // probes: [
+    //   {
+    //     type: 'Liveness'
+    //     httpGet: {
+    //       path: '/_cluster/health?wait_for_status=yellow&timeout=50s'
+    //       port: elasticSearchPort
+    //     }
+    //     initialDelaySeconds: 10
+    //     periodSeconds: 10
+    //     failureThreshold: 10
+    //   }
+    //   {
+    //     type: 'Readiness'        
+    //     httpGet: {
+    //       path: '/_cluster/health?wait_for_status=yellow&timeout=50s'
+    //       port: elasticSearchPort
+    //     }
+    //     initialDelaySeconds: 10
+    //     periodSeconds: 10
+    //     failureThreshold: 10
+    //   }
+    //   {        
+    //     type: 'Startup'
+    //     httpGet: {
+    //       path: '/_cluster/health?wait_for_status=yellow&timeout=50s'
+    //       port: elasticSearchPort
+    //     }
+    //     initialDelaySeconds: 10
+    //     periodSeconds: 10
+    //     failureThreshold: 10
+    //   }
+    // ]
   }
 }
 
@@ -317,6 +372,8 @@ var additionalGrafanaDefinition = {
   )
 }
 
+var grafanaPort = 80
+
 module grafana './modules/container-app.bicep' = {
   name: 'grafanaDeployment'
   params: {
@@ -328,7 +385,7 @@ module grafana './modules/container-app.bicep' = {
     applicationInsightsConnectionString: monitoring.outputs.AZURE_RESOURCE_MONITORING_APP_INSIGHTS_CONNECTION_STRING
     definition: additionalGrafanaDefinition
     fetchLatestImage: cpuadUpdaterFetchLatestImage
-    ingressTargetPort: 3000
+    ingressTargetPort: grafanaPort
     userAssignedManagedIdentityResourceId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_ID
     userAssignedManagedIdentityClientId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_CLIENT_ID
     tags: tags
@@ -349,6 +406,38 @@ module grafana './modules/container-app.bicep' = {
         mountOptions: 'dir_mode=0777,file_mode=0777,uid=1000,gid=1000,mfsymlinks,nobrl,cache=none'
       }
     ]
+    // probes: [
+    //   {
+    //     type: 'Liveness'
+    //     httpGet: {
+    //       path: '/api/health'
+    //       port: grafanaPort
+    //     }
+    //     initialDelaySeconds: 10
+    //     periodSeconds: 10
+    //     failureThreshold: 10
+    //   }
+    //   {
+    //     type: 'Readiness'        
+    //     httpGet: {
+    //       path: '/api/health'
+    //       port: grafanaPort
+    //     }
+    //     initialDelaySeconds: 10
+    //     periodSeconds: 10
+    //     failureThreshold: 10
+    //   }
+    //   {        
+    //     type: 'Startup'
+    //     httpGet: {
+    //       path: '/api/health'
+    //       port: grafanaPort
+    //     }
+    //     initialDelaySeconds: 10
+    //     periodSeconds: 10
+    //     failureThreshold: 10
+    //   }
+    // ]
   }
 }
 

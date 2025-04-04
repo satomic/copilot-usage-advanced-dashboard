@@ -79,6 +79,15 @@ echo "Container App Job update succeeded"
 # Success message
 echo "Deployed Azure Container App Job successfully"
 
+echo "Starting Azure Container App Job..."
+az containerapp job start --name "$jobName" --resource-group "$resourceGroup"
+if [ $? -ne 0 ]; then
+    echo "Container App Job start failed"
+    exit 1
+fi
+
+echo "Container App Job started successfully"
+
 # Azure Portal URL
 portalUrl="https://portal.azure.com/#@$AZURE_TENANT_ID/resource$AZURE_CONTAINER_APP_JOB_URL"
 echo "You can view the Container App Job in the Azure Portal: $portalUrl"
