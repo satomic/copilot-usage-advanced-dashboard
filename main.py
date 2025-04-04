@@ -390,7 +390,8 @@ class GitHubOrganizationManager:
                 seat.pop('assigning_team', None)
                 
                 seat['organization_slug'] = self.organization_slug
-                seat['day'] = current_time()[:10] # 2025-04-02T08:00:00+08:00 seat['updated_at'][:10]
+                # seat['day'] = current_time()[:10] # 2025-04-02T08:00:00+08:00 seat['updated_at'][:10]
+                seat['day'] = datetime.now(datetime.strptime(seat['updated_at'], '%Y-%m-%dT%H:%M:%S%z').tzinfo).strftime('%Y-%m-%d %H:%M:%S.%f')[:10]
                 seat['unique_hash'] = generate_unique_hash(
                     seat, 
                     key_properties=['organization_slug', 'assignee_login', 'day']
