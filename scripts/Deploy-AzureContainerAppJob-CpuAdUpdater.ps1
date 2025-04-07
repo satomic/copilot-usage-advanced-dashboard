@@ -77,6 +77,17 @@ Write-Host "Container App Job update succeeded" -ForegroundColor Green
 
 Write-Host "Deployed Azure Container App Job successfully" -ForegroundColor Green
 
+Write-Host "Starting Azure Container App Job..." -ForegroundColor Green
+
+az containerapp job start --name $jobName --resource-group $resourceGroup 
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Container App Job start failed" -ForegroundColor Red
+    exit $LASTEXITCODE
+}
+
+Write-Host "Container App Job started successfully" -ForegroundColor Green
+
 $portalUrl = "https://portal.azure.com/#@$($env:AZURE_TENANT_ID)/resource$($env:AZURE_CONTAINER_APP_JOB_URL)"
 
 Write-Host "You can view the Container App Job in the Azure Portal: " -ForegroundColor Green -NoNewline

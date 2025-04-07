@@ -34,6 +34,9 @@ param grafanaUsername string = ''
 @secure()
 param grafanaPassword string = ''
 
+@secure()
+param githubPat string
+
 // Tags that should be applied to all resources.
 // 
 // Note that 'azd-service-name' tags should be applied separately to service host resources.
@@ -67,6 +70,7 @@ module resources 'resources.bicep' = {
     grafanaDefinition: grafanaDefinition
     grafanaPassword: grafanaPassword
     grafanaUsername: grafanaUsername
+    githubPat: githubPat
   }
 }
 
@@ -80,3 +84,5 @@ output AZURE_RESOURCE_GRAFANA_ID string = resources.outputs.AZURE_RESOURCE_GRAFA
 output AZURE_RESOURCE_GROUP_NAME string = rg.name
 output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_NAME
 output AZD_IS_PROVISIONED bool = true
+output SERVICE_UPDATEGRAFANA_RESOURCE_EXISTS bool = resources.outputs.SERVICE_UPDATEGRAFANA_RESOURCE_EXISTS
+output SERVICE_CPUADUPDATER_RESOURCE_EXISTS bool = resources.outputs.SERVICE_CPUADUPDATER_RESOURCE_EXISTS
