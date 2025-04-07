@@ -163,7 +163,7 @@ module cpuadUpdaterFetchLatestImage './modules/fetch-container-job-image.bicep' 
   name: 'cpuadUpdaterFetchImageDeployment'
   params: {
     exists: cpuAdUpdaterExists
-    name: 'cpuadUpdater'
+    name: 'cpuad-updater'
   }
 }
 
@@ -449,3 +449,5 @@ output AZURE_RESOURCE_ELASTIC_SEARCH_ID string = elasticSearch.outputs.AZURE_RES
 output AZURE_RESOURCE_GRAFANA_ID string = grafana.outputs.AZURE_RESOURCE_CONTAINER_APP_ID
 output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = containerAppsEnvironment.outputs.AZURE_RESOURCE_CONTAINER_APPS_ENVIRONMENT_NAME
 output AZURE_CONTAINER_REGISTRY_LOGIN_SERVER string = containerRegistry.outputs.AZURE_CONTAINER_REGISTRY_LOGIN_SERVER
+output SERVICE_UPDATEGRAFANA_RESOURCE_EXISTS bool = true
+output SERVICE_CPUADUPDATER_RESOURCE_EXISTS bool = true

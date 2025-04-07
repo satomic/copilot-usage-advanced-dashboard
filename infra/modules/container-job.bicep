@@ -30,7 +30,7 @@ var srcEnv = map(filter(appSettingsArray, i => i.?secret == null), i => {
 })
 
 module job 'br/public:avm/res/app/job:0.6.0' = {
-  name: name
+  name: 'containerJobDeployment-${name}'
   params: {
     name: name
     triggerType: triggerType
@@ -50,7 +50,7 @@ module job 'br/public:avm/res/app/job:0.6.0' = {
     
     containers: [
       {
-        image: fetchLatestImage.outputs.?containers[?0].?image ?? 'mcr.microsoft.com/k8se/quickstart-jobs:latest'
+        image: fetchLatestImage.outputs.?containers.?value[?0].?image ?? 'mcr.microsoft.com/k8se/quickstart-jobs:latest'
         name: 'main'
         resources: {
           cpu: cpu
@@ -91,5 +91,9 @@ module job 'br/public:avm/res/app/job:0.6.0' = {
   }
 }
 
+output outputs object = fetchLatestImage.outputs
+output containers object = fetchLatestImage.outputs.?containers
+output index_zero object = fetchLatestImage.outputs.?containers.?value[?0]
+output image string = fetchLatestImage.outputs.?containers.?value[?0].?image
 output AZURE_RESOURCE_CONTAINER_APP_ID string = job.outputs.resourceId
 output AZURE_RESOURCE_CONTAINER_APP_NAME string = job.outputs.name
