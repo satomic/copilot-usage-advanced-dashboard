@@ -565,8 +565,8 @@ drwxr-xr-x 2 root root  4096 Dec 17 00:18 grafana
 
 Parameter description
 
-- `GITHUB_PAT`: 
-  - Your GitHub account needs to have Owner permissions for Organizations. 
+- `GITHUB_PAT`:
+  - Your GitHub account needs to have Owner permissions for Organizations.
   - [Create a personal access token (classic)](https://docs.github.com/en/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) of your account with the `manage_billing:copilot`, `read:enterprise`, `read:org` scope. Then please replace `<YOUR_GITHUB_PAT>` with the actual PAT.
   - If you encounter PAT permission error, please **Allow access via fine-grained personal access tokens** in Organization's **Settings** - **Personal access tokens**.
 - `ORGANIZATION_SLUGS`: The Slugs of all Organizations that you want to monitor, which can be one or multiple separated by `,` (English symbol). **If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`**. Please replace `<YOUR_ORGANIZATION_SLUGS>` with the actual value. For example, the following types of values are supported:
@@ -589,6 +589,13 @@ docker run -itd \
 -e ELASTICSEARCH_URL="http://localhost:9200" \
 -v /srv/cpuad-updater-logs:/app/logs \
 satomic/cpuad-updater
+```
+
+If your Elasticsearch instance requires authentication, pass include the `ELASTICSEARCH_USER` and `ELASTICSEARCH_PASS` environment variables.
+
+```bash
+-e ELASTICSEARCH_USER="elastic"
+-e ELASTICSEARCH_PASS="mypassword"
 ```
 
 ### Option 2. Run in source code mode
