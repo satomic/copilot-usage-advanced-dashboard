@@ -17,6 +17,7 @@
 |1.3|Compatible with metrics API|20250208|
 |1.4|1. [Distinguish between insert and copy events of chat](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/8)<br>2. [Add model filter variables](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/6)<br>3. [Compatible with organizations that do not have teams](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/9)<br>4. Fixed some bugs, for upgrades to older versions before `20250220`, please refer to [Old version (`<=20250220`) upgrade steps](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)|20250222|
 |1.5| Add daily usage history for each user, old version upgrade guide refer to [this issue](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)  | 20250404 |
+|1.6| refactor timezone handling in main.py & Docker run ENV paras |20250410|
 
 ## Table of contents
 
@@ -576,6 +577,8 @@ Parameter description
   - `myOrg1,standalone:myStandaloneSlug`
 - `LOG_PATH`: Log storage location, not recommended to modify. If modified, you need to modify the `-v` data volume mapping simultaneously.
 - `EXECUTION_INTERVAL`: Update interval, the default is to update the program every `1` hours.
+- `ELASTICSEARCH_URL`: The URL of your Elasticsearch, the default is `http://localhost:9200`, if you have modified the port, please modify it here.
+- `TZ`: Timezone, the default is `GMT`, if you want to change it to your local timezone, please refer to [tz database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For example, if you are in Toronto, please change it to `America/Toronto`.
 
 ```bash
 docker run -itd \
@@ -587,6 +590,7 @@ docker run -itd \
 -e LOG_PATH="logs" \
 -e EXECUTION_INTERVAL=1 \
 -e ELASTICSEARCH_URL="http://localhost:9200" \
+-e TZ="GMT" \  # change to your local timezone if needed
 -v /srv/cpuad-updater-logs:/app/logs \
 satomic/cpuad-updater
 ```

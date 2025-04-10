@@ -8,12 +8,16 @@ from log_utils import *
 import time
 from metrics_2_usage_convertor import convert_metrics_to_usage
 import traceback
-from tzlocal import get_localzone
-
+from zoneinfo import ZoneInfo
 
 def get_utc_offset():
-    local_tz = get_localzone()
-    offset_sec = local_tz.utcoffset(datetime.now()).total_seconds()
+    tz_name = os.environ.get("TZ", "GMT")
+    try:
+        local_tz = ZoneInfo(tz_name)
+    except Exception as e:
+        local_tz = ZoneInfo("GMT")
+    now = datetime.now(local_tz)
+    offset_sec = now.utcoffset().total_seconds()
     offset_hours = int(offset_sec // 3600)
     offset_minutes = int((offset_sec % 3600) // 60)
     offset_str = f"{offset_hours:+03}:{abs(offset_minutes):02}"
