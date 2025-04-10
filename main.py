@@ -37,7 +37,9 @@ class Paras:
     # ElasticSearch
     primary_key = os.getenv('PRIMARY_KEY', 'unique_hash')
     elasticsearch_url = os.getenv('ELASTICSEARCH_URL', 'http://localhost:9200')
-    
+    elasticsearch_user = os.getenv('ELASTICSEARCH_USER', None)
+    elasticsearch_pass = os.getenv('ELASTICSEARCH_PASS', None)
+
     # Log path
     log_path = os.getenv('LOG_PATH', 'logs')
 
@@ -158,7 +160,7 @@ class GitHubEnterpriseManager:
         logger.info(f"Initialized GitHubEnterpriseManager for enterprise: {enterprise_slug}")
 
     def _fetch_all_organizations(self, save_to_json=False):
-        
+
         # GraphQL query
         query = '''
         {
@@ -260,7 +262,7 @@ class GitHubOrganizationManager:
         data_seats = github_api_request_handler(url, error_return_value={})
         if not data_seats:
             return data_seats
-        
+
         data = {
             "seat_management_setting": "assign_selected",
             "public_code_suggestions": "allow",
@@ -283,11 +285,11 @@ class GitHubOrganizationManager:
                 start_of_yesterday = (datetime.now(created_date.tzinfo).replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1))
                 if created_date >= start_of_yesterday:
                     data['seat_added_this_cycle'] += 1
-            
+
             seat_pending_cancellation_date = data_seat.get('pending_cancellation_date')
             if seat_pending_cancellation_date:
                 data['seat_pending_cancellation'] += 1
-            
+
             seat_last_activity_at = data_seat.get('last_activity_at')
             if seat_last_activity_at:
                 last_activity_date = datetime.strptime(seat_last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
@@ -301,7 +303,7 @@ class GitHubOrganizationManager:
         data['organization_slug'] = self.organization_slug
         data['day'] = current_time()[:10]
         data['unique_hash'] = generate_unique_hash(
-            data, 
+            data,
             key_properties=['organization_slug', 'day']
         )
 
@@ -358,7 +360,7 @@ class GitHubOrganizationManager:
         data['organization_slug'] = self.organization_slug
         data['day'] = current_time()[:10]
         data['unique_hash'] = generate_unique_hash(
-            data, 
+            data,
             key_properties=['organization_slug', 'day']
         )
 
@@ -392,15 +394,15 @@ class GitHubOrganizationManager:
                 seat['assignee_team_slug'] = seat.get('assigning_team', {}).get('slug', 'no-team')
                 seat['assignee_team_html_url'] = seat.get('assigning_team', {}).get('html_url')
                 seat.pop('assigning_team', None)
-                
+
                 seat['organization_slug'] = self.organization_slug
                 # seat['day'] = current_time()[:10] # 2025-04-02T08:00:00+08:00 seat['updated_at'][:10]
                 seat['day'] = datetime.now(datetime.strptime(seat['updated_at'], '%Y-%m-%dT%H:%M:%S%z').tzinfo).strftime('%Y-%m-%d %H:%M:%S.%f')[:10]
                 seat['unique_hash'] = generate_unique_hash(
-                    seat, 
+                    seat,
                     key_properties=['organization_slug', 'assignee_login', 'day']
                 )
-                
+
                 last_activity_at = seat.get('last_activity_at') # 2025-04-02T00:22:35+08:00
                 if last_activity_at:
                     last_activity_date = datetime.strptime(last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
@@ -422,7 +424,7 @@ class GitHubOrganizationManager:
 
     def _fetch_all_teams(self, save_to_json=True):
         # Teams under the same org are essentially at the same level because the URL does not reflect the nested relationship, so team names cannot be duplicated
-        
+
         url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/teams"
         teams = []
         page = 1
@@ -440,7 +442,7 @@ class GitHubOrganizationManager:
                 break
             teams.extend(page_teams)
             page += 1  # 获取下一页数据
-        
+
         teams = self._add_fullpath_slug(teams)
         teams = assign_position_in_tree(teams)
         dict_save_to_json_file(teams, f'{self.organization_slug}_all_teams', save_to_json=save_to_json)
@@ -482,7 +484,7 @@ class DataSplitter:
             total_data.pop('breakdown_chat', None)
             total_data = total_data | self.additional_properties
             total_data['unique_hash'] = generate_unique_hash(
-                total_data, 
+                total_data,
                 key_properties=['organization_slug', 'team_slug', 'day']
             )
 
@@ -513,7 +515,7 @@ class DataSplitter:
                 #     breakdown_entry_with_day['language'] = 'json'
 
                 breakdown_entry_with_day['unique_hash'] = generate_unique_hash(
-                    breakdown_entry_with_day, 
+                    breakdown_entry_with_day,
                     key_properties=['organization_slug', 'team_slug', 'day', 'language', 'editor', 'model']
                 )
 
@@ -551,9 +553,15 @@ class ElasticsearchManager:
 
     def __init__(self, primary_key=Paras.primary_key):
         self.primary_key = primary_key
-        self.es = Elasticsearch(
-            Paras.elasticsearch_url
-        )
+        if Paras.elasticsearch_user is None or Paras.elasticsearch_pass is None:
+            logger.info(f"Using Elasticsearch without authentication")
+            self.es = Elasticsearch(Paras.elasticsearch_url)
+        else:
+            logger.info(f"Using basic authentication for Elasticsearch")
+            self.es = Elasticsearch(
+                Paras.elasticsearch_url,
+                basic_auth=(Paras.elasticsearch_user, Paras.elasticsearch_pass)
+            )
         self.check_and_create_indexes()
 
     # Check if all indexes in the indexes are present, and if they don't, they are created based on the files in the mapping folder
@@ -578,7 +586,7 @@ class ElasticsearchManager:
         try:
             # Get existing document
             existing_doc = self.es.get(index=index_name, id=doc_id)
-            
+
             # Check update condition if provided
             if update_condition:
                 should_preserve_fields = True
@@ -586,20 +594,20 @@ class ElasticsearchManager:
                     if field not in existing_doc['_source'] or existing_doc['_source'][field] != value:
                         should_preserve_fields = False
                         break
-                
+
                 if should_preserve_fields:
                     # Preserve fields listed in update_condition by copying their values from existing document
                     for field in update_condition.keys():
                         if field in existing_doc['_source']:
                             data[field] = existing_doc['_source'][field]
                     logger.info(f'[partial update] to [{index_name}]: {doc_id} - preserving fields: {list(update_condition.keys())}')
-            
+
             # Always update document, possibly with some preserved fields
             self.es.update(index=index_name, id=doc_id, doc=data)
             logger.info(f'[updated] to [{index_name}]: {data}')
         except NotFoundError:
             self.es.index(index=index_name, id=doc_id, document=data)
-            logger.info(f'[created] to [{index_name}]: {data}') 
+            logger.info(f'[created] to [{index_name}]: {data}')
 
 def main(organization_slug):
     logger.info(f"==========================================================================================================")
@@ -613,7 +621,7 @@ def main(organization_slug):
     organization_slug = organization_slug.replace('standalone:', '')
 
     logger.info(f"Starting data processing for {slug_type}: {organization_slug}")
-    github_org_manager = GitHubOrganizationManager(organization_slug, is_standalone=is_standalone) 
+    github_org_manager = GitHubOrganizationManager(organization_slug, is_standalone=is_standalone)
     es_manager = ElasticsearchManager()
 
 
@@ -663,7 +671,7 @@ def main(organization_slug):
         # and save to json file
         total_list = data_splitter.get_total_list()
         dict_save_to_json_file(total_list, f'{team_slug}_total_list')
-        
+
         breakdown_list = data_splitter.get_breakdown_list()
         dict_save_to_json_file(breakdown_list, f'{team_slug}_breakdown_list')
 
@@ -673,19 +681,19 @@ def main(organization_slug):
         # Write to ES
         for total_data in total_list:
             es_manager.write_to_es(Indexes.index_name_total, total_data)
-        
+
         for breakdown_data in breakdown_list:
             es_manager.write_to_es(Indexes.index_name_breakdown, breakdown_data)
 
         for breakdown_chat_data in breakdown_chat_list:
             es_manager.write_to_es(Indexes.index_name_breakdown_chat, breakdown_chat_data)
-        
+
         logger.info(f"Data processing completed for team: {team_slug}")
 
 
 
 if __name__ == '__main__':
-    
+
     while True:
         try:
             # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting

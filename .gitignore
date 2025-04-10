@@ -25,3 +25,6 @@ dashboard-model-*
 *bak*
 
 debug_*
+
+# .env files
+*.env
