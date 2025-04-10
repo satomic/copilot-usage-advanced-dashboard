@@ -1,3 +1,4 @@
 elasticsearch
 requests
 tzlocal
+tzdata
