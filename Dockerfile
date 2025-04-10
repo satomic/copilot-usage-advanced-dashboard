@@ -4,15 +4,17 @@ FROM ubuntu:22.04
 # Set environment variables
 # PYTHONDONTWRITEBYTECODE: Prevents Python from writing .pyc files to disk
 # PYTHONUNBUFFERED: Ensures that the Python output is sent straight to the terminal (unbuffered)
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# DEBIAN_FRONTEND: Set to noninteractive to avoid prompts during package installation
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Set the working directory
 WORKDIR /app
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
+    apt-get install -y python3 python3-pip tzdata && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
