@@ -23,6 +23,12 @@
       "githubPat": {
         "value": "${GITHUB_PAT}"
       },
+      "grafanaUsername": {
+        "value": "${GRAFANA_USERNAME}"
+      },
+      "grafanaPassword": {
+        "value": "${GRAFANA_PASSWORD}"
+      },
       "updateGrafanaDefinition": {
         "value": {
           "cpu": "1.0",

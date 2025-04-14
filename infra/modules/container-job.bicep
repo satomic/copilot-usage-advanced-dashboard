@@ -91,9 +91,5 @@ module job 'br/public:avm/res/app/job:0.6.0' = {
   }
 }
 
-output outputs object = fetchLatestImage.outputs
-output containers object = fetchLatestImage.outputs.?containers
-output index_zero object = fetchLatestImage.outputs.?containers.?value[?0]
-output image string = fetchLatestImage.outputs.?containers.?value[?0].?image
 output AZURE_RESOURCE_CONTAINER_APP_ID string = job.outputs.resourceId
 output AZURE_RESOURCE_CONTAINER_APP_NAME string = job.outputs.name

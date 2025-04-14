@@ -45,18 +45,21 @@ module storageAccount 'br/public:avm/res/storage/storage-account:0.18.2' = {
       shares: [
         {
           name: elasticSearchFileShareName
-          quota: 1024
+          shareQuota: 100
           enabledProtocols: 'NFS'
+          provisionedThroughputInMiBps: 230
         }
         {
           name: grafanaFileShareName
-          quota: 1024
+          shareQuota: 100
           enabledProtocols: 'NFS'
+          provisionedThroughputInMiBps: 230
         }
         {
           name: cpuadUpdaterFileShareName
-          quota: 1024
+          shareQuota: 100
           enabledProtocols: 'NFS'
+          provisionedThroughputInMiBps: 230
         }
       ]
     }
