@@ -15,13 +15,15 @@ param volumes array = []
 param workloadProfileName string
 param cronExpression string = ''
 param triggerType string
+param keyVaultName string // New parameter for Key Vault name
 
 import {secretType} from 'br/public:avm/res/app/job:0.6.0'
 
 var appSettingsArray = filter(array(definition.settings), i => i.name != '')
 var secrets = map(filter(appSettingsArray, i => i.?secret != null), i => {
   name: i.name
-  value: i.value
+  secretName: i.?keyVaultSecretName ? i.keyVaultSecretName : '' // Use Key Vault secret name
+  secretUri: i.?keyVaultSecretName != null ? 'https://${keyVaultName}${environment().suffixes.keyvaultDns}/secrets/${i.keyVaultSecretName}' : '' // Use Key Vault secret reference
   secretRef: i.?secretRef ?? take(replace(replace(toLower(i.name), '_', '-'), '.', '-'), 32)
 })
 var srcEnv = map(filter(appSettingsArray, i => i.?secret == null), i => {
@@ -44,8 +46,10 @@ module job 'br/public:avm/res/app/job:0.6.0' = {
     workloadProfileName: workloadProfileName
     secrets: union([],
       map(secrets, secret => {
-        name: secret.secretRef
-        value: secret.value
+        name: secret.secretName
+        value: null // Value is not needed when using Key Vault references
+        keyVaultUrl: secret.secretUri // Add Key Vault secret URI
+        identity: userAssignedManagedIdentityResourceId
       }))
     
     containers: [

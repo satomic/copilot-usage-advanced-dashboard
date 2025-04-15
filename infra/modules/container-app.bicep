@@ -18,12 +18,13 @@ param workloadProfileName string
 param scaleMinReplicas int = 1
 param scaleMaxReplicas int = 2
 param probes array = []
+param keyVaultName string // New parameter for Key Vault name
 
 var appSettingsArray = filter(array(definition.settings), i => i.name != '')
 var secrets = map(filter(appSettingsArray, i => i.?secret != null), i => {
   name: i.name
-  value: i.value
-  secretRef: i.?secretRef ?? take(replace(replace(toLower(i.name), '_', '-'), '.', '-'), 32)
+  secretName: i.?keyVaultSecretName ? i.keyVaultSecretName : '' // Use Key Vault secret name
+  secretUri: i.?keyVaultSecretName != null ? 'https://${keyVaultName}${environment().suffixes.keyvaultDns}/secrets/${i.keyVaultSecretName}' : '' // Use Key Vault secret reference
   path: i.?path
 })
 var srcEnv = map(filter(appSettingsArray, i => i.?secret == null), i => {
@@ -37,8 +38,8 @@ var additionalVolumeMounts = union(length(secrets) > 0 ? [
   }
 ] : [], volumeMounts)
 
-var secretVolumePaths = map(filter(secrets, i => i.secretRef != null && i.path != null), i => {
-  secretRef: i.secretRef
+var secretVolumePaths = map(filter(secrets, i => i.secretUri != null && i.path != null), i => {
+  secretRef: i.secretName
   path: i.path
 })
 
@@ -58,12 +59,13 @@ module containerApp 'br/public:avm/res/app/container-app:0.8.0' = {
     scaleMinReplicas: scaleMinReplicas
     scaleMaxReplicas: scaleMaxReplicas
     secrets: {
-      secureList:  union([
-      ],
-      map(secrets, secret => {
-        name: secret.secretRef
-        value: secret.value
-      }))
+      secureList: union([],
+        map(secrets, secret => {
+          name: secret.secretName // Use Key Vault secret name
+          value: null // Value is not needed when using Key Vault references
+          keyVaultUrl: secret.secretUri // Add Key Vault secret URI
+          identity: userAssignedManagedIdentityResourceId
+        }))
     }
     containers: [
       {
@@ -87,7 +89,7 @@ module containerApp 'br/public:avm/res/app/container-app:0.8.0' = {
         srcEnv,
         map(secrets, secret => {
             name: secret.name
-            secretRef: secret.secretRef
+            secretRef: secret.secretName
         }))
         probes: probes
       }

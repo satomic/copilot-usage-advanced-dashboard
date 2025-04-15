@@ -30,3 +30,4 @@ module vault 'br/public:avm/res/key-vault/vault:0.12.1' = {
 }
 
 output AZURE_RESOURCE_KEY_VAULT_ID string = vault.outputs.resourceId
+output AZURE_RESOURCE_KEY_VAULT_NAME string = vault.outputs.name

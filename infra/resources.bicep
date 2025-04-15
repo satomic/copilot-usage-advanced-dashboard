@@ -167,19 +167,6 @@ module cpuadUpdaterFetchLatestImage './modules/fetch-container-job-image.bicep' 
   }
 }
 
-// var additionalCpuadUpdaterDefinition = {
-//   settings: union(
-//     [
-//       {
-//         name: githubPatSecretName
-//         value: grafanaUsernameSecretValue
-//         secret: true
-//       }
-//     ],
-//     cpuAdUpdaterDefinition.settings
-//   )
-// }
-
 module cpuadUpdater './modules/container-job.bicep' = {
   name: 'cpuadUpdaterDeployment'
   params: {
@@ -212,6 +199,7 @@ module cpuadUpdater './modules/container-job.bicep' = {
     ]
     cronExpression: cpuAdUpdaterDefinition.cronExpression
     triggerType: cpuAdUpdaterDefinition.triggerType
+    keyVaultName: keyVault.outputs.AZURE_RESOURCE_KEY_VAULT_NAME
   }
 }
 
@@ -228,12 +216,12 @@ var additionalUpdateGrafanaDefinition = {
     [
       {
         name: 'GRAFANA_USERNAME'
-        value: grafanaUsernameSecretValue
+        keyVaultSecretName: grafanaUsernameSecretName
         secret: true
       }
       {
         name: 'GRAFANA_PASSWORD'
-        value: grafanaPasswordSecretValue
+        keyVaultSecretName: grafanaPasswordSecretName
         secret: true
       }
     ],
@@ -258,6 +246,7 @@ module updateGrafana './modules/container-job.bicep' = {
     cpu: updateGrafanaDefinition.cpu
     memory: updateGrafanaDefinition.memory
     triggerType: updateGrafanaDefinition.triggerType
+    keyVaultName: keyVault.outputs.AZURE_RESOURCE_KEY_VAULT_NAME
   }
 }
 
@@ -309,6 +298,7 @@ module elasticSearch './modules/container-app.bicep' = {
       }
     ]
     ingressExternal: false
+    keyVaultName: keyVault.outputs.AZURE_RESOURCE_KEY_VAULT_NAME
     // probes: [
     //   {
     //     type: 'Liveness'
@@ -357,13 +347,13 @@ var additionalGrafanaDefinition = {
     [
       {
         name: 'GRAFANA_USERNAME'
-        value: grafanaUsernameSecretValue
+        keyVaultSecretName: grafanaUsernameSecretName
         secret: true
         path: 'admin_user'
       }
       {
         name: 'GRAFANA_PASSWORD'
-        value: grafanaPasswordSecretValue
+        keyVaultSecretName: grafanaPasswordSecretName
         secret: true
         path: 'admin_password'
       }
@@ -406,6 +396,7 @@ module grafana './modules/container-app.bicep' = {
         mountOptions: 'dir_mode=0777,file_mode=0777,uid=1000,gid=1000,mfsymlinks,nobrl,cache=none'
       }
     ]
+    keyVaultName: keyVault.outputs.AZURE_RESOURCE_KEY_VAULT_NAME
     // probes: [
     //   {
     //     type: 'Liveness'
