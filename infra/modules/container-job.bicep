@@ -22,7 +22,7 @@ import {secretType} from 'br/public:avm/res/app/job:0.6.0'
 var appSettingsArray = filter(array(definition.settings), i => i.name != '')
 var secrets = map(filter(appSettingsArray, i => i.?secret != null), i => {
   name: i.name
-  secretName: i.?keyVaultSecretName ? i.keyVaultSecretName : '' // Use Key Vault secret name
+  secretName: i.?keyVaultSecretName != null ? i.keyVaultSecretName : '' // Use Key Vault secret name
   secretUri: i.?keyVaultSecretName != null ? 'https://${keyVaultName}${environment().suffixes.keyvaultDns}/secrets/${i.keyVaultSecretName}' : '' // Use Key Vault secret reference
   secretRef: i.?secretRef ?? take(replace(replace(toLower(i.name), '_', '-'), '.', '-'), 32)
 })

@@ -167,6 +167,19 @@ module cpuadUpdaterFetchLatestImage './modules/fetch-container-job-image.bicep' 
   }
 }
 
+var additionalCpuadUpdaterDefinition = {
+  settings: union(
+    [
+      {
+        name: 'GITHUB_PAT'
+        keyVaultSecretName: githubPatSecretName
+        secret: true
+      }
+    ],
+    cpuAdUpdaterDefinition.settings
+  )
+}
+
 module cpuadUpdater './modules/container-job.bicep' = {
   name: 'cpuadUpdaterDeployment'
   params: {
@@ -176,7 +189,7 @@ module cpuadUpdater './modules/container-job.bicep' = {
     containerRegistryLoginServer: containerRegistry.outputs.AZURE_CONTAINER_REGISTRY_LOGIN_SERVER
     containerAppsEnvironmentResourceId: containerAppsEnvironment.outputs.AZURE_RESOURCE_CONTAINER_APPS_ENVIRONMENT_ID
     applicationInsightsConnectionString: monitoring.outputs.AZURE_RESOURCE_MONITORING_APP_INSIGHTS_CONNECTION_STRING
-    definition: cpuAdUpdaterDefinition
+    definition: additionalCpuadUpdaterDefinition
     fetchLatestImage: cpuadUpdaterFetchLatestImage
     userAssignedManagedIdentityResourceId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_ID
     userAssignedManagedIdentityClientId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_CLIENT_ID

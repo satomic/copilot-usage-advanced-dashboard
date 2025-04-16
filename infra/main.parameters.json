@@ -64,11 +64,6 @@
             {
               "name": "ORGANIZATION_SLUGS",
               "value": "${GITHUB_ORGANIZATION_SLUGS}"
-            },
-            {
-              "name": "GITHUB_PAT",
-              "value": "${GITHUB_PAT}",
-              "secret": true
             }
           ]
         }
