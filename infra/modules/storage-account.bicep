@@ -63,7 +63,8 @@ module storageAccount 'br/public:avm/res/storage/storage-account:0.18.2' = {
         }
       ]
     }
-    supportsHttpsTrafficOnly: true
+    // The NFS protocol does not support encryption and relies on network-level security. This setting must be disabled for NFS to work.
+    supportsHttpsTrafficOnly: false
   }
 }
 
