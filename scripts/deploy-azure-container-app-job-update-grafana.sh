@@ -20,7 +20,10 @@ echo ""
 
 while IFS='=' read -r key value; do
     if [[ $key && $value ]]; then
-        export "$key"="${value%\"}"
+        # Remove leading and trailing quotes
+        value="${value%\"}"
+        value="${value#\"}"
+        export "$key"="$value"
     fi
 done < <(azd env get-values)
 
@@ -30,6 +33,8 @@ if [ $? -ne 0 ]; then
 else
     echo "Successfully loaded env vars from .env file."
 fi
+
+echo "is provisioned: $AZD_IS_PROVISIONED"
 
 if [ "${AZD_IS_PROVISIONED,,}" != "true" ]; then
     echo "Azure resources are not provisioned. Please run 'azd provision' to set up the necessary resources before running this script."

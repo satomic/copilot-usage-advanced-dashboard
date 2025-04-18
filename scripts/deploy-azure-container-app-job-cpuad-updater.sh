@@ -20,11 +20,12 @@ echo ""
 echo "Loading azd .env file from current environment"
 echo ""
 
-# Load environment variables from azd
 while IFS='=' read -r key value; do
     if [[ $key && $value ]]; then
-        export "$key"="${value%\"}"
-        export "$key"="${value#\"}"
+        # Remove leading and trailing quotes
+        value="${value%\"}"
+        value="${value#\"}"
+        export "$key"="$value"
     fi
 done < <(azd env get-values)
 

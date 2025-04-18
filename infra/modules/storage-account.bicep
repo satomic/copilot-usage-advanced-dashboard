@@ -63,7 +63,7 @@ module storageAccount 'br/public:avm/res/storage/storage-account:0.18.2' = {
         }
       ]
     }
-    supportsHttpsTrafficOnly: false
+    supportsHttpsTrafficOnly: true
   }
 }
 
