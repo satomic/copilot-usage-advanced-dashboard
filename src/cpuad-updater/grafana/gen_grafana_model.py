@@ -74,10 +74,10 @@ for data_resource in data_resources:
     uid = data_resource['uid']
     data_sources_name_uid_mapping[name] = uid
 
-with open(mapping_output_path, 'w') as f:
+with open(mapping_output_path, 'w', encoding='utf-8') as f:
     json.dump(data_sources_name_uid_mapping, f, indent=4)
 
-with open(template_path, 'r') as template_file:
+with open(template_path, 'r', encoding='utf-8') as template_file:
     template_content = template_file.read()
 
 for data_source_name in data_source_names:
@@ -88,6 +88,6 @@ for data_source_name in data_source_names:
     uid_placeholder = f"{data_source_name}-uid"
     template_content = template_content.replace(uid_placeholder, uid)
 
-with open(model_output_path, 'w') as output_file:
+with open(model_output_path, 'w', encoding='utf-8') as output_file:
     output_file.write(template_content)
     print(f"Model saved to {model_output_path}, please import it to Grafana")

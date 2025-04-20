@@ -16,7 +16,9 @@
 |1.2|Support Copilot Standalone, thanks [sombaner](https://github.com/sombaner)'s great feedback |20241224|
 |1.3|Compatible with metrics API|20250208|
 |1.4|1. [Distinguish between insert and copy events of chat](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/8)<br>2. [Add model filter variables](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/6)<br>3. [Compatible with organizations that do not have teams](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/9)<br>4. Fixed some bugs, for upgrades to older versions before `20250220`, please refer to [Old version (`<=20250220`) upgrade steps](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)|20250222|
-
+|1.5| Add daily usage history for each user, old version upgrade guide refer to [this issue](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)  | 20250404 |
+|1.6| refactor timezone handling in main.py & Docker run ENV paras |20250410|
+|1.7| [Add Elasticsearch authentication](https://github.com/satomic/copilot-usage-advanced-dashboard/pull/19) |20250411|
 
 ## Table of contents
 
@@ -233,8 +235,8 @@ Dependent technology stack:
 
 ## GitHub Credentials
 
-- `GITHUB_PAT`: 
-  - Your GitHub account needs to have Owner permissions for Organizations. 
+- `GITHUB_PAT`:
+  - Your GitHub account needs to have Owner permissions for Organizations.
   - [Create a personal access token (classic)](https://docs.github.com/en/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) of your account with the `manage_billing:copilot`, `read:enterprise`, `read:org` scope. Then please replace `<YOUR_GITHUB_PAT>` with the actual PAT.
   - If you encounter PAT permission error, please **Allow access via fine-grained personal access tokens** in Organization's **Settings** - **Personal access tokens**.
 - `ORGANIZATION_SLUGS`: The Slugs of all Organizations that you want to monitor, which can be one or multiple separated by `,` (English symbol). **If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`**. Please replace `<YOUR_ORGANIZATION_SLUGS>` with the actual value. For example, the following types of values are supported:
@@ -244,6 +246,86 @@ Dependent technology stack:
   - `myOrg1,standalone:myStandaloneSlug`
 - `LOG_PATH`: Log storage location, not recommended to modify. If modified, you need to modify the `-v` data volume mapping simultaneously.
 - `EXECUTION_INTERVAL`: Update interval, the default is to update the program every `1` hours.
+- `ELASTICSEARCH_URL`: The URL of your Elasticsearch, the default is `http://localhost:9200`, if you have modified the port, please modify it here.
+- `TZ`: Timezone, the default is `GMT`, if you want to change it to your local timezone, please refer to [tz database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For example, if you are in Toronto, please change it to `America/Toronto`.
+
+```bash
+docker run -itd \
+--net=host \
+--restart=always \
+--name cpuad \
+-e GITHUB_PAT="<YOUR_GITHUB_PAT>" \
+-e ORGANIZATION_SLUGS="<YOUR_ORGANIZATION_SLUGS>" \
+-e LOG_PATH="logs" \
+-e EXECUTION_INTERVAL=1 \
+-e ELASTICSEARCH_URL="http://localhost:9200" \
+-e TZ="GMT" \  # change to your local timezone if needed
+-v /srv/cpuad-updater-logs:/app/logs \
+satomic/cpuad-updater
+```
+
+If your Elasticsearch instance requires authentication, pass include the `ELASTICSEARCH_USER` and `ELASTICSEARCH_PASS` environment variables.
+
+```bash
+-e ELASTICSEARCH_USER="elastic"
+-e ELASTICSEARCH_PASS="mypassword"
+```
+
+### Option 2. Run in source code mode
+
+1. Confirm that you are in the correct path
+   ```bash
+   cd /srv/copilot-usage-advanced-dashboard
+   ```
+2. Install Dependencies
+   ```bash
+   python3 -m pip install -r requirements.txt
+   ```
+3. Setting Environment Variables. **If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`**.
+   ```bash
+   export GITHUB_PAT="<YOUR_GITHUB_PAT>"
+   export ORGANIZATION_SLUGS="<YOUR_ORGANIZATION_SLUGS>"
+
+   ```
+4. run
+   ```bash
+   python3 main.py
+   ```
+5. output logs
+   ```text
+   2024-12-17 05:32:22,292 - [INFO] - Data saved to logs/2024-12-17/nekoaru_level3-team1_copilot_usage_2024-12-17.json
+   2024-12-17 05:32:22,292 - [INFO] - Fetched Copilot usage for team: level3-team1
+   2024-12-17 05:32:22,293 - [INFO] - Data saved to logs/2024-12-17/nekoaru_all_teams_copilot_usage_2024-12-17.json
+   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for organization: nekoaru
+   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for team: level1-team1
+   2024-12-17 05:32:22,293 - [WARNING] - No Copilot usage data found for team: level1-team1
+   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for team: level2-team1
+   2024-12-17 05:32:22,293 - [WARNING] - No Copilot usage data found for team: level2-team1
+   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for team: level2-team2
+   2024-12-17 05:32:22,293 - [WARNING] - No Copilot usage data found for team: level2-team2
+   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for team: level3-team1
+   2024-12-17 05:32:22,293 - [WARNING] - No Copilot usage data found for team: level3-team1
+   2024-12-17 05:32:22,293 - [INFO] - Sleeping for 6 hours before next execution...
+   2024-12-17 05:32:22,293 - [INFO] - Heartbeat: still running...
+
+   ```
+
+***
+
+# Congratulations
+
+## Current application running status in the VM
+
+At this moment, in the VM, you should be able to see 3 containers running (if you have deployed them from scratch based on docker), as follows:
+
+```bash
+docker ps
+
+CONTAINER ID   IMAGE                                                  COMMAND                  CREATED        STATUS        PORTS                                                 NAMES
+1edffd12a522   satomic/cpuad-updater:20241221                         "python3 main.py"        23 hours ago   Up 10 hours                                                         cpuad
+b19e467d48f1   grafana/grafana:11.4.0                                 "/run.sh"                25 hours ago   Up 10 hours                                                         grafana
+ee35b2a340f1   docker.elastic.co/elasticsearch/elasticsearch:8.17.0   "/bin/tini -- /usr/l…"   3 days ago     Up 10 hours   0.0.0.0:9200->9200/tcp, :::9200->9200/tcp, 9300/tcp   es
+```
 
 ## View Dashboard
 
