@@ -231,6 +231,9 @@ class GitHubOrganizationManager:
                 if self.teams:
                     logger.info(f"Fetching Copilot usages for all teams, team count: {len(self.teams)}")
                     urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team['slug']}/copilot/{usage_or_metrics}") for team in self.teams }
+
+                    # add root team in case teams are too small
+                    urls.update({ 'no-team': ('root_team', f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/{usage_or_metrics}")})
                 else:
                     logger.info(f"No teams found for {self.slug_type}: {self.organization_slug}, fetching {self.slug_type} usage. mock team slug: no-team. strongly recommend to create teams for the {self.slug_type} to get more accurate data.")
                     urls = { 'no-team': ('root_team', f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/{usage_or_metrics}")}
