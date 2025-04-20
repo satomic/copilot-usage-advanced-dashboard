@@ -28,3 +28,6 @@ debug_*
 .azure
 
 .venv/
+
+# .env files
+*.env
