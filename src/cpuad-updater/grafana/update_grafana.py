@@ -6,6 +6,10 @@ import logging
 from datetime import datetime
 import json
 
+# # load environment variables from .env file
+# from dotenv import load_dotenv
+# load_dotenv()
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -63,8 +67,16 @@ def poll_for_grafana():
     """
     while True:
         try:
-            response = requests.get(f"{grafana_url.rstrip('/')}")
+            response = requests.get(f"{grafana_url.rstrip('/')}/api/health")
             if response.status_code == 200:
+                # read the response content
+                content = response.json()
+                logging.info(f"Grafana health status: {content}")
+
+                if content.get('database') != 'ok':
+                    logging.error("Grafana database is not healthy.")
+                    raise ValueError("Grafana database is not healthy.")
+                
                 logging.info("Grafana is up and running.")
                 break
         except requests.exceptions.RequestException as e:
@@ -82,6 +94,7 @@ def get_existing_grafana_service_account_id(headers):
         f"{grafana_url.rstrip('/')}/api/serviceaccounts/search?query={service_account_name}",
         headers=headers
     )
+    time.sleep(1)  # Add a 1-second delay
 
     if result.status_code != 200:
         logging.error(f"Failed to retrieve service accounts: {result.status_code} - {result.text}")
@@ -112,6 +125,7 @@ def delete_existing_grafana_service_account(headers, service_account_id):
         f"{grafana_url.rstrip('/')}/api/serviceaccounts/{service_account_id}",
         headers=headers
     )
+    time.sleep(1)  # Add a 1-second delay
 
     if result.status_code != 200:
         logging.error(f"Failed to delete service account: {result.status_code} - {result.text}")
@@ -186,6 +200,7 @@ def create_service_account(headers):
             "isDisabled": False
         }
     )
+    time.sleep(1)  # Add a 1-second delay
 
     if result.status_code != 201:
         logging.error(f"Failed to create service account: {result.status_code} - {result.text}")
@@ -286,7 +301,8 @@ def add_grafana_data_sources(grafana_token):
         logging.info(f"Adding data source: {ds['name']}...")
 
         response = requests.post(f"{grafana_url.rstrip('/')}/api/datasources", headers=headers, json=payload)
-
+        time.sleep(1)  # Add a 1-second delay
+        
         if response.status_code != 200:        
             if response.status_code == 409:
                 logging.info(f"Data source {ds['name']} already exists. Proceeding...")
@@ -317,7 +333,9 @@ def generate_grafana_model(grafana_token):
             "Authorization": f"Bearer {grafana_token}",
             "X-GitHub-Api-Version": "2022-11-28"
         }
-    response = requests.get(f'{grafana_url.rstrip('/')}/api/datasources', headers=headers)
+    grafana_url_stripted = grafana_url.rstrip('/')
+    response = requests.get(f'{grafana_url_stripted}/api/datasources', headers=headers)
+    time.sleep(1)  # Add a 1-second delay
 
     if response.status_code != 200:
         logging.error(f"Failed to get data sources: {response.status_code} - {response.text}")
@@ -358,7 +376,7 @@ if __name__ == "__main__":
 
     logging.info("Adding Grafana data sources...")
     
-    add_grafana_data_sources(grafana_token=grafana_token,)
+    add_grafana_data_sources(grafana_token=grafana_token)
 
     logging.info("Successfully added Grafana data sources.")
 
@@ -366,7 +384,7 @@ if __name__ == "__main__":
 
     python_script_path = 'gen_grafana_model.py'
     
-    dashboard_model = generate_grafana_model(grafana_token=grafana_token,)
+    dashboard_model = generate_grafana_model(grafana_token=grafana_token)
 
     logging.info("Successfully generated Grafana dashboard model.")
 

@@ -559,23 +559,34 @@ class ElasticsearchManager:
             logger.info(f"Using Elasticsearch without authentication")
             self.es = Elasticsearch(
                 hosts = Paras.elasticsearch_url,
-                max_retries = 10,
+                max_retries = 3,
                 retry_on_timeout = True,
-                request_timeout = 30,
+                request_timeout = 60,
             )
         else:
             logger.info(f"Using basic authentication for Elasticsearch")
             self.es = Elasticsearch(
                 hosts = Paras.elasticsearch_url,
                 basic_auth=(Paras.elasticsearch_user, Paras.elasticsearch_pass),
-                max_retries = 10,
+                max_retries = 3,
                 retry_on_timeout = True,
-                request_timeout = 30,
+                request_timeout = 60,
             )
+
         self.check_and_create_indexes()
 
     # Check if all indexes in the indexes are present, and if they don't, they are created based on the files in the mapping folder
     def check_and_create_indexes(self):
+
+        # try ping for 1 minute
+        for i in range(30):
+            if self.es.ping():
+                logger.info("Elasticsearch is up and running")
+                break
+            else:
+                logger.warning("Elasticsearch is not responding, retrying...")
+                time.sleep(5)
+
         for index_name in Indexes.__dict__:
             if index_name.startswith('index_'):
                 index_name = Indexes.__dict__[index_name]
@@ -633,7 +644,6 @@ def main(organization_slug):
     logger.info(f"Starting data processing for {slug_type}: {organization_slug}")
     github_org_manager = GitHubOrganizationManager(organization_slug, is_standalone=is_standalone)
     es_manager = ElasticsearchManager()
-
 
     # Process seat info and settings
     logger.info(f"Processing Copilot seat info & settings for {slug_type}: {organization_slug}")
@@ -702,6 +712,7 @@ def main(organization_slug):
 
 if __name__ == '__main__':
     try:
+        logger.info(f"Starting data processing for organizations: {Paras.organization_slugs}")
         # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting
         organization_slugs = Paras.organization_slugs.split(',')
         for organization_slug in organization_slugs:

@@ -2,7 +2,7 @@ param location string
 param tags object
 param name string
 param definition object
-param fetchLatestImage object
+param existingImage string = ''
 param applicationInsightsConnectionString string
 param userAssignedManagedIdentityClientId string
 param userAssignedManagedIdentityResourceId string
@@ -19,6 +19,8 @@ param scaleMinReplicas int = 1
 param scaleMaxReplicas int = 2
 param probes array = []
 param keyVaultName string // New parameter for Key Vault name
+@description('Optional. List of specialized containers that run before app containers.')
+param initContainersTemplate array = []
 
 var appSettingsArray = filter(array(definition.settings), i => i.name != '')
 var secrets = map(filter(appSettingsArray, i => i.?secret != null), i => {
@@ -69,7 +71,7 @@ module containerApp 'br/public:avm/res/app/container-app:0.8.0' = {
     }
     containers: [
       {
-        image: fetchLatestImage.outputs.?containers.?value[?0].?image ?? 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
+        image: existingImage == '' ? 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest' : existingImage
         name: 'main'
         resources: {
           cpu: json(cpu)
@@ -109,6 +111,7 @@ module containerApp 'br/public:avm/res/app/container-app:0.8.0' = {
     tags: union(tags, { 'azd-service-name': name })
     ingressExternal: ingressExternal
     volumes: additionalVolumes
+    initContainersTemplate: initContainersTemplate
   }
 }
 

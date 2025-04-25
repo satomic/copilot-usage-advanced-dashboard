@@ -31,6 +31,10 @@ param grafanaPassword string
 
 @secure()
 param githubPat string
+param githubOrganizationSlugs string
+
+param elasticSearchImageName string
+param grafanaImageName string
 
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = uniqueString(subscription().id, resourceGroup().id, location)
@@ -39,9 +43,13 @@ var grafanaFileShareName = 'grafana'
 var cpuadUpdaterFileShareName = 'cpuad-updater'
 
 var grafanaUsernameSecretName = 'grafana-username'
-var grafanaUsernameSecretValue = grafanaUsername != '' ? grafanaUsername : uniqueString('grafanaUsername', subscription().id, resourceGroup().id, location, resourceToken)
+var grafanaUsernameSecretValue = grafanaUsername != ''
+  ? grafanaUsername
+  : uniqueString('grafanaUsername', subscription().id, resourceGroup().id, location, resourceToken)
 var grafanaPasswordSecretName = 'grafana-password'
-var grafanaPasswordSecretValue = grafanaPassword != '' ? grafanaPassword : uniqueString('grafanaPassword', subscription().id, resourceGroup().id, location, resourceToken)
+var grafanaPasswordSecretValue = grafanaPassword != ''
+  ? grafanaPassword
+  : uniqueString('grafanaPassword', subscription().id, resourceGroup().id, location, resourceToken)
 var githubPatSecretName = 'github-pat'
 
 module monitoring './modules/monitoring.bicep' = {
@@ -175,6 +183,10 @@ var additionalCpuadUpdaterDefinition = {
         keyVaultSecretName: githubPatSecretName
         secret: true
       }
+      {
+        name: 'ORGANIZATION_SLUGS'
+        value: githubOrganizationSlugs
+      }
     ],
     cpuAdUpdaterDefinition.settings
   )
@@ -283,13 +295,14 @@ module elasticSearch './modules/container-app.bicep' = {
     containerAppsEnvironmentResourceId: containerAppsEnvironment.outputs.AZURE_RESOURCE_CONTAINER_APPS_ENVIRONMENT_ID
     applicationInsightsConnectionString: monitoring.outputs.AZURE_RESOURCE_MONITORING_APP_INSIGHTS_CONNECTION_STRING
     definition: elasticSearchDefinition
-    fetchLatestImage: cpuadUpdaterFetchLatestImage
+    existingImage: elasticSearchImageName
     ingressTargetPort: elasticSearchPort
     userAssignedManagedIdentityResourceId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_ID
     userAssignedManagedIdentityClientId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_CLIENT_ID
     tags: tags
     cpu: elasticSearchDefinition.cpu
     memory: elasticSearchDefinition.memory
+    scaleMaxReplicas: 1
     volumeMounts: [
       {
         mountPath: '/usr/share/elasticsearch/data'
@@ -312,6 +325,35 @@ module elasticSearch './modules/container-app.bicep' = {
     ]
     ingressExternal: false
     keyVaultName: keyVault.outputs.AZURE_RESOURCE_KEY_VAULT_NAME
+    initContainersTemplate: [
+      {
+        name: 'init-elasticsearch'
+        image: 'busybox:1.28'
+        resources: {
+          cpu: json('0.25')
+          memory: '0.5Gi'
+        }
+        command: [
+          '/bin/sh'
+        ]
+        args: [
+          '-c'
+          'chown -R 1000:1000 /usr/share/elasticsearch/data && chown -R 1000:1000 /usr/share/elasticsearch/logs'
+        ]
+        volumeMounts: [
+          {
+            mountPath: '/usr/share/elasticsearch/data'
+            volumeName: storageAccount.outputs.AZURE_STORAGE_ELASTIC_SEARCH_FILE_SHARE_NAME
+            subPath: 'data'
+          }
+          {
+            mountPath: '/usr/share/elasticsearch/logs'
+            volumeName: storageAccount.outputs.AZURE_STORAGE_ELASTIC_SEARCH_FILE_SHARE_NAME
+            subPath: 'logs'
+          }
+        ]
+      }
+    ]
     // probes: [
     //   {
     //     type: 'Liveness'
@@ -387,14 +429,15 @@ module grafana './modules/container-app.bicep' = {
     containerAppsEnvironmentResourceId: containerAppsEnvironment.outputs.AZURE_RESOURCE_CONTAINER_APPS_ENVIRONMENT_ID
     applicationInsightsConnectionString: monitoring.outputs.AZURE_RESOURCE_MONITORING_APP_INSIGHTS_CONNECTION_STRING
     definition: additionalGrafanaDefinition
-    fetchLatestImage: cpuadUpdaterFetchLatestImage
     ingressTargetPort: grafanaPort
+    existingImage: grafanaImageName
     userAssignedManagedIdentityResourceId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_ID
     userAssignedManagedIdentityClientId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_CLIENT_ID
     tags: tags
     ingressExternal: true
     cpu: grafanaDefinition.cpu
     memory: grafanaDefinition.memory
+    scaleMaxReplicas: 1
     volumeMounts: [
       {
         mountPath: '/var/lib/grafana'

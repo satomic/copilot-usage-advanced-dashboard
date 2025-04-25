@@ -1,11 +1,11 @@
 # Use the official Python 3.10 base image
-FROM python:3.13.2
+FROM python:3.13.3-slim
 
 # Set environment variables
 # PYTHONDONTWRITEBYTECODE: Prevents Python from writing .pyc files to disk
 # PYTHONUNBUFFERED: Ensures that the Python output is sent straight to the terminal (unbuffered)
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Set the working directory
 WORKDIR /app

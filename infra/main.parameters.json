@@ -20,8 +20,17 @@
       "grafanaExists": {
         "value": "${SERVICE_GRAFANA_RESOURCE_EXISTS=false}"
       },
+      "elasticSearchImageName": {
+        "value": "${SERVICE_ELASTIC_SEARCH_IMAGE_NAME}"
+      },
+      "grafanaImageName": {
+        "value": "${SERVICE_GRAFANA_IMAGE_NAME}"
+      },
       "githubPat": {
         "value": "${GITHUB_PAT}"
+      },
+      "githubOrganizationSlugs": {
+        "value": "${GITHUB_ORGANIZATION_SLUGS}"
       },
       "grafanaUsername": {
         "value": "${GRAFANA_USERNAME}"
@@ -31,8 +40,8 @@
       },
       "updateGrafanaDefinition": {
         "value": {
-          "cpu": "1.0",
-          "memory": "2.0Gi",
+          "cpu": "0.25",
+          "memory": "0.5Gi",
           "triggerType": "Manual",
           "settings": [
             {
@@ -48,8 +57,8 @@
       },
       "cpuAdUpdaterDefinition": {
         "value": {
-          "cpu": "1.0",
-          "memory": "2.0Gi",
+          "cpu": "0.25",
+          "memory": "0.5Gi",
           "triggerType": "Schedule",
           "cronExpression": "0 */1 * * *",
           "settings": [
@@ -60,26 +69,22 @@
             {
               "name": "ELASTICSEARCH_URL",
               "value": "http://elastic-search:80"
-            },
-            {
-              "name": "ORGANIZATION_SLUGS",
-              "value": "${GITHUB_ORGANIZATION_SLUGS}"
             }
           ]
         }
       },
       "elasticSearchDefinition": {
         "value": {
-          "cpu": "4.0",
-          "memory": "8.0Gi",
+          "cpu": "1.0",
+          "memory": "2.0Gi",
           "settings": [ 
           ]
         }
       },
       "grafanaDefinition": {
         "value": {
-          "cpu": "1.0",
-          "memory": "2.0Gi",
+          "cpu": "0.5",
+          "memory": "1.0Gi",
           "settings": [
             {
               "name": "GF_LOG_LEVEL",

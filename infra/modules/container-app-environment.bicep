@@ -8,7 +8,8 @@ param workloadProfileType string
 param infrastructureSubnetId string
 param appInsightsConnectionString string
 
-var workloadProfileName = 'default'
+// var workloadProfileName = 'default'
+var workloadProfileName = 'Consumption'
 
 // Container apps environment
 module containerAppsEnvironment 'br/public:avm/res/app/managed-environment:0.10.0' = {
@@ -23,10 +24,10 @@ module containerAppsEnvironment 'br/public:avm/res/app/managed-environment:0.10.
     infrastructureSubnetId: infrastructureSubnetId
     workloadProfiles: [
       {
-        name: workloadProfileName
-        workloadProfileType: workloadProfileType
-        minimumCount: 1
-        maximumCount: 10
+        name: 'Consumption'
+        workloadProfileType: 'Consumption'
+        // minimumCount: 1
+        // maximumCount: 1
       }
     ]
     appInsightsConnectionString: appInsightsConnectionString
