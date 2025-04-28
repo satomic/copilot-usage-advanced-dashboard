@@ -23,7 +23,6 @@ def get_utc_offset():
     offset_str = f"{offset_hours:+03}:{abs(offset_minutes):02}"
     return offset_str
 
-
 class Paras:
 
     @staticmethod
@@ -36,7 +35,7 @@ class Paras:
 
     # ElasticSearch
     primary_key = os.getenv('PRIMARY_KEY', 'unique_hash')
-    elasticsearch_url = os.getenv('ELASTICSEARCH_URL', 'http://localhost:9200')
+    elasticsearch_url = os.getenv('ELASTICSEARCH_URL', 'http://$ELASTICSEARCH_URL')
     elasticsearch_user = os.getenv('ELASTICSEARCH_USER', None)
     elasticsearch_pass = os.getenv('ELASTICSEARCH_PASS', None)
 
@@ -208,7 +207,7 @@ class GitHubEnterpriseManager:
             logger.info(f"Fetched {len(all_orgs)} organizations")
             return all_orgs
         else:
-            print(f'request failed, error code：{response.status_code}')
+            print(f'request failed, error code: {response.status_code}')
             logger.error(f"Request failed with status code: {response.status_code}")
             return {}
 
@@ -232,6 +231,9 @@ class GitHubOrganizationManager:
                 if self.teams:
                     logger.info(f"Fetching Copilot usages for all teams, team count: {len(self.teams)}")
                     urls = { team['slug']: (team['position_in_tree'], f"https://api.github.com/{self.api_type}/{self.organization_slug}/team/{team['slug']}/copilot/{usage_or_metrics}") for team in self.teams }
+
+                    # add root team in case teams are too small
+                    urls.update({ 'no-team': ('root_team', f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/{usage_or_metrics}")})
                 else:
                     logger.info(f"No teams found for {self.slug_type}: {self.organization_slug}, fetching {self.slug_type} usage. mock team slug: no-team. strongly recommend to create teams for the {self.slug_type} to get more accurate data.")
                     urls = { 'no-team': ('root_team', f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/{usage_or_metrics}")}
@@ -383,7 +385,7 @@ class GitHubOrganizationManager:
             for seat in seats:
                 # assignee sub dict
                 seat['assignee_login'] = seat.get('assignee', {}).get('login')
-                # if organization_slug is CopilotNext, then 把assignee_login中的每一个字母都往后移一位
+                # if organization_slug is CopilotNext, then assignee_login
                 if self.organization_slug == 'CopilotNext':
                     seat['assignee_login'] = ''.join([chr(ord(c) + 1) for c in seat['assignee_login']])
 
@@ -416,7 +418,7 @@ class GitHubOrganizationManager:
                     seat['is_active_today'] = 0
                 seat['days_since_last_activity'] = days_since_last_activity
                 datas.append(seat)
-            page += 1  # 获取下一页数据
+            page += 1
 
         dict_save_to_json_file(datas, f'{self.organization_slug}_seat_assignments', save_to_json=save_to_json)
         logger.info(f"Fetching seat assignments for {self.slug_type}: {self.organization_slug}")
@@ -441,7 +443,7 @@ class GitHubOrganizationManager:
             if not page_teams:
                 break
             teams.extend(page_teams)
-            page += 1  # 获取下一页数据
+            page += 1
 
         teams = self._add_fullpath_slug(teams)
         teams = assign_position_in_tree(teams)
@@ -555,17 +557,36 @@ class ElasticsearchManager:
         self.primary_key = primary_key
         if Paras.elasticsearch_user is None or Paras.elasticsearch_pass is None:
             logger.info(f"Using Elasticsearch without authentication")
-            self.es = Elasticsearch(Paras.elasticsearch_url)
+            self.es = Elasticsearch(
+                hosts = Paras.elasticsearch_url,
+                max_retries = 3,
+                retry_on_timeout = True,
+                request_timeout = 60,
+            )
         else:
             logger.info(f"Using basic authentication for Elasticsearch")
             self.es = Elasticsearch(
-                Paras.elasticsearch_url,
-                basic_auth=(Paras.elasticsearch_user, Paras.elasticsearch_pass)
+                hosts = Paras.elasticsearch_url,
+                basic_auth=(Paras.elasticsearch_user, Paras.elasticsearch_pass),
+                max_retries = 3,
+                retry_on_timeout = True,
+                request_timeout = 60,
             )
+
         self.check_and_create_indexes()
 
     # Check if all indexes in the indexes are present, and if they don't, they are created based on the files in the mapping folder
     def check_and_create_indexes(self):
+
+        # try ping for 1 minute
+        for i in range(30):
+            if self.es.ping():
+                logger.info("Elasticsearch is up and running")
+                break
+            else:
+                logger.warning("Elasticsearch is not responding, retrying...")
+                time.sleep(5)
+
         for index_name in Indexes.__dict__:
             if index_name.startswith('index_'):
                 index_name = Indexes.__dict__[index_name]
@@ -607,7 +628,7 @@ class ElasticsearchManager:
             logger.info(f'[updated] to [{index_name}]: {data}')
         except NotFoundError:
             self.es.index(index=index_name, id=doc_id, document=data)
-            logger.info(f'[created] to [{index_name}]: {data}')
+            logger.info(f'[created] to [{index_name}]: {data}') 
 
 def main(organization_slug):
     logger.info(f"==========================================================================================================")
@@ -623,7 +644,6 @@ def main(organization_slug):
     logger.info(f"Starting data processing for {slug_type}: {organization_slug}")
     github_org_manager = GitHubOrganizationManager(organization_slug, is_standalone=is_standalone)
     es_manager = ElasticsearchManager()
-
 
     # Process seat info and settings
     logger.info(f"Processing Copilot seat info & settings for {slug_type}: {organization_slug}")
@@ -690,22 +710,14 @@ def main(organization_slug):
 
         logger.info(f"Data processing completed for team: {team_slug}")
 
-
-
 if __name__ == '__main__':
-
-    while True:
-        try:
-            # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting
-            organization_slugs = Paras.organization_slugs.split(',')
-            for organization_slug in organization_slugs:
-                main(organization_slug.strip())
-            logger.info(f"Sleeping for {Paras.execution_interval} hours before next execution...")
-            for _ in range(Paras.execution_interval * 3600 // 3600):
-                logger.info("Heartbeat: still running...")
-                time.sleep(3600)
-        except Exception as e:
-            logger.error(f"An error occurred: {traceback.format_exc(e)}")
-            time.sleep(5)
-        finally:
-            logger.info('-----------------Finished-----------------')
+    try:
+        logger.info(f"Starting data processing for organizations: {Paras.organization_slugs}")
+        # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting
+        organization_slugs = Paras.organization_slugs.split(',')
+        for organization_slug in organization_slugs:
+            main(organization_slug.strip())
+    except Exception as e:
+        logger.error(f"An error occurred: {traceback.format_exc(e)}")
+    finally:
+        logger.info('-----------------Finished-----------------')

@@ -4,18 +4,6 @@
         "day" : {
           "type" : "date"
         },
-        "created_at" : {
-          "type" : "date"
-        },
-        "pending_cancellation_date" : {
-          "type" : "date"
-        },
-        "last_activity_at" : {
-          "type" : "date"
-        },
-        "updated_at" : {
-          "type" : "date"
-        },
         "last_updated_at" : {
           "type" : "text",
           "fields" : {
@@ -28,33 +16,48 @@
         "organization_slug" : {
           "type" : "keyword"
         },
-        "last_activity_editor" : {
+        "seat_management_setting" : {
           "type" : "keyword"
         },
-        "assignee_login" : {
+        "public_code_suggestions" : {
           "type" : "keyword"
         },
-        "assignee_html_url" : {
+        "ide_chat" : {
           "type" : "keyword"
         },
-        "assignee_team_slug" : {
-          "type" : "keyword"
-        },
-        "assignee_team_html_url" : {
+        "cli" : {
           "type" : "keyword"
         },
         "plan_type" : {
           "type" : "keyword"
         },
-		    "days_since_last_activity" : {
+        "seat_total" : {
           "type" : "long"
         },
-        "is_active_today" : {
+        "seat_added_this_cycle" : {
+          "type" : "long"
+        },
+        "seat_pending_invitation" : {
+          "type" : "long"
+        },
+        "seat_pending_cancellation" : {
+          "type" : "long"
+        },
+		    "seat_active_this_cycle" : {
+          "type" : "long"
+        },
+		    "seat_inactive_this_cycle" : {
           "type" : "long"
         },
         "unique_hash" : {
           "type" : "keyword"
         }
+      }
+    },
+    "settings": {
+      "index": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0
       }
     }
 }

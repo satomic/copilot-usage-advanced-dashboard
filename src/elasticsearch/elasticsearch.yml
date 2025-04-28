@@ -1,0 +1,17 @@
+bootstrap.memory_lock: true
+cluster.name: es-docker-cluster
+discovery.type: single-node
+network.host: 0.0.0.0
+node.name: single-node
+path.data: /usr/share/elasticsearch/data
+path.logs: /usr/share/elasticsearch/logs
+xpack.security.enabled: false
+xpack.ml.enabled: false
+xpack.watcher.enabled: false
+xpack.graph.enabled: false
+xpack.idp.enabled: false
+xpack.ccr.enabled: false
+xpack.eql.enabled: false
+cluster.routing.rebalance.enable: none
+cluster.routing.allocation.enable: all
+cluster.routing.allocation.disk.threshold_enabled: false

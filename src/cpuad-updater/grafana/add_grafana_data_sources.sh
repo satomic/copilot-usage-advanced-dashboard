@@ -1,11 +1,11 @@
-curl -X POST http://localhost:3000/api/datasources \
+curl -X POST http://$GRAFANA_URL/api/datasources \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $GRAFANA_TOKEN" \
 -d '{
   "name": "elasticsearch-breakdown",
   "type": "elasticsearch",
   "access": "proxy",
-  "url": "http://localhost:9200",
+  "url": "http://$ELASTICSEARCH_URL",
   "basicAuth": false,
   "withCredentials": false,
   "isDefault": false,
@@ -21,14 +21,14 @@ curl -X POST http://localhost:3000/api/datasources \
 }'
 
 
-curl -X POST http://localhost:3000/api/datasources \
+curl -X POST http://$GRAFANA_URL/api/datasources \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $GRAFANA_TOKEN" \
 -d '{
   "name": "elasticsearch-breakdown-chat",
   "type": "elasticsearch",
   "access": "proxy",
-  "url": "http://localhost:9200",
+  "url": "http://$ELASTICSEARCH_URL",
   "basicAuth": false,
   "withCredentials": false,
   "isDefault": false,
@@ -44,14 +44,14 @@ curl -X POST http://localhost:3000/api/datasources \
 }'
 
 
-curl -X POST http://localhost:3000/api/datasources \
+curl -X POST http://$GRAFANA_URL/api/datasources \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $GRAFANA_TOKEN" \
 -d '{
   "name": "elasticsearch-total",
   "type": "elasticsearch",
   "access": "proxy",
-  "url": "http://localhost:9200",
+  "url": "http://$ELASTICSEARCH_URL",
   "basicAuth": false,
   "withCredentials": false,
   "isDefault": false,
@@ -67,14 +67,14 @@ curl -X POST http://localhost:3000/api/datasources \
 }'
 
 
-curl -X POST http://localhost:3000/api/datasources \
+curl -X POST http://$GRAFANA_URL/api/datasources \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $GRAFANA_TOKEN" \
 -d '{
   "name": "elasticsearch-seat-info-settings",
   "type": "elasticsearch",
   "access": "proxy",
-  "url": "http://localhost:9200",
+  "url": "http://$ELASTICSEARCH_URL",
   "basicAuth": false,
   "withCredentials": false,
   "isDefault": false,
@@ -89,14 +89,14 @@ curl -X POST http://localhost:3000/api/datasources \
   }
 }'
 
-curl -X POST http://localhost:3000/api/datasources \
+curl -X POST http://$GRAFANA_URL/api/datasources \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer $GRAFANA_TOKEN" \
 -d '{
   "name": "elasticsearch-seat-assignments",
   "type": "elasticsearch",
   "access": "proxy",
-  "url": "http://localhost:9200",
+  "url": "http://$ELASTICSEARCH_URL",
   "basicAuth": false,
   "withCredentials": false,
   "isDefault": false,

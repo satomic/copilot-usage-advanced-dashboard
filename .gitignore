@@ -21,10 +21,14 @@ logs/
 docker_run.sh
 gen_grafana_template.py
 dashboard-model-*
+dashboard-template-*.json
 .vscode/
 *bak*
 
 debug_*
+.azure
+
+.venv/
 
 # .env files
 *.env

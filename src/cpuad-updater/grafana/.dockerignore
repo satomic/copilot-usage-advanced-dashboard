@@ -1,0 +1,25 @@
+__pycache__/
+.venv
+logs
+.env
+*.sh
+.git
+.azure
+.vscode
+scripts/
+image/
+infra/
+
+# tmp
+tmp/
+.DS_Store
+try*
+logs/
+docker_run.sh
+gen_grafana_template.py
+dashboard-model-*
+.vscode/
+*bak*
+
+debug_*
+.azure

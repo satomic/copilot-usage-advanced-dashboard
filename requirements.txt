@@ -1,4 +1,0 @@
-elasticsearch
-requests
-tzlocal
-tzdata
