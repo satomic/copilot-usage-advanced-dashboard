@@ -4,7 +4,7 @@ Everything described in this article is based on the all-in-one architecture. In
 
 ## Architecture diagram
 
-![](image/image_oZJ-KGOxa5.png)
+![](/image/image_oZJ-KGOxa5.png)
 
 ## Technology stack
 
@@ -249,19 +249,19 @@ drwxr-xr-x 2 root root  4096 May 13 10:00 grafana
 
 1. admin visit **Administration** → **Users and access** → **Service accounts**
 
-   ![](image/image_KY8b0hv5g1.png)
+   ![](/image/image_KY8b0hv5g1.png)
 2. input **Display name**，**Role** select `Admin`, **Create**
 
-   ![](image/image_wjIjr2vLYJ.png)
+   ![](/image/image_wjIjr2vLYJ.png)
 3. click **Add service account token**
 
-   ![](image/image_tXLYRaldHa.png)
+   ![](/image/image_tXLYRaldHa.png)
 4. click **Generate token**
 
-   ![](image/image_B1twE5g-hS.png)
+   ![](/image/image_B1twE5g-hS.png)
 5. **Copy to clipboard and close**
 
-   ![](image/image_Ahoe1eqPzS.png)
+   ![](/image/image_Ahoe1eqPzS.png)
 6. Now, you have obtained your Grafana Token `"<your_grafana_token>"`, please save it and set it as an environment variable in the VM, which will be used in the next steps.
    ```bash
    export GRAFANA_TOKEN="<your_grafana_token>"
@@ -280,7 +280,7 @@ drwxr-xr-x 2 root root  4096 May 13 10:00 grafana
    ```
 3. Visit the Grafana UI to confirm that the addition was successful
 
-   ![](image/image_data_source.png)
+   ![](/image/image_data_source.png)
 
 ### Generate Dashboard Json Model
 
@@ -308,14 +308,14 @@ drwxr-xr-x 2 root root  4096 May 13 10:00 grafana
    ```
 2. Copy the generated json file and import it into Grafana
 
-   ![](image/image_AYrtVirvr1.png)
+   ![](/image/image_AYrtVirvr1.png)
 
    Select the file to import, or paste the content directly
 
-   ![](image/image_w_wlgST2uO.png)
+   ![](/image/image_w_wlgST2uO.png)
 3. **Import**
 
-   ![](image/image_ojvK2wCe7i.png)
+   ![](/image/image_ojvK2wCe7i.png)
 4. Congratulations, you now have a complete dashboard, but there should be no data yet. Next, run the core program.
 
 ## cpuad-updater
@@ -423,8 +423,8 @@ ee35b2a340f1   docker.elastic.co/elasticsearch/elasticsearch:8.17.0   "/bin/tini
 
 At this point, return to the Grafana page and refresh. You should be able to see the data.
 
-![](image/image_lf08iyNeUt.png)
+![](/image/image_lf08iyNeUt.png)
 
 or
 
-![](image/image_wjdhYnlwOZ.png)
+![](/image/image_wjdhYnlwOZ.png)

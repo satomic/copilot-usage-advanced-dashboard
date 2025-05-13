@@ -2,7 +2,7 @@
 
 ## Architecture diagram
 
-![](image/architecture.drawio.png)
+![](/image/architecture.drawio.png)
 
 ## Technology stack
 
