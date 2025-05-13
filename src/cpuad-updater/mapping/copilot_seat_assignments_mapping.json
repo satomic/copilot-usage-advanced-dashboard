@@ -49,9 +49,6 @@
 		    "days_since_last_activity" : {
           "type" : "long"
         },
-        "is_active_today" : {
-          "type" : "long"
-        },
         "unique_hash" : {
           "type" : "keyword"
         }

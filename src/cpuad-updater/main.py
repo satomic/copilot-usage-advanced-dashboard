@@ -402,7 +402,7 @@ class GitHubOrganizationManager:
                 seat['day'] = datetime.now(datetime.strptime(seat['updated_at'], '%Y-%m-%dT%H:%M:%S%z').tzinfo).strftime('%Y-%m-%d %H:%M:%S.%f')[:10]
                 seat['unique_hash'] = generate_unique_hash(
                     seat,
-                    key_properties=['organization_slug', 'assignee_login', 'day']
+                    key_properties=['organization_slug', 'assignee_login']
                 )
 
                 last_activity_at = seat.get('last_activity_at') # 2025-04-02T00:22:35+08:00
@@ -410,12 +410,12 @@ class GitHubOrganizationManager:
                     last_activity_date = datetime.strptime(last_activity_at, '%Y-%m-%dT%H:%M:%S%z')
                     days_since_last_activity = (datetime.now(last_activity_date.tzinfo) - last_activity_date).days
                     # Create updated_at_date with the same timezone as last_activity_date
-                    updated_at_date = datetime.now(last_activity_date.tzinfo)
-                    is_active_today = 1 if (last_activity_date.date() == updated_at_date.date()) else 0
-                    seat['is_active_today'] = is_active_today
+                    # updated_at_date = datetime.now(last_activity_date.tzinfo)
+                    # is_active_today = 1 if (last_activity_date.date() == updated_at_date.date()) else 0
+                    # seat['is_active_today'] = is_active_today
                 else:
                     days_since_last_activity = -1
-                    seat['is_active_today'] = 0
+                    # seat['is_active_today'] = 0
                 seat['days_since_last_activity'] = days_since_last_activity
                 datas.append(seat)
             page += 1
@@ -661,9 +661,7 @@ def main(organization_slug):
         logger.warning(f"No Copilot seat assignments found for {slug_type}: {organization_slug}")
     else:
         for seat_assignment in data_seat_assignments:
-            es_manager.write_to_es(Indexes.index_seat_assignments, seat_assignment, update_condition={
-                'is_active_today': 1
-            })
+            es_manager.write_to_es(Indexes.index_seat_assignments, seat_assignment)
         logger.info(f"Data processing completed for {slug_type}: {organization_slug}")
 
     # Process usage data
