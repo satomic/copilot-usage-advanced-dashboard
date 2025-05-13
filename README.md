@@ -220,114 +220,24 @@ You can analyze the effect of Copilot in different languages ​​and different
 
 ***
 
-## Architecture diagram
+
+
+# Deployment
+
+## Azure Container Apps
+if you are using Azure Container Apps, please refer to the [Azure Container Apps deployment document](deploy/azure-container-apps.md).
 
 ![](image/architecture.drawio.png)
 
-## Technology stack
 
-Dependent technology stack:
 
-- Azure Container Apps
-- Elasticsearch
-- Grafana
-- Python3
+## Linux with Docker
+if you are not using Azure, you can use Linux with Docker, please refer to the [Linux with Docker deployment document](deploy/linux-with-docker.md).
 
-## GitHub Credentials
+![](image/image_oZJ-KGOxa5.png)
 
-- `GITHUB_PAT`:
-  - Your GitHub account needs to have Owner permissions for Organizations.
-  - [Create a personal access token (classic)](https://docs.github.com/en/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) of your account with the `manage_billing:copilot`, `read:enterprise`, `read:org` scope. Then please replace `<YOUR_GITHUB_PAT>` with the actual PAT.
-  - If you encounter PAT permission error, please **Allow access via fine-grained personal access tokens** in Organization's **Settings** - **Personal access tokens**.
-- `ORGANIZATION_SLUGS`: The Slugs of all Organizations that you want to monitor, which can be one or multiple separated by `,` (English symbol). **If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`**. Please replace `<YOUR_ORGANIZATION_SLUGS>` with the actual value. For example, the following types of values are supported:
-  - `myOrg1`
-  - `myOrg1,myOrg2`
-  - `standalone:myStandaloneSlug`
-  - `myOrg1,standalone:myStandaloneSlug`
-- `LOG_PATH`: Log storage location, not recommended to modify. If modified, you need to modify the `-v` data volume mapping simultaneously.
-- `EXECUTION_INTERVAL`: Update interval, the default is to update the program every `1` hours.
-- `ELASTICSEARCH_URL`: The URL of your Elasticsearch, the default is `http://localhost:9200`, if you have modified the port, please modify it here.
-- `TZ`: Timezone, the default is `GMT`, if you want to change it to your local timezone, please refer to [tz database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For example, if you are in Toronto, please change it to `America/Toronto`.
 
-```bash
-docker run -itd \
---net=host \
---restart=always \
---name cpuad \
--e GITHUB_PAT="<YOUR_GITHUB_PAT>" \
--e ORGANIZATION_SLUGS="<YOUR_ORGANIZATION_SLUGS>" \
--e LOG_PATH="logs" \
--e EXECUTION_INTERVAL=1 \
--e ELASTICSEARCH_URL="http://localhost:9200" \
--e TZ="GMT" \  # change to your local timezone if needed
--v /srv/cpuad-updater-logs:/app/logs \
-satomic/cpuad-updater
-```
-
-If your Elasticsearch instance requires authentication, pass include the `ELASTICSEARCH_USER` and `ELASTICSEARCH_PASS` environment variables.
-
-```bash
--e ELASTICSEARCH_USER="elastic"
--e ELASTICSEARCH_PASS="mypassword"
-```
-
-### Option 2. Run in source code mode
-
-1. Confirm that you are in the correct path
-   ```bash
-   cd /srv/copilot-usage-advanced-dashboard
-   ```
-2. Install Dependencies
-   ```bash
-   python3 -m pip install -r requirements.txt
-   ```
-3. Setting Environment Variables. **If you are using Copilot Standalone, use your Standalone Slug here, prefixed with `standalone:`, for example `standalone:YOUR_STANDALONE_SLUG`**.
-   ```bash
-   export GITHUB_PAT="<YOUR_GITHUB_PAT>"
-   export ORGANIZATION_SLUGS="<YOUR_ORGANIZATION_SLUGS>"
-
-   ```
-4. run
-   ```bash
-   python3 main.py
-   ```
-5. output logs
-   ```text
-   2024-12-17 05:32:22,292 - [INFO] - Data saved to logs/2024-12-17/nekoaru_level3-team1_copilot_usage_2024-12-17.json
-   2024-12-17 05:32:22,292 - [INFO] - Fetched Copilot usage for team: level3-team1
-   2024-12-17 05:32:22,293 - [INFO] - Data saved to logs/2024-12-17/nekoaru_all_teams_copilot_usage_2024-12-17.json
-   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for organization: nekoaru
-   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for team: level1-team1
-   2024-12-17 05:32:22,293 - [WARNING] - No Copilot usage data found for team: level1-team1
-   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for team: level2-team1
-   2024-12-17 05:32:22,293 - [WARNING] - No Copilot usage data found for team: level2-team1
-   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for team: level2-team2
-   2024-12-17 05:32:22,293 - [WARNING] - No Copilot usage data found for team: level2-team2
-   2024-12-17 05:32:22,293 - [INFO] - Processing Copilot usage data for team: level3-team1
-   2024-12-17 05:32:22,293 - [WARNING] - No Copilot usage data found for team: level3-team1
-   2024-12-17 05:32:22,293 - [INFO] - Sleeping for 6 hours before next execution...
-   2024-12-17 05:32:22,293 - [INFO] - Heartbeat: still running...
-
-   ```
-
-***
-
-# Congratulations
-
-## Current application running status in the VM
-
-At this moment, in the VM, you should be able to see 3 containers running (if you have deployed them from scratch based on docker), as follows:
-
-```bash
-docker ps
-
-CONTAINER ID   IMAGE                                                  COMMAND                  CREATED        STATUS        PORTS                                                 NAMES
-1edffd12a522   satomic/cpuad-updater:20241221                         "python3 main.py"        23 hours ago   Up 10 hours                                                         cpuad
-b19e467d48f1   grafana/grafana:11.4.0                                 "/run.sh"                25 hours ago   Up 10 hours                                                         grafana
-ee35b2a340f1   docker.elastic.co/elasticsearch/elasticsearch:8.17.0   "/bin/tini -- /usr/l…"   3 days ago     Up 10 hours   0.0.0.0:9200->9200/tcp, :::9200->9200/tcp, 9300/tcp   es
-```
-
-## View Dashboard
+## Congratulations, View Dashboard
 
 At this point, return to the Grafana page and refresh. You should be able to see the data.
 
@@ -336,30 +246,3 @@ At this point, return to the Grafana page and refresh. You should be able to see
 or
 
 ![](image/image_wjdhYnlwOZ.png)
-
-## Deployment
-
-1. Run the following command to set the GitHub credentials in the Azure Developer CLI.
-
-   ```shell
-   azd env set GITHUB_PAT ...
-
-   azd env set GITHUB_ORGANIZATION_SLUGS ...
-   ```
-
-1. **Optional*** Run the following commands to set the Grafana credentials. Note that not setting this values results in the deployment script generating credentials.
-
-   ```shell
-   azd env set GRAFANA_USERNAME ...
-   azd env set GRAFANA_PASSWORD ...
-   ```
-
-1. Run the following command to deploy the application.
-
-   ```shell
-   azd up
-   ```
-   
-1. After the deployment is complete, you can access the application using the URL provided in the output.
-
-1. The username & password for the Grafana dashboard can be found in the Key Vault. Note that these are not secure credentials and should be changed.

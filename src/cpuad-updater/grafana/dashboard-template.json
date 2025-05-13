@@ -19,7 +19,7 @@
         "editable": true,
         "fiscalYearStartMonth": 0,
         "graphTooltip": 0,
-        "id": null,
+        "id": 4,
         "links": [],
         "panels": [
             {
@@ -83,7 +83,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -214,7 +215,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -301,7 +303,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -388,7 +391,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -508,7 +512,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -793,7 +798,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -918,7 +924,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -1078,7 +1085,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -1239,7 +1247,8 @@
                             "mode": "absolute",
                             "steps": [
                                 {
-                                    "color": "green"
+                                    "color": "green",
+                                    "value": null
                                 },
                                 {
                                     "color": "red",
@@ -4193,7 +4202,7 @@
                     "overrides": []
                 },
                 "gridPos": {
-                    "h": 10,
+                    "h": 16,
                     "w": 12,
                     "x": 12,
                     "y": 122
@@ -4202,7 +4211,7 @@
                 "options": {
                     "barRadius": 0,
                     "barWidth": 0.97,
-                    "colorByField": "Sum",
+                    "colorByField": "Max",
                     "fullHighlight": false,
                     "groupWidth": 0.7,
                     "legend": {
@@ -4218,6 +4227,7 @@
                         "mode": "single",
                         "sort": "none"
                     },
+                    "xField": "assignee_login",
                     "xTickLabelRotation": 0,
                     "xTickLabelSpacing": 0
                 },
@@ -4246,7 +4256,7 @@
                             {
                                 "field": "days_since_last_activity",
                                 "id": "1",
-                                "type": "sum"
+                                "type": "max"
                             }
                         ],
                         "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND days_since_last_activity: [2 TO *]",
@@ -4561,338 +4571,6 @@
                 "fieldConfig": {
                     "defaults": {
                         "color": {
-                            "fixedColor": "semi-dark-green",
-                            "mode": "fixed"
-                        },
-                        "mappings": [],
-                        "thresholds": {
-                            "mode": "absolute",
-                            "steps": [
-                                {
-                                    "color": "green",
-                                    "value": null
-                                },
-                                {
-                                    "color": "red",
-                                    "value": 80
-                                }
-                            ]
-                        }
-                    },
-                    "overrides": []
-                },
-                "gridPos": {
-                    "h": 6,
-                    "w": 4,
-                    "x": 12,
-                    "y": 132
-                },
-                "id": 71,
-                "options": {
-                    "colorMode": "value",
-                    "graphMode": "area",
-                    "justifyMode": "auto",
-                    "orientation": "auto",
-                    "percentChangeColorMode": "standard",
-                    "reduceOptions": {
-                        "calcs": [
-                            "lastNotNull"
-                        ],
-                        "fields": "",
-                        "values": false
-                    },
-                    "showPercentChange": false,
-                    "textMode": "auto",
-                    "wideLayout": true
-                },
-                "pluginVersion": "11.4.0",
-                "targets": [
-                    {
-                        "alias": "",
-                        "bucketAggs": [
-                            {
-                                "field": "day",
-                                "id": "2",
-                                "settings": {
-                                    "interval": "auto",
-                                    "min_doc_count": "0",
-                                    "timeZone": "utc",
-                                    "trimEdges": "0"
-                                },
-                                "type": "date_histogram"
-                            }
-                        ],
-                        "datasource": {
-                            "type": "elasticsearch",
-                            "uid": "elasticsearch-seat-assignments-uid"
-                        },
-                        "metrics": [
-                            {
-                                "id": "1",
-                                "type": "count"
-                            }
-                        ],
-                        "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND is_active_today: [1 TO 1]",
-                        "refId": "A",
-                        "timeField": "day"
-                    }
-                ],
-                "title": "Total Number of Active User-Days",
-                "transformations": [
-                    {
-                        "id": "reduce",
-                        "options": {
-                            "includeTimeField": false,
-                            "mode": "seriesToRows",
-                            "reducers": [
-                                "sum"
-                            ]
-                        }
-                    }
-                ],
-                "type": "stat"
-            },
-            {
-                "datasource": {
-                    "type": "elasticsearch",
-                    "uid": "elasticsearch-seat-assignments-uid"
-                },
-                "fieldConfig": {
-                    "defaults": {
-                        "color": {
-                            "fixedColor": "yellow",
-                            "mode": "fixed"
-                        },
-                        "mappings": [],
-                        "thresholds": {
-                            "mode": "absolute",
-                            "steps": [
-                                {
-                                    "color": "green",
-                                    "value": null
-                                },
-                                {
-                                    "color": "red",
-                                    "value": 80
-                                }
-                            ]
-                        }
-                    },
-                    "overrides": []
-                },
-                "gridPos": {
-                    "h": 6,
-                    "w": 4,
-                    "x": 16,
-                    "y": 132
-                },
-                "id": 72,
-                "options": {
-                    "colorMode": "value",
-                    "graphMode": "area",
-                    "justifyMode": "auto",
-                    "orientation": "auto",
-                    "percentChangeColorMode": "standard",
-                    "reduceOptions": {
-                        "calcs": [
-                            "lastNotNull"
-                        ],
-                        "fields": "",
-                        "values": false
-                    },
-                    "showPercentChange": false,
-                    "textMode": "auto",
-                    "wideLayout": true
-                },
-                "pluginVersion": "11.4.0",
-                "targets": [
-                    {
-                        "alias": "",
-                        "bucketAggs": [
-                            {
-                                "field": "day",
-                                "id": "2",
-                                "settings": {
-                                    "interval": "auto"
-                                },
-                                "type": "date_histogram"
-                            }
-                        ],
-                        "datasource": {
-                            "type": "elasticsearch",
-                            "uid": "elasticsearch-seat-assignments-uid"
-                        },
-                        "metrics": [
-                            {
-                                "id": "1",
-                                "type": "count"
-                            }
-                        ],
-                        "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login",
-                        "refId": "A",
-                        "timeField": "day"
-                    }
-                ],
-                "title": "Total Number of User-Days",
-                "transformations": [
-                    {
-                        "id": "reduce",
-                        "options": {
-                            "reducers": [
-                                "sum"
-                            ]
-                        }
-                    }
-                ],
-                "type": "stat"
-            },
-            {
-                "datasource": {
-                    "type": "elasticsearch",
-                    "uid": "elasticsearch-seat-assignments-uid"
-                },
-                "fieldConfig": {
-                    "defaults": {
-                        "color": {
-                            "fixedColor": "blue",
-                            "mode": "fixed"
-                        },
-                        "mappings": [],
-                        "thresholds": {
-                            "mode": "absolute",
-                            "steps": [
-                                {
-                                    "color": "green",
-                                    "value": null
-                                },
-                                {
-                                    "color": "red",
-                                    "value": 80
-                                }
-                            ]
-                        },
-                        "unit": "percentunit"
-                    },
-                    "overrides": []
-                },
-                "gridPos": {
-                    "h": 6,
-                    "w": 4,
-                    "x": 20,
-                    "y": 132
-                },
-                "id": 73,
-                "options": {
-                    "colorMode": "value",
-                    "graphMode": "area",
-                    "justifyMode": "auto",
-                    "orientation": "auto",
-                    "percentChangeColorMode": "standard",
-                    "reduceOptions": {
-                        "calcs": [
-                            "lastNotNull"
-                        ],
-                        "fields": "",
-                        "values": false
-                    },
-                    "showPercentChange": false,
-                    "textMode": "auto",
-                    "wideLayout": true
-                },
-                "pluginVersion": "11.4.0",
-                "targets": [
-                    {
-                        "alias": "",
-                        "bucketAggs": [
-                            {
-                                "field": "day",
-                                "id": "2",
-                                "settings": {
-                                    "interval": "auto",
-                                    "min_doc_count": "0",
-                                    "timeZone": "utc",
-                                    "trimEdges": "0"
-                                },
-                                "type": "date_histogram"
-                            }
-                        ],
-                        "datasource": {
-                            "type": "elasticsearch",
-                            "uid": "elasticsearch-seat-assignments-uid"
-                        },
-                        "hide": true,
-                        "metrics": [
-                            {
-                                "id": "1",
-                                "type": "count"
-                            }
-                        ],
-                        "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND is_active_today: [1 TO 1]",
-                        "refId": "A",
-                        "timeField": "day"
-                    },
-                    {
-                        "alias": "",
-                        "bucketAggs": [
-                            {
-                                "field": "day",
-                                "id": "2",
-                                "settings": {
-                                    "interval": "auto"
-                                },
-                                "type": "date_histogram"
-                            }
-                        ],
-                        "datasource": {
-                            "type": "elasticsearch",
-                            "uid": "elasticsearch-seat-assignments-uid"
-                        },
-                        "hide": true,
-                        "metrics": [
-                            {
-                                "id": "1",
-                                "type": "count"
-                            }
-                        ],
-                        "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login",
-                        "refId": "B",
-                        "timeField": "day"
-                    },
-                    {
-                        "datasource": {
-                            "name": "Expression",
-                            "type": "__expr__",
-                            "uid": "__expr__"
-                        },
-                        "expression": "$A / $B ",
-                        "hide": false,
-                        "refId": "C",
-                        "type": "math"
-                    }
-                ],
-                "title": "Active Rate of User-Days",
-                "transformations": [
-                    {
-                        "id": "reduce",
-                        "options": {
-                            "includeTimeField": false,
-                            "mode": "reduceFields",
-                            "reducers": [
-                                "lastNotNull"
-                            ]
-                        }
-                    }
-                ],
-                "type": "stat"
-            },
-            {
-                "datasource": {
-                    "type": "elasticsearch",
-                    "uid": "elasticsearch-seat-assignments-uid"
-                },
-                "fieldConfig": {
-                    "defaults": {
-                        "color": {
                             "mode": "palette-classic-by-name"
                         },
                         "custom": {
@@ -4952,6 +4630,7 @@
                     "y": 138
                 },
                 "id": 65,
+                "maxPerRow": 2,
                 "options": {
                     "cellHeight": "sm",
                     "footer": {
@@ -4967,7 +4646,7 @@
                     "sortBy": [
                         {
                             "desc": true,
-                            "displayName": "days_since_last_activity"
+                            "displayName": "days_since_last_activity (last)"
                         }
                     ]
                 },
@@ -5004,16 +4683,16 @@
                             "include": {
                                 "names": [
                                     "day",
-                                    "assignee_login",
                                     "assignee_team_slug",
                                     "created_at",
                                     "days_since_last_activity",
+                                    "is_active_today",
                                     "last_activity_at",
                                     "last_activity_editor",
                                     "last_updated_at",
-                                    "organization_slug",
                                     "updated_at",
-                                    "is_active_today"
+                                    "assignee_login",
+                                    "organization_slug"
                                 ]
                             }
                         }
@@ -5024,6 +4703,76 @@
                             "outputFormat": "Y-M-D",
                             "timeField": "day",
                             "useTimezone": true
+                        }
+                    },
+                    {
+                        "id": "groupBy",
+                        "options": {
+                            "fields": {
+                                "assignee_login": {
+                                    "aggregations": [
+                                        "uniqueValues"
+                                    ],
+                                    "operation": "groupby"
+                                },
+                                "assignee_team_slug": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                },
+                                "created_at": {
+                                    "aggregations": []
+                                },
+                                "day": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                },
+                                "days_since_last_activity": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                },
+                                "is_active_today": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                },
+                                "last_activity_at": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                },
+                                "last_activity_editor": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                },
+                                "last_updated_at": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                },
+                                "organization_slug": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                },
+                                "updated_at": {
+                                    "aggregations": [
+                                        "last"
+                                    ],
+                                    "operation": "aggregate"
+                                }
+                            }
                         }
                     }
                 ],
@@ -6126,7 +5875,7 @@
         "timezone": "",
         "title": "Copilot Usage Advanced Dashboard",
         "uid": "be7hpbvvhst8gc",
-        "version": 85,
+        "version": 88,
         "weekStart": "",
         "inputs": [
             {
