@@ -88,6 +88,16 @@ for data_source_name in data_source_names:
     uid_placeholder = f"{data_source_name}-uid"
     template_content = template_content.replace(uid_placeholder, uid)
 
+# After processing all placeholders, extract the dashboard field
+template_json = json.loads(template_content)
+dashboard_content = template_json.get('dashboard', {})
+
+# Save the dashboard content to a separate file
+dashboard_output_path = f'{grafana_folder}/import-this-to-grafana-{datetime.today().strftime("%Y-%m-%d")}.json'
+with open(dashboard_output_path, 'w', encoding='utf-8') as dashboard_file:
+    json.dump(dashboard_content, dashboard_file, indent=4, ensure_ascii=False)
+    print(f"Please import {dashboard_output_path} to Grafana")
+
 with open(model_output_path, 'w', encoding='utf-8') as output_file:
     output_file.write(template_content)
     print(f"Model saved to {model_output_path}, please import it to Grafana")
