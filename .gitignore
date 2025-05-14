@@ -32,3 +32,4 @@ debug_*
 
 # .env files
 *.env
+elasticsearch_env
