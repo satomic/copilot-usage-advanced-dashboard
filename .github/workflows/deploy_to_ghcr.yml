@@ -1,0 +1,41 @@
+name: Build, push Docker image
+
+on:
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  packages: write
+
+jobs:
+  build-elastic:
+    name: Elastic Search Image
+    uses: ./.github/workflows/template_ghcr.yml
+    with:
+        APP_NAME: elastic-search
+        CONTEXT: ./src/elasticsearch
+    
+  build-grafana:
+    name: Grafana Image
+    uses: ./.github/workflows/template_ghcr.yml
+    with:
+        APP_NAME: grafana
+        CONTEXT: ./src/grafana
+
+  build-cpuad-updater:
+    name: CPUAD Updater Image
+    uses: ./.github/workflows/template_ghcr.yml
+    with:
+        APP_NAME: cpuad-updater
+        CONTEXT: ./src/cpuad-updater
+
+  build-grafana-updater:
+    name: Grafana Updater Image
+    uses: ./.github/workflows/template_ghcr.yml
+    with:
+        APP_NAME: grafana-updater
+        CONTEXT: ./src/cpuad-updater/grafana
