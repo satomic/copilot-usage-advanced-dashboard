@@ -13,30 +13,37 @@ data_source_names = [
     "elasticsearch-total",
 ]
 
-grafana_folder = 'grafana'
-default_template_path = f'{grafana_folder}/dashboard-template.json'
-model_output_path = f'{grafana_folder}/dashboard-model-{datetime.today().strftime("%Y-%m-%d")}.json'
+grafana_folder = "grafana"
+default_template_path = f"{grafana_folder}/dashboard-template.json"
+model_output_path = (
+    f'{grafana_folder}/dashboard-model-{datetime.today().strftime("%Y-%m-%d")}.json'
+)
 mapping_output_path = f'{grafana_folder}/dashboard-model-data_sources_name_uid_mapping-{datetime.today().strftime("%Y-%m-%d")}.json'
 
 # Parse command-line arguments
-parser = argparse.ArgumentParser(description='Generate Grafana dashboard model.')
-parser.add_argument('--template', type=str, default=default_template_path, help='Path to the dashboard template JSON file')
+parser = argparse.ArgumentParser(description="Generate Grafana dashboard model.")
+parser.add_argument(
+    "--template",
+    type=str,
+    default=default_template_path,
+    help="Path to the dashboard template JSON file",
+)
 args = parser.parse_args()
 
 template_path = args.template
 
-grafana_url = os.getenv('GRAFANA_URL', 'http://$GRAFANA_URL/')
-grafana_token = os.getenv('GRAFANA_TOKEN')
+grafana_url = os.getenv("GRAFANA_URL", "http://$GRAFANA_URL/")
+grafana_token = os.getenv("GRAFANA_TOKEN")
 
 if not grafana_token:
     raise ValueError("Please set the GRAFANA_TOKEN environment variable")
 
 headers = {
-        "Accept": "application/vnd.github+json",
-        "Authorization": f"Bearer {grafana_token}",
-        "X-GitHub-Api-Version": "2022-11-28"
-    }
-response = requests.get(grafana_url.rstrip('/')+'/api/datasources', headers=headers)
+    "Accept": "application/vnd.github+json",
+    "Authorization": f"Bearer {grafana_token}",
+    "X-GitHub-Api-Version": "2022-11-28",
+}
+response = requests.get(grafana_url.rstrip("/") + "/api/datasources", headers=headers)
 
 # sample data_resources
 # data_resources = [
@@ -70,14 +77,14 @@ data_resources = response.json()
 
 data_sources_name_uid_mapping = {}
 for data_resource in data_resources:
-    name = data_resource['name']
-    uid = data_resource['uid']
+    name = data_resource["name"]
+    uid = data_resource["uid"]
     data_sources_name_uid_mapping[name] = uid
 
-with open(mapping_output_path, 'w', encoding='utf-8') as f:
+with open(mapping_output_path, "w", encoding="utf-8") as f:
     json.dump(data_sources_name_uid_mapping, f, indent=4)
 
-with open(template_path, 'r', encoding='utf-8') as template_file:
+with open(template_path, "r", encoding="utf-8") as template_file:
     template_content = template_file.read()
 
 for data_source_name in data_source_names:
@@ -90,14 +97,14 @@ for data_source_name in data_source_names:
 
 # After processing all placeholders, extract the dashboard field
 template_json = json.loads(template_content)
-dashboard_content = template_json.get('dashboard', {})
+dashboard_content = template_json.get("dashboard", {})
 
 # Save the dashboard content to a separate file
 dashboard_output_path = f'{grafana_folder}/import-this-to-grafana-{datetime.today().strftime("%Y-%m-%d")}.json'
-with open(dashboard_output_path, 'w', encoding='utf-8') as dashboard_file:
+with open(dashboard_output_path, "w", encoding="utf-8") as dashboard_file:
     json.dump(dashboard_content, dashboard_file, indent=4, ensure_ascii=False)
     print(f"Please import {dashboard_output_path} to Grafana")
 
-with open(model_output_path, 'w', encoding='utf-8') as output_file:
+with open(model_output_path, "w", encoding="utf-8") as output_file:
     output_file.write(template_content)
     print(f"Model saved to {model_output_path}, please import it to Grafana")
