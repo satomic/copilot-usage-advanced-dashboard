@@ -10,7 +10,7 @@ Application can be deployed to a kubernetes cluster
 
 Dependent technology stack:
 
-- Kubernetes (pods, jobs, services, persitent storage, ingress)
+- Kubernetes (pods, jobs, services, persistent storage, ingress)
 - Elasticsearch
 - Grafana
 - Python3
