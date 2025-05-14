@@ -1,0 +1,66 @@
+# ------------------------------------------------------------------------------------------------------------------------
+# Reusable Workflow: Docker Build to a Registry
+# ------------------------------------------------------------------------------------------------------------------------
+    name: z_template_docker_build
+    run-name: Build and push Docker Image
+    on:
+      workflow_call:
+        inputs:
+          APP_NAME:
+            required: true
+            type: string
+          CONTEXT:
+            required: true
+            type: string
+    
+    # ------------------------------------------------------------------------------------------------------------------------
+        outputs:
+          IMAGE_TAGS:
+            value: ${{ jobs.build.outputs.IMAGE_TAGS  }}
+        
+    # ------------------------------------------------------------------------------------------------------------------------
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+        outputs:
+          IMAGE_TAGS: ${{ steps.meta.outputs.tags }}
+    
+        steps:
+          - name: Checkout GitHub Action
+            uses: actions/checkout@v4
+
+          - name: Login to GitHub Container Registry
+            uses: docker/login-action@v3
+            with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+
+            # Adding below tag any push to main as "latest"
+            # To deploy latest, create a release with a semver tag
+            # type=raw,value=latest,enable={{is_default_branch}}
+          - name: Extract metadata
+            id: meta
+            uses: docker/metadata-action@v5
+            with:
+                # this is back a single image, `-with-proxy` is legacy and will be removed
+                images: |
+                    ghcr.io/${{ github.repository }}/${{ inputs.APP_NAME  }}
+                labels: |
+                    org.opencontainers.image.title=copilot-usage-advanced-dashboard-${{ inputs.APP_NAME  }}
+                    org.opencontainers.image.description=Metrics viewer for GitHub Copilot usage ${{ inputs.APP_NAME  }}
+                    org.opencontainers.image.source=${{ github.repository }}
+                tags: |
+                    type=sha
+                    type=ref,event=branch
+                    type=ref,event=pr
+                    type=semver,pattern={{version}}
+                    type=semver,pattern={{major}}.{{minor}}
+
+          - name: Build and push
+            uses: docker/build-push-action@v5
+            with:
+                context: ${{ inputs.CONTEXT  }}
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                push: true
