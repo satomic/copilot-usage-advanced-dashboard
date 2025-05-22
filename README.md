@@ -236,6 +236,8 @@ if you are not using Azure, you can use Linux with Docker, please refer to the [
 
 ![](image/image_oZJ-KGOxa5.png)
 
+## Kubernetes
+For cloud native deployment on Kubernetes,  please refer to the [Kubernetes deployment document](deploy/kubernetes.md).
 
 ## Congratulations, View Dashboard
 

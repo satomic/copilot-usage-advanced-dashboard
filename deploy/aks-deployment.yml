@@ -60,7 +60,7 @@ spec:
               mountPath: /usr/share/elasticsearch/logs
       containers:
         - name: elasticsearch
-          image: ghcr.io/jordanbean-msft/copilot-usage-advanced-dashboard/elastic-search:main
+          image: ghcr.io/satomic/copilot-usage-advanced-dashboard/elastic-search:main
           ports:
             - containerPort: 9200
           volumeMounts:
@@ -124,7 +124,7 @@ spec:
     spec:
       initContainers:
         - name: update-grafana
-          image: ghcr.io/jordanbean-msft/copilot-usage-advanced-dashboard/grafana-updater:main
+          image: ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana-updater:main
           envFrom:
             - secretRef:
                 name: grafana-credentials
@@ -142,7 +142,7 @@ spec:
               memory: "512Mi"
       containers:
         - name: grafana
-          image: ghcr.io/jordanbean-msft/copilot-usage-advanced-dashboard/grafana:main
+          image: ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana:main
           ports:
             - containerPort: 80
           envFrom:
@@ -234,7 +234,7 @@ spec:
         spec:
           containers:
             - name: cpuad-updater
-              image: ghcr.io/jordanbean-msft/copilot-usage-advanced-dashboard/cpuad-updater:main
+              image: ghcr.io/satomic/copilot-usage-advanced-dashboard/cpuad-updater:main
               envFrom:
                 - secretRef:
                     name: github-pat
