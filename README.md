@@ -40,12 +40,12 @@
     - [1. Copilot Seat Info & Top Languages](#1-Copilot-Seat-Info--Top-Languages)
     - [2. Copilot Usage Total Insight](#2-Copilot-Usage-Total-Insight)
     - [3. Copilot Usage Breakdown Insight](#3-Copilot-Usage-Breakdown-Insight)
-- [Special Notes](#Special-Notes)
-  - [Architecture diagram](#Architecture-diagram)
-  - [Technology stack](#Technology-stack)
-- [GitHub Credentials](#GitHub-Credentials)
-- [View Dashboard](#View-Dashboard)
 - [Deployment](#deployment)
+  - [1. Azure Container Apps](#1-Azure-Container-Apps)
+  - [2. Linux with Docker](#2-Linux-with-Docker)
+  - [3. Kubernetes](#3-Kubernetes)
+- [Congratulations](#Congratulations)
+
 ---
 
 
@@ -224,22 +224,24 @@ You can analyze the effect of Copilot in different languages ​​and different
 
 # Deployment
 
-## Azure Container Apps
+## 1. Azure Container Apps
 if you are using Azure Container Apps, please refer to the [Azure Container Apps deployment document](deploy/azure-container-apps.md).
 
 ![](image/architecture.drawio.png)
 
 
 
-## Linux with Docker
+## 2. Linux with Docker
 if you are not using Azure, you can use Linux with Docker, please refer to the [Linux with Docker deployment document](deploy/linux-with-docker.md).
 
 ![](image/image_oZJ-KGOxa5.png)
 
-## Kubernetes
+## 3. Kubernetes
 For cloud native deployment on Kubernetes,  please refer to the [Kubernetes deployment document](deploy/kubernetes.md).
 
-## Congratulations, View Dashboard
+---
+
+# Congratulations
 
 At this point, return to the Grafana page and refresh. You should be able to see the data.
 
