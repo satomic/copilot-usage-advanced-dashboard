@@ -4,13 +4,13 @@ from datetime import datetime
 
 
 def current_time():
-    return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
 
 
 """
 Log utilities
 """
-log_format = '%(asctime)s - [%(levelname)s] - %(message)s'
+log_format = "%(asctime)s - [%(levelname)s] - %(message)s"
 logging.basicConfig(level=logging.INFO, format=log_format)
 
 
@@ -19,7 +19,6 @@ def configure_logger(log_path="logs", with_date_folder=True):
     if with_date_folder:
         log_path = os.path.join(log_path, current_time()[:10])
 
-
     # Get whether to enable debug
     debug = True
 
@@ -27,7 +26,7 @@ def configure_logger(log_path="logs", with_date_folder=True):
         os.makedirs(log_path)
 
     log_file_name = f"{log_path}/{datetime.now().strftime('%Y-%m-%d')}.log"
-    file_handler = logging.FileHandler(log_file_name, mode='a')
+    file_handler = logging.FileHandler(log_file_name, mode="a")
     file_handler.setLevel(logging.INFO)
     file_formatter = logging.Formatter(log_format)
     file_handler.setFormatter(file_formatter)
@@ -40,7 +39,7 @@ def configure_logger(log_path="logs", with_date_folder=True):
     return logger
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     logger = configure_logger()
     logger.info("test")
     logger.debug("test")

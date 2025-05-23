@@ -88,6 +88,15 @@ Server:
 
 ```
 
+## Using existing images
+
+Docker images for all app components are available in [GitHub container registry](https://github.com/satomic?tab=packages&repo_name=copilot-usage-advanced-dashboard):
+
+- **Elastic Search** - `docker pull ghcr.io/satomic/copilot-usage-advanced-dashboard/elastic-search:main`
+- **grafana** - `docker pull ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana:main`
+- **grafana-updater** - `docker pull ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana-updater:main`
+- **cpuad-updater** - `docker pull ghcr.io/satomic/copilot-usage-advanced-dashboard/cpuad-updater:main`
+
 ## Download source code
 
 Put all the work in the `/srv` directory, click [download zip archive](https://github.com/satomic/copilot-usage-advanced-dashboard/archive/refs/heads/main.zip), unzip and rename the folder to `copilot-usage-advanced-dashboard`, or directly `git clone`

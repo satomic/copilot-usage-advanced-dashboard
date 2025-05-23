@@ -33,12 +33,20 @@ def convert_day(metrics_day):
                             "acceptances_count": 0,
                             "lines_suggested": 0,
                             "lines_accepted": 0,
-                            "active_users": lang.get("total_engaged_users", 0)
+                            "active_users": lang.get("total_engaged_users", 0),
                         }
-                    breakdown_dict[key]["suggestions_count"] += lang.get("total_code_suggestions", 0)
-                    breakdown_dict[key]["acceptances_count"] += lang.get("total_code_acceptances", 0)
-                    breakdown_dict[key]["lines_suggested"] += lang.get("total_code_lines_suggested", 0)
-                    breakdown_dict[key]["lines_accepted"] += lang.get("total_code_lines_accepted", 0)
+                    breakdown_dict[key]["suggestions_count"] += lang.get(
+                        "total_code_suggestions", 0
+                    )
+                    breakdown_dict[key]["acceptances_count"] += lang.get(
+                        "total_code_acceptances", 0
+                    )
+                    breakdown_dict[key]["lines_suggested"] += lang.get(
+                        "total_code_lines_suggested", 0
+                    )
+                    breakdown_dict[key]["lines_accepted"] += lang.get(
+                        "total_code_lines_accepted", 0
+                    )
 
                     total_suggestions_count += lang.get("total_code_suggestions", 0)
                     total_acceptances_count += lang.get("total_code_acceptances", 0)
@@ -72,22 +80,26 @@ def convert_day(metrics_day):
                         "chat_copy_events": 0,
                         "chat_insertion_events": 0,
                         "chat_acceptances": 0,
-                        "active_users": model.get("total_engaged_users", 0)
+                        "active_users": model.get("total_engaged_users", 0),
                     }
                 total_chat_copy_events += model.get("total_chat_copy_events", 0)
-                total_chat_insertion_events += model.get("total_chat_insertion_events", 0)
-                total_chat_acceptances += (
-                    model.get("total_chat_insertion_events", 0) +
-                    model.get("total_chat_copy_events", 0)
+                total_chat_insertion_events += model.get(
+                    "total_chat_insertion_events", 0
                 )
+                total_chat_acceptances += model.get(
+                    "total_chat_insertion_events", 0
+                ) + model.get("total_chat_copy_events", 0)
                 total_chat_turns += model.get("total_chats", 0)
                 breakdown_chat_dict[key]["chat_turns"] += model.get("total_chats", 0)
-                breakdown_chat_dict[key]["chat_copy_events"] += model.get("total_chat_copy_events", 0)
-                breakdown_chat_dict[key]["chat_insertion_events"] += model.get("total_chat_insertion_events", 0)
-                breakdown_chat_dict[key]["chat_acceptances"] += (
-                    model.get("total_chat_insertion_events", 0) +
-                    model.get("total_chat_copy_events", 0)
+                breakdown_chat_dict[key]["chat_copy_events"] += model.get(
+                    "total_chat_copy_events", 0
                 )
+                breakdown_chat_dict[key]["chat_insertion_events"] += model.get(
+                    "total_chat_insertion_events", 0
+                )
+                breakdown_chat_dict[key]["chat_acceptances"] += model.get(
+                    "total_chat_insertion_events", 0
+                ) + model.get("total_chat_copy_events", 0)
 
     breakdown_chat_list = list(breakdown_chat_dict.values())
 
@@ -104,20 +116,22 @@ def convert_day(metrics_day):
         "total_chat_copy_events": total_chat_copy_events,
         "total_chat_insertion_events": total_chat_insertion_events,
         "breakdown": breakdown_list,
-        "breakdown_chat": breakdown_chat_list
+        "breakdown_chat": breakdown_chat_list,
     }
     return usage
+
 
 def convert_metrics_to_usage(metrics):
     # metrics is a list, each element is the indicator data for one day
     return [convert_day(day) for day in metrics]
 
+
 def main():
     # if len(sys.argv) < 3:
     #     print("Usage: python conversion.py input.json output.json")
     #     sys.exit(1)
-    input_file = 'logs/2025-02-22/nekoaru_level1-team1_copilot_metrics_2025-02-22.json'  # sys.argv[1]
-    output_file = 'tmp/output.json'  # sys.argv[2]
+    input_file = "logs/2025-02-22/nekoaru_level1-team1_copilot_metrics_2025-02-22.json"  # sys.argv[1]
+    output_file = "tmp/output.json"  # sys.argv[2]
 
     with open(input_file, "r", encoding="utf-8") as f:
         metrics = json.load(f)
@@ -126,6 +140,7 @@ def main():
 
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(usage, f, indent=2)
+
 
 if __name__ == "__main__":
     main()
