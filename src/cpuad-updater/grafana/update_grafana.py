@@ -83,6 +83,19 @@ def poll_for_grafana():
             logging.error(f"Grafana is not reachable: {e}")
         time.sleep(5)
 
+def safe_request(method, url, headers=None, json=None, max_retries=3, retry_interval=5):
+    """General purpose HTTP request handler with retries"""
+    for attempt in range(max_retries):
+        try:
+            response = requests.request(method, url, headers=headers, json=json)
+            if response.status_code in [200,201,404]:
+                return response
+            else:
+                logging.error(f"Request failed with status code {response.status_code}: {response.text}")
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Request exception: {e}")
+        time.sleep(retry_interval)
+    raise ValueError(f"Unable to complete request after {max_retries} retries: {url}")
 
 def get_existing_grafana_service_account_id(headers):
     """
@@ -91,11 +104,12 @@ def get_existing_grafana_service_account_id(headers):
     Returns:
         The service account ID if it exists, None otherwise.
     """
-    result = requests.get(
+    result = safe_request(
+        "GET",
         f"{grafana_url.rstrip('/')}/api/serviceaccounts/search?query={service_account_name}",
         headers=headers,
     )
-    time.sleep(1)  # Add a 1-second delay
+    # time.sleep(1)  # Add a 1-second delay
 
     if result.status_code != 200:
         logging.error(
@@ -140,7 +154,6 @@ def delete_existing_grafana_service_account(headers, service_account_id):
         raise ValueError(
             f"Failed to delete service account - {result.status_code} - {result.text}"
         )
-
     logging.info("Service account deleted successfully.")
 
 
@@ -173,7 +186,8 @@ def setup_grafana_service_account():
 
 
 def create_grafana_access_token(headers, service_account_id):
-    result = requests.post(
+    result = safe_request(
+        "POST",
         f"{grafana_url.rstrip('/')}/api/serviceaccounts/{service_account_id}/tokens",
         headers=headers,
         json={"name": "sa-for-cpuad-key", "secondsToLive": 0},
@@ -210,12 +224,13 @@ def get_grafana_basic_credentials_headers():
 
 
 def create_service_account(headers):
-    result = requests.post(
+    result = safe_request(
+        "POST",
         f"{grafana_url.rstrip('/')}/api/serviceaccounts",
         headers=headers,
         json={"name": service_account_name, "role": "Admin", "isDisabled": False},
     )
-    time.sleep(1)  # Add a 1-second delay
+    # time.sleep(1)  # Add a 1-second delay
 
     if result.status_code != 201:
         logging.error(
@@ -251,7 +266,7 @@ def import_grafana_dashboard(dashboard_model, grafana_token):
         f.write(template_content)
 
     result = requests.post(
-        f"{grafana_url.rstrip('/')}/api/dashboards/import",
+        f"{grafana_url.rstrip('/')}/api/dashboards/db",
         headers=headers,
         data=template_content,
     )
@@ -267,8 +282,7 @@ def import_grafana_dashboard(dashboard_model, grafana_token):
         logging.info("Dashboard imported successfully.")
 
 
-def add_grafana_data_sources(grafana_token):
-    # Common headers
+def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {grafana_token}",
@@ -276,17 +290,26 @@ def add_grafana_data_sources(grafana_token):
 
     # Data sources to add
     data_sources = [
-        {"name": "elasticsearch-breakdown", "index": "copilot_usage_breakdown"},
+        {
+            "name": "elasticsearch-breakdown",
+            "index": "copilot_usage_breakdown",
+        },
         {
             "name": "elasticsearch-breakdown-chat",
             "index": "copilot_usage_breakdown_chat",
         },
-        {"name": "elasticsearch-total", "index": "copilot_usage_total"},
+        {
+            "name": "elasticsearch-total",
+            "index": "copilot_usage_total",
+        },
         {
             "name": "elasticsearch-seat-info-settings",
             "index": "copilot_seat_info_settings",
         },
-        {"name": "elasticsearch-seat-assignments", "index": "copilot_seat_assignments"},
+        {
+            "name": "elasticsearch-seat-assignments",
+            "index": "copilot_seat_assignments",
+        },
     ]
 
     # Template for the payload
@@ -312,28 +335,40 @@ def add_grafana_data_sources(grafana_token):
 
     # Add each data source
     for ds in data_sources:
-        payload = create_payload(ds["name"], ds["index"])
-
-        logging.info(f"Adding data source: {ds['name']}...")
-
-        response = requests.post(
-            f"{grafana_url.rstrip('/')}/api/datasources", headers=headers, json=payload
+        logging.info(f"Checking if data source {ds['name']} already exists...")
+        check_resp = safe_request(
+            "GET",
+            f"{grafana_url.rstrip('/')}/api/datasources/name/{ds['name']}",
+            headers=headers
         )
-        time.sleep(1)  # Add a 1-second delay
+        if check_resp.status_code == 200:
+            logging.info(f"Data source {ds['name']} already exists, skipping.")
+            continue
 
-        if response.status_code != 200:
-            if response.status_code == 409:
-                logging.info(f"Data source {ds['name']} already exists. Proceeding...")
-                continue
+        payload = create_payload(ds["name"], ds["index"])
+        logging.info(f"Creating data source: {ds['name']}...")
 
-            logging.error(
-                f"Failed to add data source: {ds['name']}. Status code: {response.status_code}, Response: {response.text}"
-            )
-            raise ValueError(
-                f"Failed to add data source - {response.status_code} - {response.text}"
-            )
+        response = safe_request(
+            "POST",
+            f"{grafana_url.rstrip('/')}/api/datasources",
+            headers=headers,
+            json=payload,
+            max_retries=max_retries,
+            retry_interval=retry_interval,
+        )
 
-        logging.info(f"Successfully added data source: {ds['name']}")
+        verify_resp = safe_request(
+            "GET",
+            f"{grafana_url.rstrip('/')}/api/datasources/name/{ds['name']}",
+            headers=headers,
+            max_retries=max_retries,
+            retry_interval=retry_interval,
+        )
+
+        if verify_resp.status_code == 200:
+            logging.info(f"Data source verified: {ds['name']}")
+        else:
+            raise ValueError(f"Data source verification failed: {ds['name']}")
 
 
 def generate_grafana_model(grafana_token):

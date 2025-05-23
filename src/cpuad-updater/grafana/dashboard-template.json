@@ -5698,7 +5698,6 @@
         ],
         "preload": false,
         "refresh": "",
-        "schemaVersion": 40,
         "tags": [
             "copilot"
         ],
@@ -5874,8 +5873,6 @@
         "timepicker": {},
         "timezone": "",
         "title": "Copilot Usage Advanced Dashboard",
-        "uid": "be7hpbvvhst8gc",
-        "version": 88,
         "weekStart": "",
         "inputs": [
             {
@@ -5911,6 +5908,5 @@
         ]
     },
     "overwrite": true,
-    "inputs": [],
-    "folderUid": ""
+    "folderId": 0
 }
