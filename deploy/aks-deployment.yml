@@ -47,17 +47,6 @@ spec:
       labels:
         app: elasticsearch
     spec:
-      initContainers:
-        - name: init-elasticsearch
-          image: busybox:1.28
-          command: ["/bin/sh", "-c"]
-          args:
-            - chown -R 1000:1000 /usr/share/elasticsearch/data && chown -R 1000:1000 /usr/share/elasticsearch/logs
-          volumeMounts:
-            - name: elasticsearch
-              mountPath: /usr/share/elasticsearch/data
-            - name: elasticsearch
-              mountPath: /usr/share/elasticsearch/logs
       containers:
         - name: elasticsearch
           image: ghcr.io/satomic/copilot-usage-advanced-dashboard/elastic-search:main
@@ -122,24 +111,6 @@ spec:
       labels:
         app: grafana
     spec:
-      initContainers:
-        - name: update-grafana
-          image: ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana-updater:main
-          envFrom:
-            - secretRef:
-                name: grafana-credentials
-          env:
-            - name: ELASTICSEARCH_URL
-              value: "http://elasticsearch:9200"
-            - name: GRAFANA_URL
-              value: "http://grafana:80"
-          resources:
-            requests:
-              cpu: "0.25"
-              memory: "256Mi"
-            limits:
-              cpu: "0.5"
-              memory: "512Mi"
       containers:
         - name: grafana
           image: ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana:main
@@ -178,13 +149,14 @@ spec:
             httpGet:
               path: /api/health
               port: 80
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /api/health
               port: 80
-            initialDelaySeconds: 10
+            initialDelaySeconds: 30
             periodSeconds: 10
       volumes:
         - name: grafana-data
@@ -263,3 +235,32 @@ spec:
             - name: cpuad-updater-logs
               persistentVolumeClaim:
                 claimName: shared-pvc
+
+# --- update-grafana Job (runs once) ---
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: update-grafana-once
+spec:
+  template:
+    spec:
+      containers:
+        - name: update-grafana
+          image: ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana-updater:main
+          envFrom:
+            - secretRef:
+                name: grafana-credentials
+          env:
+            - name: ELASTICSEARCH_URL
+              value: "http://elasticsearch:9200"
+            - name: GRAFANA_URL
+              value: "http://grafana:80"
+          resources:
+            requests:
+              cpu: "0.25"
+              memory: "256Mi"
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+      restartPolicy: Never
