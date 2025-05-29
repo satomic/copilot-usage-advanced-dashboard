@@ -54,6 +54,40 @@
         },
         "unique_hash" : {
           "type" : "keyword"
+        },
+        "dotcom_chat_total_engaged_users": {
+          "type": "long"
+        },
+        "dotcom_chat_total_chats": {
+          "type": "long"
+        },
+        "dotcom_chat_breakdown": {
+          "type": "nested",
+          "properties": {
+            "model": { "type": "keyword" },
+            "is_custom_model": { "type": "boolean" },
+            "custom_model_training_date": { "type": "date", "format": "yyyy-MM-dd||strict_date_optional_time||epoch_millis" },
+            "total_engaged_users": { "type": "long" },
+            "total_chats": { "type": "long" }
+          }
+        },
+        "dotcom_pr_total_engaged_users": {
+          "type": "long"
+        },
+        "dotcom_pr_total_summaries": {
+          "type": "long"
+        },
+        "dotcom_pr_breakdown": {
+          "type": "nested",
+          "properties": {
+            "repository": { "type": "keyword" },
+            "repo_engaged_users": { "type": "long" },
+            "model": { "type": "keyword" },
+            "is_custom_model": { "type": "boolean" },
+            "custom_model_training_date": { "type": "date", "format": "yyyy-MM-dd||strict_date_optional_time||epoch_millis" },
+            "total_pr_summaries_created": { "type": "long" },
+            "model_engaged_users": { "type": "long" }
+          }
         }
       }
     },
