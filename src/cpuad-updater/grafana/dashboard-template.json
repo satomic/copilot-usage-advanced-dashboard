@@ -5694,6 +5694,201 @@
                 ],
                 "title": "Accept Rate by Lines (%)",
                 "type": "status-history"
+            },
+            {
+              "datasource": {
+                "uid": "elasticsearch-total-uid"
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "none"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 0,
+                "y": 200
+              },
+              "id": 9001,
+              "options": {
+                "wideLayout": true
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "metrics": [
+                    {
+                      "field": "dotcom_chat_total_engaged_users",
+                      "id": "1",
+                      "type": "max"
+                    }
+                  ],
+                  "query": "organization_slug: $organization_name",
+                  "refId": "A",
+                  "timeField": "day"
+                }
+              ],
+              "title": "GitHub.com Copilot Chat: Total Engaged Users",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "uid": "elasticsearch-total-uid"
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "none"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 6,
+                "y": 200
+              },
+              "id": 9002,
+              "options": {
+                "wideLayout": true
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "metrics": [
+                    {
+                      "field": "dotcom_chat_total_chats",
+                      "id": "1",
+                      "type": "sum"
+                    }
+                  ],
+                  "query": "organization_slug: $organization_name",
+                  "refId": "A",
+                  "timeField": "day"
+                }
+              ],
+              "title": "GitHub.com Copilot Chat: Total Chats",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "uid": "elasticsearch-total-uid"
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "none"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 12,
+                "y": 200
+              },
+              "id": 9003,
+              "options": {
+                "wideLayout": true
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "metrics": [
+                    {
+                      "field": "dotcom_pr_total_engaged_users",
+                      "id": "1",
+                      "type": "max"
+                    }
+                  ],
+                  "query": "organization_slug: $organization_name",
+                  "refId": "A",
+                  "timeField": "day"
+                }
+              ],
+              "title": "GitHub.com Copilot PR: Total Engaged Users",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "uid": "elasticsearch-total-uid"
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "none"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 5,
+                "w": 6,
+                "x": 18,
+                "y": 200
+              },
+              "id": 9004,
+              "options": {
+                "wideLayout": true
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "metrics": [
+                    {
+                      "field": "dotcom_pr_total_summaries",
+                      "id": "1",
+                      "type": "sum"
+                    }
+                  ],
+                  "query": "organization_slug: $organization_name",
+                  "refId": "A",
+                  "timeField": "day"
+                }
+              ],
+              "title": "GitHub.com Copilot PR: Total PR Summaries",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "uid": "elasticsearch-total-uid"
+              },
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 10,
+                "w": 24,
+                "x": 0,
+                "y": 206
+              },
+              "id": 9005,
+              "options": {
+                "showHeader": true
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "metrics": [],
+                  "query": "organization_slug: $organization_name",
+                  "refId": "A",
+                  "timeField": "day"
+                }
+              ],
+              "title": "GitHub.com Copilot PR Breakdown",
+              "transformations": [
+                {
+                  "id": "extractFields",
+                  "options": {
+                    "fields": [
+                      "dotcom_pr_breakdown.repository",
+                      "dotcom_pr_breakdown.model",
+                      "dotcom_pr_breakdown.total_pr_summaries_created",
+                      "dotcom_pr_breakdown.model_engaged_users"
+                    ]
+                  }
+                }
+              ],
+              "type": "table"
             }
         ],
         "preload": false,
