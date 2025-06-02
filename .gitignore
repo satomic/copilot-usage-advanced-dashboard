@@ -33,3 +33,4 @@ debug_*
 # .env files
 *.env
 elasticsearch_env
+aks-deployment.my.yml
