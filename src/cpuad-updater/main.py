@@ -914,14 +914,9 @@ def main(organization_slug):
 
 if __name__ == "__main__":
     try:
-        logger.info(
-            f"Starting data processing for organizations: {Paras.organization_slugs}"
-        )
-        # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting
-        organization_slugs = Paras.organization_slugs.split(",")
-        for organization_slug in organization_slugs:
-            main(organization_slug.strip())
+        main()
+        logger.info("Execution completed successfully.")
     except Exception as e:
-        logger.error(f"An error occurred: {traceback.format_exc(e)}")
+        logger.error(f"An error occurred: {traceback.format_exc()}")
     finally:
-        logger.info("-----------------Finished-----------------")
+        logger.info('-----------------Finished-----------------')
