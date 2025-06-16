@@ -220,8 +220,6 @@ spec:
                   value: "http://elasticsearch:9200"
                 - name: LOG_PATH
                   value: "logs"
-                - name: EXECUTION_INTERVAL
-                  value: "6"
               volumeMounts:
                 - name: cpuad-updater-logs
                   mountPath: /app/logs

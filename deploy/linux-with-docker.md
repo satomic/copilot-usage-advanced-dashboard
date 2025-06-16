@@ -345,7 +345,6 @@ Parameter description
   - `standalone:myStandaloneSlug`
   - `myOrg1,standalone:myStandaloneSlug`
 - `LOG_PATH`: Log storage location, not recommended to modify. If modified, you need to modify the `-v` data volume mapping simultaneously.
-- `EXECUTION_INTERVAL`: Update interval, the default is to update the program every `1` hours.
 - `ELASTICSEARCH_URL`: The URL of your Elasticsearch, the default is `http://localhost:9200`, if you have modified the port, please modify it here.
 - `TZ`: Timezone, the default is `GMT`, if you want to change it to your local timezone, please refer to [tz database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For example, if you are in Toronto, please change it to `America/Toronto`.
 
@@ -357,7 +356,6 @@ docker run -itd \
 -e GITHUB_PAT="<YOUR_GITHUB_PAT>" \
 -e ORGANIZATION_SLUGS="<YOUR_ORGANIZATION_SLUGS>" \
 -e LOG_PATH="logs" \
--e EXECUTION_INTERVAL=1 \
 -e ELASTICSEARCH_URL="http://localhost:9200" \
 -e TZ="GMT" \  # change to your local timezone if needed
 -v /srv/cpuad-updater-logs:/app/logs \

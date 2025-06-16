@@ -48,9 +48,6 @@ class Paras:
     def get_log_path():
         return os.path.join(Paras.log_path, Paras.date_str())
 
-    # Execution interval HOURS
-    execution_interval = int(os.getenv("EXECUTION_INTERVAL", 6))
-
 
 class Indexes:
     index_seat_info = os.getenv("INDEX_SEAT_INFO", "copilot_seat_info_settings")
