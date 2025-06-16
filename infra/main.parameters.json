@@ -110,6 +110,9 @@
       },
       "principalId": {
         "value": "${AZURE_PRINCIPAL_ID}"
+      },
+      "assignPermissionsToPrincipal": {
+        "value": "${ASSIGN_PERMISSIONS_TO_PRINCIPAL=true}"
       }
     }
 }

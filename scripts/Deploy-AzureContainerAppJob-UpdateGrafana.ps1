@@ -45,7 +45,6 @@ $resourceGroup = $($env:AZURE_RESOURCE_GROUP_NAME)
 $environment = $($env:AZURE_CONTAINER_APPS_ENVIRONMENT_NAME)
 $jobName = $($env:AZURE_RESOURCE_UPDATE_GRAFANA_NAME)
 $loginServer = $($env:AZURE_CONTAINER_REGISTRY_ENDPOINT)
-$registryName = $($env:AZURE_CONTAINER_REGISTRY_NAME)
 $tag = "azd"
 $tag += "-$(Get-Date -Format 'yyyyMMddHHmmss')"
 $image = "$($env:AZURE_CONTAINER_REGISTRY_ENDPOINT)/copilot-usage-advanced-dashboard/update-grafana-job:$($tag)"
@@ -55,12 +54,11 @@ Write-Host "Resource Group: $resourceGroup" -ForegroundColor Green
 Write-Host "Environment: $environment" -ForegroundColor Green
 Write-Host "Job Name: $jobName" -ForegroundColor Green
 Write-Host "Login Server: $loginServer" -ForegroundColor Green
-Write-Host "Registry Name: $registryName" -ForegroundColor Green
 Write-Host "Image: $image" -ForegroundColor Green
 Write-Host "Project Directory: $projectDir" -ForegroundColor Green
 
 Write-Host "Building and pushing Docker image using Azure Container Registry tasks..." -ForegroundColor Green
-az acr build --registry $registryName --image $image --file "$projectDir/Dockerfile" "$projectDir"
+az acr build --registry $loginServer --image $image --file "$projectDir/Dockerfile" "$projectDir"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ACR build failed" -ForegroundColor Red
     exit $LASTEXITCODE
