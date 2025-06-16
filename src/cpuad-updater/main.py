@@ -260,8 +260,7 @@ class GitHubOrganizationManager:
         usage_or_metrics="metrics",
     ):
         urls = {
-            self.organization_slug,
-            (
+            self.organization_slug: (
                 position_in_tree,
                 f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/{usage_or_metrics}",
             ),
