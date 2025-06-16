@@ -36,6 +36,8 @@ param githubOrganizationSlugs string
 param elasticSearchImageName string
 param grafanaImageName string
 
+param doRoleAssignments bool = true
+
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = uniqueString(subscription().id, resourceGroup().id, location)
 var elasticSearchFileShareName = 'elastic-search'
@@ -79,6 +81,7 @@ module containerRegistry './modules/container-registry.bicep' = {
     abbrs: abbrs
     resourceToken: resourceToken
     principalId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_PRINCIPAL_ID
+    doRoleAssignments: doRoleAssignments
   }
 }
 
@@ -91,6 +94,7 @@ module keyVault './modules/key-vault.bicep' = {
     tags: tags
     userAssignedManagedIdentityPrincipalId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_PRINCIPAL_ID
     principalId: principalId
+    doRoleAssignments: doRoleAssignments
     secrets: [
       {
         name: grafanaUsernameSecretName
@@ -130,6 +134,7 @@ module storageAccount './modules/storage-account.bicep' = {
     userAssignedIdentityPrincipalId: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_PRINCIPAL_ID
     keyVaultResourceId: keyVault.outputs.AZURE_RESOURCE_KEY_VAULT_ID
     containerAppsVirtualNetworkId: virtualNetwork.outputs.AZURE_VIRTUAL_NETWORK_CONTAINER_APPS_SUBNET_ID
+    doRoleAssignments: doRoleAssignments
   }
 }
 

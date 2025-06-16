@@ -38,6 +38,9 @@
       "grafanaPassword": {
         "value": "${GRAFANA_PASSWORD}"
       },
+      "doRoleAssignments": {
+        "value": "${AZURE_ROLE_ASSIGNMENTS=true}"
+      },
       "updateGrafanaDefinition": {
         "value": {
           "cpu": "0.25",

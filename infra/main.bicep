@@ -44,6 +44,8 @@ param githubOrganizationSlugs string
 param elasticSearchImageName string = ''
 param grafanaImageName string = ''
 
+param doRoleAssignments bool = true
+
 // Tags that should be applied to all resources.
 // 
 // Note that 'azd-service-name' tags should be applied separately to service host resources.
@@ -81,6 +83,7 @@ module resources 'resources.bicep' = {
     grafanaUsername: grafanaUsername
     githubPat: githubPat
     githubOrganizationSlugs: githubOrganizationSlugs
+    doRoleAssignments: doRoleAssignments
   }
 }
 

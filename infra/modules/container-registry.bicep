@@ -3,6 +3,8 @@ param tags object
 param abbrs object
 param resourceToken string
 param principalId string
+param doRoleAssignments bool
+
 
 // Container registry
 module containerRegistry 'br/public:avm/res/container-registry/registry:0.1.1' = {
@@ -12,13 +14,13 @@ module containerRegistry 'br/public:avm/res/container-registry/registry:0.1.1' =
     location: location
     tags: tags
     publicNetworkAccess: 'Enabled'
-    roleAssignments:[
+    roleAssignments: doRoleAssignments ? [
       {
         principalId: principalId
         principalType: 'ServicePrincipal'
         roleDefinitionIdOrName: 'AcrPull'
       }
-    ]
+    ] : []
   }
 }
 

@@ -229,7 +229,17 @@ if you are using Azure Container Apps, please refer to the [Azure Container Apps
 
 ![](image/architecture.drawio.png)
 
+### Deploying as `Contributor`
 
+Deployment adds required role assignments, which require `User Access Administrator` RBAC role (more permissions than `Contributor`) or `Owner` RBAC role.
+
+To deploy as `Contributor` RBAC role, pass `doRoleAssignments` parameter set to `false` or set `AZURE_ROLE_ASSIGNMENTS` environment variable when deploying with `azd`.
+
+Required role assignments:
+
+- **Key Vault Secrets Officer** on the KeyVault assigned to User Assigned Identity
+- **AcrPull** on the Azure Container Registry assigned to User Assigned Identity
+- **Storage File Data SMB Share Contributor** on the Storage Account assigned to User Assigned Identity
 
 ## 2. Linux with Docker
 if you are not using Azure, you can use Linux with Docker, please refer to the [Linux with Docker deployment document](deploy/linux-with-docker.md).

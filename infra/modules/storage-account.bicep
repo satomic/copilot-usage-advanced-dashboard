@@ -8,6 +8,7 @@ param grafanaFileShareName string
 param cpuadUpdaterFileShareName string
 param keyVaultResourceId string
 param containerAppsVirtualNetworkId string
+param doRoleAssignments bool
 
 var accessKey1Name = 'storageAccountKey1'
 
@@ -34,13 +35,13 @@ module storageAccount 'br/public:avm/res/storage/storage-account:0.18.2' = {
         }
       ]
     }
-    roleAssignments:[
+    roleAssignments: doRoleAssignments ? [
       {
         principalId: userAssignedIdentityPrincipalId
         principalType: 'ServicePrincipal'
         roleDefinitionIdOrName: 'Storage File Data SMB Share Contributor'
       }
-    ]
+    ] : []
     fileServices: {
       shares: [
         {
