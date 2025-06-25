@@ -55,7 +55,7 @@ Write-Host "Resource Group: $resourceGroup" -ForegroundColor Green
 Write-Host "Environment: $environment" -ForegroundColor Green
 Write-Host "Job Name: $jobName" -ForegroundColor Green
 Write-Host "Login Server: $loginServer" -ForegroundColor Green
-Write-Host "Registry: $registryName" -ForegroundColor Green
+Write-Host "Registry Name: $registryName" -ForegroundColor Green
 Write-Host "Image: $image" -ForegroundColor Green
 Write-Host "Project Directory: $projectDir" -ForegroundColor Green
 
