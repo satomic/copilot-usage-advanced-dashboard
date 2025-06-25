@@ -28,6 +28,8 @@ param grafanaDefinition object
 @description('Id of the user or app to assign application roles')
 param principalId string
 
+param userPrincipalId string = ''
+
 @description('If true, assign permissions to the principalId. If false, do not assign permissions to the principalId. This is useful for testing purposes or when you want to manage permissions manually.')
 param assignPermissionsToPrincipal bool = true
 
@@ -49,8 +51,10 @@ param grafanaImageName string = ''
 
 param doRoleAssignments bool = true
 
+param authentication object
+
 // Tags that should be applied to all resources.
-// 
+//
 // Note that 'azd-service-name' tags should be applied separately to service host resources.
 // Example usage:
 //   tags: union(tags, { 'azd-service-name': <service name in azure.yaml> })
@@ -71,7 +75,7 @@ module resources 'resources.bicep' = {
   params: {
     location: location
     tags: tags
-    principalId: assignPermissionsToPrincipal ? principalId : ''
+    principalId: empty(userPrincipalId) ? principalId : userPrincipalId
     updateGrafanaExists: updateGrafanaExists
     updateGrafanaDefinition: updateGrafanaDefinition
     cpuAdUpdaterExists: cpuAdUpdaterExists
@@ -87,6 +91,7 @@ module resources 'resources.bicep' = {
     githubPat: githubPat
     githubOrganizationSlugs: githubOrganizationSlugs
     doRoleAssignments: doRoleAssignments
+    authentication: authentication
   }
 }
 
@@ -103,3 +108,6 @@ output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = resources.outputs.AZURE_CO
 output AZD_IS_PROVISIONED bool = true
 output SERVICE_UPDATEGRAFANA_RESOURCE_EXISTS bool = resources.outputs.SERVICE_UPDATEGRAFANA_RESOURCE_EXISTS
 output SERVICE_CPUADUPDATER_RESOURCE_EXISTS bool = resources.outputs.SERVICE_CPUADUPDATER_RESOURCE_EXISTS
+output GRAFANA_DASHBOARD_URL string = resources.outputs.GRAFANA_DASHBOARD_URL
+output GRAFANA_DASHBOARD_AUTHENTICATION_CALLBACK_URI string = resources.outputs.GRAFANA_DASHBOARD_AUTHENTICATION_CALLBACK_URI
+output MANAGED_IDENTITY_NAME string = resources.outputs.MANAGED_IDENTITY_NAME

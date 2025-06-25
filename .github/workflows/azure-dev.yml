@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     # Run when commits are pushed to mainline branch (main or master)
-    # Set this to the mainline branch you are using 
+    # Set this to the mainline branch you are using
     branches:
       - main
 
@@ -23,9 +23,13 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
       AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+      AZURE_USER_PRINCIPAL_ID: ${{ secrets.AZURE_USER_PRINCIPAL_ID }}
       GITHUB_ORGANIZATION_SLUGS: ${{ vars.GH_ORGANIZATION_SLUGS }}
       AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
       ASSIGN_PERMISSIONS_TO_PRINCIPAL: false
+      AZURE_AUTHENTICATION_ENABLED: ${{ vars.AZURE_AUTHENTICATION_ENABLED }}
+      AZURE_AUTHENTICATION_CLIENT_ID: ${{ secrets.AZURE_AUTHENTICATION_CLIENT_ID }}
+      AZURE_AUTHENTICATION_OPEN_ID_ISSUER: ${{ vars.AZURE_AUTHENTICATION_OPEN_ID_ISSUER }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,7 +42,7 @@ jobs:
             --federated-credential-provider "github" `
             --tenant-id "$Env:AZURE_TENANT_ID"
         shell: pwsh
-        
+
       - name: Azure CLI Login (OIDC)
         uses: azure/login@v2
         with:

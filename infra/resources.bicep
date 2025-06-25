@@ -38,6 +38,8 @@ param grafanaImageName string
 
 param doRoleAssignments bool = true
 
+param authentication object
+
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = uniqueString(subscription().id, resourceGroup().id, location)
 var elasticSearchFileShareName = 'elastic-search'
@@ -48,11 +50,14 @@ var grafanaUsernameSecretName = 'grafana-username'
 var grafanaUsernameSecretValue = grafanaUsername != ''
   ? grafanaUsername
   : uniqueString('grafanaUsername', subscription().id, resourceGroup().id, location, resourceToken)
+var grafanaUsernameSecretFilename = 'admin_user'
 var grafanaPasswordSecretName = 'grafana-password'
 var grafanaPasswordSecretValue = grafanaPassword != ''
   ? grafanaPassword
   : uniqueString('grafanaPassword', subscription().id, resourceGroup().id, location, resourceToken)
+var grafanaPasswordSecretFilename = 'admin_password'
 var githubPatSecretName = 'github-pat'
+var managedIdentityClientIdSecretName = 'override-use-mi-fic-assertion-client-id'
 
 module monitoring './modules/monitoring.bicep' = {
   name: 'monitoringDeployment'
@@ -107,6 +112,10 @@ module keyVault './modules/key-vault.bicep' = {
       {
         name: githubPatSecretName
         value: githubPat
+      }
+      {
+        name: managedIdentityClientIdSecretName
+        value: identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_CLIENT_ID
       }
     ]
   }
@@ -371,7 +380,7 @@ module elasticSearch './modules/container-app.bicep' = {
     //     failureThreshold: 10
     //   }
     //   {
-    //     type: 'Readiness'        
+    //     type: 'Readiness'
     //     httpGet: {
     //       path: '/_cluster/health?wait_for_status=yellow&timeout=50s'
     //       port: elasticSearchPort
@@ -380,7 +389,7 @@ module elasticSearch './modules/container-app.bicep' = {
     //     periodSeconds: 10
     //     failureThreshold: 10
     //   }
-    //   {        
+    //   {
     //     type: 'Startup'
     //     httpGet: {
     //       path: '/_cluster/health?wait_for_status=yellow&timeout=50s'
@@ -409,13 +418,39 @@ var additionalGrafanaDefinition = {
         name: 'GRAFANA_USERNAME'
         keyVaultSecretName: grafanaUsernameSecretName
         secret: true
-        path: 'admin_user'
+        path: grafanaUsernameSecretFilename
       }
       {
         name: 'GRAFANA_PASSWORD'
         keyVaultSecretName: grafanaPasswordSecretName
         secret: true
-        path: 'admin_password'
+        path: grafanaPasswordSecretFilename
+      }
+      {
+        name: 'GF_SECURITY_ADMIN_USER__FILE'
+        value: '/run/secrets/${grafanaUsernameSecretFilename}'
+      }
+      {
+        name: 'GF_SECURITY_ADMIN_PASSWORD__FILE'
+        value: '/run/secrets/${grafanaPasswordSecretFilename}'
+      }
+      {
+        name: 'GF_AUTH_PROXY_ENABLED'
+        value: bool(authentication.enabled) ? 'true' : 'false'
+      }
+      {
+        name: 'GF_AUTH_PROXY_HEADER_NAME'
+        value: 'X-MS-CLIENT-PRINCIPAL-NAME'
+      }
+      {
+        name: 'GF_AUTH_PROXY_HEADER_PROPERTY'
+        value: 'email'
+      }
+      {
+        name: managedIdentityClientIdSecretName
+        keyVaultSecretName: managedIdentityClientIdSecretName
+        secret: true
+        path: managedIdentityClientIdSecretName
       }
     ],
     grafanaDefinition.settings
@@ -458,6 +493,8 @@ module grafana './modules/container-app.bicep' = {
       }
     ]
     keyVaultName: keyVault.outputs.AZURE_RESOURCE_KEY_VAULT_NAME
+    authentication: authentication
+    managedIdentityClientIdSecretName: managedIdentityClientIdSecretName
     // probes: [
     //   {
     //     type: 'Liveness'
@@ -470,7 +507,7 @@ module grafana './modules/container-app.bicep' = {
     //     failureThreshold: 10
     //   }
     //   {
-    //     type: 'Readiness'        
+    //     type: 'Readiness'
     //     httpGet: {
     //       path: '/api/health'
     //       port: grafanaPort
@@ -479,7 +516,7 @@ module grafana './modules/container-app.bicep' = {
     //     periodSeconds: 10
     //     failureThreshold: 10
     //   }
-    //   {        
+    //   {
     //     type: 'Startup'
     //     httpGet: {
     //       path: '/api/health'
@@ -504,3 +541,6 @@ output AZURE_CONTAINER_REGISTRY_LOGIN_SERVER string = containerRegistry.outputs.
 output AZURE_CONTAINER_REGISTRY_NAME string = containerRegistry.outputs.AZURE_CONTAINER_REGISTRY_NAME
 output SERVICE_UPDATEGRAFANA_RESOURCE_EXISTS bool = true
 output SERVICE_CPUADUPDATER_RESOURCE_EXISTS bool = true
+output GRAFANA_DASHBOARD_URL string = grafana.outputs.AZURE_RESOURCE_CONTAINER_APP_FQDN
+output GRAFANA_DASHBOARD_AUTHENTICATION_CALLBACK_URI string = grafana.outputs.AZURE_RESOURCE_CONTAINER_APP_AUTHENTICATION_CALLBACK_URI
+output MANAGED_IDENTITY_NAME string = identity.outputs.AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_NAME
