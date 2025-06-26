@@ -13,3 +13,4 @@ module identity 'br/public:avm/res/managed-identity/user-assigned-identity:0.2.1
 output AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_ID string = identity.outputs.resourceId
 output AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_CLIENT_ID string = identity.outputs.clientId
 output AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_PRINCIPAL_ID string = identity.outputs.principalId
+output AZURE_RESOURCE_USER_ASSIGNED_IDENTITY_NAME string = identity.outputs.name
