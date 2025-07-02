@@ -103,6 +103,55 @@ def convert_day(metrics_day):
 
     breakdown_chat_list = list(breakdown_chat_dict.values())
 
+    # --- Copilot dotcom chat metrics ---
+    dotcom_chat = metrics_day.get("copilot_dotcom_chat", {})
+    dotcom_chat_total_engaged_users = dotcom_chat.get("total_engaged_users", 0)
+    dotcom_chat_total_chats = 0
+    dotcom_chat_breakdown = []
+    for model in dotcom_chat.get("models", []):
+        model_name = model.get("name", "unknown")
+        is_custom_model = model.get("is_custom_model", False)
+        custom_model_training_date = model.get("custom_model_training_date")
+        total_engaged_users = model.get("total_engaged_users", 0)
+        total_chats = model.get("total_chats", 0)
+        dotcom_chat_total_chats += total_chats
+        dotcom_chat_breakdown.append(
+            {
+                "model": model_name,
+                "is_custom_model": is_custom_model,
+                "custom_model_training_date": custom_model_training_date,
+                "total_engaged_users": total_engaged_users,
+                "total_chats": total_chats,
+            }
+        )
+
+    # --- Copilot dotcom pull request/code review metrics ---
+    dotcom_pr = metrics_day.get("copilot_dotcom_pull_requests", {})
+    dotcom_pr_total_engaged_users = dotcom_pr.get("total_engaged_users", 0)
+    dotcom_pr_total_summaries = 0
+    dotcom_pr_breakdown = []
+    for repo in dotcom_pr.get("repositories", []):
+        repo_name = repo.get("name", "unknown")
+        repo_engaged_users = repo.get("total_engaged_users", 0)
+        for model in repo.get("models", []):
+            model_name = model.get("name", "unknown")
+            is_custom_model = model.get("is_custom_model", False)
+            custom_model_training_date = model.get("custom_model_training_date")
+            total_pr_summaries_created = model.get("total_pr_summaries_created", 0)
+            model_engaged_users = model.get("total_engaged_users", 0)
+            dotcom_pr_total_summaries += total_pr_summaries_created
+            dotcom_pr_breakdown.append(
+                {
+                    "repository": repo_name,
+                    "repo_engaged_users": repo_engaged_users,
+                    "model": model_name,
+                    "is_custom_model": is_custom_model,
+                    "custom_model_training_date": custom_model_training_date,
+                    "total_pr_summaries_created": total_pr_summaries_created,
+                    "model_engaged_users": model_engaged_users,
+                }
+            )
+
     usage = {
         "day": day,
         "total_suggestions_count": total_suggestions_count,
@@ -117,6 +166,13 @@ def convert_day(metrics_day):
         "total_chat_insertion_events": total_chat_insertion_events,
         "breakdown": breakdown_list,
         "breakdown_chat": breakdown_chat_list,
+        # --- dotcom metrics ---
+        "dotcom_chat_total_engaged_users": dotcom_chat_total_engaged_users,
+        "dotcom_chat_total_chats": dotcom_chat_total_chats,
+        "dotcom_chat_breakdown": dotcom_chat_breakdown,
+        "dotcom_pr_total_engaged_users": dotcom_pr_total_engaged_users,
+        "dotcom_pr_total_summaries": dotcom_pr_total_summaries,
+        "dotcom_pr_breakdown": dotcom_pr_breakdown,
     }
     return usage
 
