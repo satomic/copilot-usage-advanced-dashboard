@@ -486,6 +486,8 @@ class GitHubOrganizationManager:
             if not seats:
                 break
             for seat in seats:
+                if not seat.get("assignee"):
+                    continue
                 # assignee sub dict
                 seat["assignee_login"] = seat.get("assignee", {}).get("login")
                 # if organization_slug is CopilotNext, then assignee_login
