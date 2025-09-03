@@ -72,10 +72,7 @@ spec:
       targetPort: 9200
 
 ---
-
 # --- cronjob which pull data from github api, please also create secret for cronjob deployment github-pat ----
-
-
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -124,9 +121,7 @@ spec:
             - name: cpuad-updater-logs
               emptyDir: {}
 
-
 # --- Grafana Deployment ---
-
 ---
 apiVersion: apps/v1
 kind: Deployment
