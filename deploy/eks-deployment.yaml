@@ -1,0 +1,250 @@
+# This file contains the Kubernetes deployment configuration for the Copilot Usage Advanced Dashboard
+
+# --- elasticsearch ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: copilot-elasticsearch
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+        - name: elasticsearch
+          image: ghcr.io/satomic/copilot-usage-advanced-dashboard/elastic-search:main
+          ports:
+            - containerPort: 9200
+          volumeMounts:
+            - name: elasticsearch
+              mountPath: /usr/share/elasticsearch/data
+              subPath: data
+            - name: elasticsearch
+              mountPath: /usr/share/elasticsearch/log
+              subPath: logs
+          resources:
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+          livenessProbe:
+            httpGet:
+              path: /_cluster/health
+              port: 9200
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /_cluster/health
+              port: 9200
+            initialDelaySeconds: 10
+            periodSeconds: 10
+      volumes:
+        - name: elasticsearch
+          emptyDir: {}
+
+---
+
+# --- elasticsearch  service ----
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: default
+spec:
+  selector:
+    app: elasticsearch
+  ports:
+    - name: http
+      port: 9200
+      targetPort: 9200
+
+---
+# --- cronjob which pull data from github api, please also create secret for cronjob deployment github-pat ----
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cpuad-updater
+spec:
+  schedule: "*/12 * * * *" # every 12 hour
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          securityContext:
+            runAsUser: 1000
+            fsGroup: 1000
+          containers:
+            - name: cpuad-updater
+              image: ghcr.io/satomic/copilot-usage-advanced-dashboard/cpuad-updater:main
+              envFrom:
+                - secretRef:
+                    name: github-pat
+              env:
+                - name: ORGANIZATION_SLUGS
+                  value: "name of the ORGANIZATION_SLUGS"
+                - name: ELASTICSEARCH_URL
+                  value: "http://elasticsearch:9200"
+                - name: LOG_PATH
+                  value: "logs"
+                - name: EXECUTION_INTERVAL
+                  value: "6"
+              volumeMounts:
+                - name: cpuad-updater-logs
+                  mountPath: /app/logs
+                  subPath: cpuad
+              resources:
+                requests:
+                  cpu: "0.5"
+                  memory: "512Mi"
+                limits:
+                  cpu: "1"
+                  memory: "1Gi"
+              securityContext:
+                runAsUser: 1000        # match your app user if needed
+                runAsGroup: 3000       # optional
+                allowPrivilegeEscalation: false
+          restartPolicy: OnFailure
+          volumes:
+            - name: cpuad-updater-logs
+              emptyDir: {}
+
+# --- Grafana Deployment ---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana:main
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: grafana-credentials
+          env:
+            - name: GF_LOG_LEVEL
+              value: debug
+            - name: GF_SERVER_HTTP_PORT
+              value: "80"
+            - name: GF_SECURITY_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-credentials
+                  key: GRAFANA_USERNAME
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-credentials
+                  key: GRAFANA_PASSWORD
+          volumeMounts:
+            - name: grafana-data
+              mountPath: /var/lib/grafana
+              subPath: grafana
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          securityContext:
+            runAsUser: 472
+            runAsGroup: 472
+      volumes:
+        - name: grafana-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  selector:
+    app: grafana
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: grafana
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+
+# --- update-grafana Job (runs once) ---
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: update-grafana-once
+spec:
+  template:
+    spec:
+      containers:
+        - name: update-grafana
+          image: ghcr.io/satomic/copilot-usage-advanced-dashboard/grafana-updater:main
+          envFrom:
+            - secretRef:
+                name: grafana-credentials
+          env:
+            - name: ELASTICSEARCH_URL
+              value: "http://elasticsearch:9200"
+            - name: GRAFANA_URL
+              value: "http://grafana:80"
+          resources:
+            requests:
+              cpu: "0.25"
+              memory: "256Mi"
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+      restartPolicy: Never
