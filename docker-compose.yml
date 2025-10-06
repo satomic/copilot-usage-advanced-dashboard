@@ -3,78 +3,58 @@ version: '3.8'
 
 services:
   elasticsearch:
-    build:
-      context: ./src/elasticsearch
-    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: copilot-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=hiFc1SbV
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
     ports:
       - "9200:9200"
+      - "9300:9300"
     volumes:
-      - data:/usr/share/elasticsearch/data
-      - logs:/usr/share/elasticsearch/logs
-    mem_limit: 1g
-    cpus: 1
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health/"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - copilot-network
 
   grafana:
-    build:
-      context: ./src/grafana
-    container_name: grafana
-    mem_limit: 1g
-    cpus: 0.5
+    image: grafana/grafana:latest
+    container_name: copilot-grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
     ports:
-      - "3000:80"
-    depends_on:
-      - elasticsearch
+      - "3000:3000"
     volumes:
-      - grafana:/var/lib/grafana
-    environment:
-      GF_LOG_LEVEL: debug
-      GF_SERVER_HTTP_PORT: 80
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: copilot
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
-  init-grafana:
-    mem_limit: 0.5g
-    cpus: 0.25
-    build:
-      context: ./src/cpuad-updater/grafana
-    container_name: init-grafana
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
     depends_on:
-      - grafana
       - elasticsearch
-      - cpuad-updater
-    environment:
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-      GRAFANA_URL: http://grafana:80
-      GRAFANA_USERNAME: admin
-      GRAFANA_PASSWORD: copilot
-    restart: "no"
+    networks:
+      - copilot-network
 
-  cpuad-updater:
-    mem_limit: 0.5g
-    cpus: 0.25
+  python-updater:
     build:
       context: ./src/cpuad-updater
-    container_name: cpuad-updater
+      dockerfile: Dockerfile
+    container_name: copilot-updater
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_USER=elastic
+      - ELASTICSEARCH_PASS=hiFc1SbV
+      - GITHUB_PAT=${GITHUB_PAT}
+      - ORGANIZATION_SLUGS=${ORGANIZATION_SLUGS}
     depends_on:
       - elasticsearch
-    environment:
-      GITHUB_PAT: ${GITHUB_PAT}
-      ORGANIZATION_SLUGS: cody-test-org
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-      # Add other environment variables as needed
-    restart: "no"
+    networks:
+      - copilot-network
 
 volumes:
-  data:
-  logs:
-  grafana:
+  elasticsearch_data:
+  grafana_data:
+
+networks:
+  copilot-network:
+    driver: bridge

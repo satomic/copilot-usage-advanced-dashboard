@@ -1,5 +1,5 @@
-# Use the official Python 3.10 base image
-FROM python:3.13.2-slim
+# Use the official Python 3.11 base image
+FROM python:3.11-slim
 
 # Set environment variables
 # PYTHONDONTWRITEBYTECODE: Prevents Python from writing .pyc files to disk
@@ -23,7 +23,7 @@ RUN groupadd -g 1000 cpuadupdater && \
 # Copy requirements.txt and install Python packages
 COPY requirements.txt /app/
 
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy mapping folder to the working directory
 COPY mapping /app/mapping
@@ -40,5 +40,8 @@ RUN chown -R cpuadupdater:cpuadupdater /app
 # Switch to the new user
 USER cpuadupdater
 
+# Create logs directory
+RUN mkdir -p logs
+
 # Run the command one time
-CMD ["python3", "main.py"]
+CMD ["python", "main.py"]
