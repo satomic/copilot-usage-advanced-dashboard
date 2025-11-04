@@ -62,6 +62,7 @@ class Indexes:
     index_name_breakdown_chat = os.getenv(
         "INDEX_NAME_BREAKDOWN_CHAT", "copilot_usage_breakdown_chat"
     )
+    index_user_metrics = os.getenv("INDEX_USER_METRICS", "copilot_user_metrics")
 
 
 logger = configure_logger(log_path=Paras.log_path)
@@ -588,6 +589,150 @@ class GitHubOrganizationManager:
 
         return teams
 
+    def get_copilot_user_metrics(self, save_to_json=True):
+        """
+        Fetch Copilot user metrics for the last 28 days from the Enterprise API
+        Uses the /copilot/metrics/reports/users-28-day/latest endpoint
+        The API returns download links which contain the actual user metrics JSON data
+        """
+        url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/metrics/reports/users-28-day/latest"
+        
+        logger.info(f"Fetching user metrics download links from: {url}")
+        api_response = github_api_request_handler(url, error_return_value={})
+        
+        if not api_response or 'download_links' not in api_response:
+            logger.warning("No download links received from user metrics API")
+            return []
+        
+        download_links = api_response.get('download_links', [])
+        logger.info(f"Found {len(download_links)} download links for user metrics")
+        
+        processed_data = []
+        current_time_str = current_time()
+        
+        # Process each download link to get the actual user metrics data
+        for i, download_link in enumerate(download_links, 1):
+            try:
+                logger.info(f"Downloading user metrics data from link {i}/{len(download_links)}")
+                
+                # Download JSON data from the link with better error handling
+                try:
+                    logger.info(f"Requesting download link: {download_link}")
+                    headers = {
+                        "Accept": "application/vnd.github+json",
+                        "Authorization": f"Bearer {Paras.github_pat}",
+                        "X-GitHub-Api-Version": "2022-11-28",
+                    }
+                    response = requests.get(download_link, headers=headers)
+                    
+                    logger.info(f"Download link {i} response status: {response.status_code}")
+                    logger.info(f"Download link {i} response headers: {dict(response.headers)}")
+                    logger.info(f"Download link {i} response content length: {len(response.content)}")
+                    
+                    if response.status_code != 200:
+                        logger.error(f"Download link {i} failed with status {response.status_code}: {response.text}")
+                        continue
+                    
+                    if not response.content:
+                        logger.warning(f"Download link {i} returned empty content")
+                        continue
+                    
+                    # Try to parse as JSON
+                    try:
+                        user_metrics_response = response.json()
+                    except json.JSONDecodeError as json_error:
+                        logger.error(f"Download link {i} returned non-JSON content. Error: {json_error}")
+                        logger.error(f"Response content preview (first 500 chars): {response.text[:500]}")
+                        continue
+                    
+                except requests.exceptions.RequestException as req_error:
+                    logger.error(f"Request error for download link {i}: {req_error}")
+                    continue
+                
+                if not user_metrics_response:
+                    logger.warning(f"No data received from download link {i}")
+                    continue
+                
+                logger.info(f"Download link {i} response type: {type(user_metrics_response)}")
+                
+                # Handle different response types and format JSON properly
+                if isinstance(user_metrics_response, list):
+                    # If it's already an array, use it directly
+                    user_metrics_data = user_metrics_response
+                    logger.info(f"Download link {i} returned array with {len(user_metrics_data)} items")
+                elif isinstance(user_metrics_response, dict):
+                    # If it's a dict, wrap it in an array
+                    user_metrics_data = [user_metrics_response]
+                    logger.info(f"Download link {i} returned single object, wrapped in array")
+                else:
+                    # If it's neither dict nor list, try to format it
+                    logger.warning(f"Download link {i} returned unexpected type: {type(user_metrics_response)}")
+                    try:
+                        # Try to convert to string and parse again
+                        response_str = str(user_metrics_response)
+                        logger.info(f"Attempting to format response as JSON: {response_str[:200]}...")
+                        
+                        # If it looks like it might be JSON data, try to format it
+                        if response_str.strip().startswith('{') or response_str.strip().startswith('['):
+                            formatted_data = json.loads(response_str)
+                            if isinstance(formatted_data, list):
+                                user_metrics_data = formatted_data
+                            elif isinstance(formatted_data, dict):
+                                user_metrics_data = [formatted_data]
+                            else:
+                                logger.error(f"Formatted data is neither dict nor list: {type(formatted_data)}")
+                                continue
+                        else:
+                            logger.error(f"Response does not appear to be JSON format")
+                            continue
+                    except Exception as format_error:
+                        logger.error(f"Failed to format response from download link {i}: {format_error}")
+                        continue
+                
+                # Process each user metrics record
+                for user_data in user_metrics_data:
+                    if isinstance(user_data, dict):
+                        # Add organizational context and metadata
+                        enriched_user_data = {
+                            **user_data,
+                            'organization_slug': self.organization_slug,
+                            'slug_type': self.slug_type,
+                            'last_updated_at': current_time_str,
+                            'utc_offset': self.utc_offset,
+                            'download_link_index': i
+                        }
+                        
+                        # Generate unique hash for deduplication (user + day combination)
+                        hash_properties = ['organization_slug', 'user_login', 'day']
+                        if 'user_login' in enriched_user_data and 'day' in enriched_user_data:
+                            enriched_user_data['unique_hash'] = generate_unique_hash(
+                                enriched_user_data, hash_properties
+                            )
+                        else:
+                            # Fallback hash if expected fields are missing
+                            fallback_properties = ['organization_slug', 'last_updated_at', 'download_link_index']
+                            enriched_user_data['unique_hash'] = generate_unique_hash(
+                                enriched_user_data, fallback_properties
+                            )
+                        
+                        processed_data.append(enriched_user_data)
+                
+                logger.info(f"Processed {len(user_metrics_data)} user records from download link {i}")
+                
+            except Exception as e:
+                logger.error(f"Error processing download link {i}: {str(e)}")
+                continue
+        
+        # Save to JSON file for debugging/inspection
+        dict_save_to_json_file(
+            processed_data,
+            f"{self.organization_slug}_copilot_user_metrics",
+            save_to_json=save_to_json
+        )
+        
+        logger.info(f"Processed {len(processed_data)} total user metrics records for {self.slug_type}: {self.organization_slug}")
+        return processed_data
+
     def _add_fullpath_slug(self, teams):
         id_to_team = {team["id"]: team for team in teams}
 
@@ -864,6 +1009,23 @@ def main(organization_slug):
             )
         logger.info(f"Data processing completed for {slug_type}: {organization_slug}")
 
+    # Process user metrics data
+    logger.info(
+        f"Processing Copilot user metrics for {slug_type}: {organization_slug}"
+    )
+    try:
+        user_metrics_data = github_org_manager.get_copilot_user_metrics()
+        if not user_metrics_data:
+            logger.warning(
+                f"No Copilot user metrics found for {slug_type}: {organization_slug}"
+            )
+        else:
+            for user_metric in user_metrics_data:
+                es_manager.write_to_es(Indexes.index_user_metrics, user_metric)
+            logger.info(f"Processed {len(user_metrics_data)} user metrics records for {slug_type}: {organization_slug}")
+    except Exception as e:
+        logger.error(f"Failed to process user metrics for {slug_type} {organization_slug}: {e}")
+
     # Process usage data
     copilot_usage_datas = github_org_manager.get_copilot_usages(team_slug="all")
     logger.info(f"Processing Copilot usage data for {slug_type}: {organization_slug}")
@@ -924,6 +1086,7 @@ if __name__ == "__main__":
         for organization_slug in organization_slugs:
             main(organization_slug.strip())
     except Exception as e:
-        logger.error(f"An error occurred: {traceback.format_exc(e)}")
+        logger.error(f"An error occurred: {e}")
+        logger.error(f"Full traceback: {traceback.format_exc()}")
     finally:
         logger.info("-----------------Finished-----------------")
