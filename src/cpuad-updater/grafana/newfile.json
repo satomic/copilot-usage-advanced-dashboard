@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -50,7 +50,7 @@
         "mode": "markdown"
       },
       "pluginVersion": "11.4.4",
-      "title": "For \ud83d\udcd6tutorials & \ud83d\udc96feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click\ud83d\udc49",
+      "title": "For 📖tutorials & 💖feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click👉",
       "type": "text"
     },
     {
@@ -66,7 +66,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -135,7 +135,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -166,7 +166,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -188,7 +188,7 @@
               },
               "expression": "$A / $B",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -198,7 +198,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -266,7 +266,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -286,7 +286,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -354,7 +354,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -374,7 +374,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -442,7 +442,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -462,7 +462,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -525,7 +525,7 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 47
+            "y": 8
           },
           "id": 2,
           "options": {
@@ -559,7 +559,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -587,7 +587,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -629,7 +629,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -657,7 +657,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -699,7 +699,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -727,7 +727,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -760,7 +760,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "ef335s8wp9fk0e"
+            "uid": "cf3zags6xxb7ka"
           },
           "description": "If teams are nested, there may be duplicate calculations. Please refer to the tutorial information above.",
           "fieldConfig": {
@@ -810,7 +810,7 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 47
+            "y": 8
           },
           "id": 5,
           "options": {
@@ -851,7 +851,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "ef335s8wp9fk0e"
+                "uid": "cf3zags6xxb7ka"
               },
               "hide": false,
               "metrics": [
@@ -874,7 +874,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -952,7 +952,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 57
+            "y": 18
           },
           "id": 1,
           "options": {
@@ -986,7 +986,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -1013,7 +1013,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -1035,7 +1035,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -1113,7 +1113,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 57
+            "y": 18
           },
           "id": 46,
           "options": {
@@ -1147,7 +1147,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -1174,7 +1174,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -1210,7 +1210,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -1307,7 +1307,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -1327,7 +1327,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "description": "",
           "fieldConfig": {
@@ -1398,7 +1398,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -1419,7 +1419,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -1489,7 +1489,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -1520,7 +1520,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -1542,7 +1542,7 @@
               },
               "expression": "$A / $B",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -1552,7 +1552,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -1633,7 +1633,7 @@
             "h": 13,
             "w": 24,
             "x": 0,
-            "y": 52
+            "y": 13
           },
           "id": 43,
           "options": {
@@ -1674,7 +1674,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -1787,7 +1787,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -1884,7 +1884,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -1904,7 +1904,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "description": "",
           "fieldConfig": {
@@ -1975,7 +1975,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -1996,7 +1996,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -2066,7 +2066,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -2097,7 +2097,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -2119,7 +2119,7 @@
               },
               "expression": "$A / $B",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -2129,7 +2129,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -2210,7 +2210,7 @@
             "h": 13,
             "w": 24,
             "x": 0,
-            "y": 53
+            "y": 14
           },
           "id": 52,
           "options": {
@@ -2251,7 +2251,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -2364,7 +2364,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -2461,7 +2461,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -2481,7 +2481,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "description": "",
           "fieldConfig": {
@@ -2552,7 +2552,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -2573,7 +2573,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -2643,7 +2643,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -2674,7 +2674,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -2696,7 +2696,7 @@
               },
               "expression": "$A / $B",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -2706,7 +2706,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -2787,7 +2787,7 @@
             "h": 13,
             "w": 24,
             "x": 0,
-            "y": 54
+            "y": 15
           },
           "id": 57,
           "options": {
@@ -2828,7 +2828,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -2941,7 +2941,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "df335s8pk1vy8f"
+            "uid": "cf3zagrrm1qtcd"
           },
           "fieldConfig": {
             "defaults": {
@@ -3010,7 +3010,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "df335s8pk1vy8f"
+                "uid": "cf3zagrrm1qtcd"
               },
               "hide": true,
               "metrics": [
@@ -3041,7 +3041,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "df335s8pk1vy8f"
+                "uid": "cf3zagrrm1qtcd"
               },
               "hide": true,
               "metrics": [
@@ -3063,7 +3063,7 @@
               },
               "expression": "$A / $B",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -3073,7 +3073,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "df335s8pk1vy8f"
+            "uid": "cf3zagrrm1qtcd"
           },
           "fieldConfig": {
             "defaults": {
@@ -3185,7 +3185,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "df335s8pk1vy8f"
+                "uid": "cf3zagrrm1qtcd"
               },
               "metrics": [
                 {
@@ -3212,7 +3212,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "df335s8pk1vy8f"
+                "uid": "cf3zagrrm1qtcd"
               },
               "hide": false,
               "metrics": [
@@ -3234,7 +3234,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "df335s8pk1vy8f"
+            "uid": "cf3zagrrm1qtcd"
           },
           "fieldConfig": {
             "defaults": {
@@ -3263,7 +3263,7 @@
             "h": 7,
             "w": 3,
             "x": 0,
-            "y": 52
+            "y": 13
           },
           "id": 63,
           "options": {
@@ -3302,7 +3302,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "df335s8pk1vy8f"
+                "uid": "cf3zagrrm1qtcd"
               },
               "metrics": [
                 {
@@ -3322,7 +3322,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "df335s8pk1vy8f"
+            "uid": "cf3zagrrm1qtcd"
           },
           "fieldConfig": {
             "defaults": {
@@ -3351,7 +3351,7 @@
             "h": 7,
             "w": 3,
             "x": 3,
-            "y": 52
+            "y": 13
           },
           "id": 67,
           "options": {
@@ -3390,7 +3390,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "df335s8pk1vy8f"
+                "uid": "cf3zagrrm1qtcd"
               },
               "metrics": [
                 {
@@ -3410,7 +3410,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "ef335s8wp9fk0e"
+            "uid": "cf3zags6xxb7ka"
           },
           "description": "If teams are nested, there may be duplicate calculations. Please refer to the tutorial information above.",
           "fieldConfig": {
@@ -3460,7 +3460,7 @@
             "h": 11,
             "w": 18,
             "x": 6,
-            "y": 55
+            "y": 16
           },
           "id": 62,
           "options": {
@@ -3504,7 +3504,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s9huwgzke"
+                "uid": "ff3zagsy7bf28a"
               },
               "hide": false,
               "metrics": [
@@ -3529,7 +3529,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "df335s8pk1vy8f"
+            "uid": "cf3zagrrm1qtcd"
           },
           "fieldConfig": {
             "defaults": {
@@ -3558,7 +3558,7 @@
             "h": 7,
             "w": 3,
             "x": 0,
-            "y": 59
+            "y": 20
           },
           "id": 66,
           "options": {
@@ -3597,7 +3597,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "df335s8pk1vy8f"
+                "uid": "cf3zagrrm1qtcd"
               },
               "metrics": [
                 {
@@ -3617,7 +3617,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "df335s8pk1vy8f"
+            "uid": "cf3zagrrm1qtcd"
           },
           "fieldConfig": {
             "defaults": {
@@ -3646,7 +3646,7 @@
             "h": 7,
             "w": 3,
             "x": 3,
-            "y": 59
+            "y": 20
           },
           "id": 68,
           "options": {
@@ -3682,7 +3682,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "ef335s8wp9fk0e"
+                "uid": "cf3zags6xxb7ka"
               },
               "metrics": [
                 {
@@ -3716,7 +3716,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s9huwgzke"
+            "uid": "ff3zagsy7bf28a"
           },
           "fieldConfig": {
             "defaults": {
@@ -3821,7 +3821,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s9huwgzke"
+                "uid": "ff3zagsy7bf28a"
               },
               "metrics": [
                 {
@@ -3853,7 +3853,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "af335s95iejgga"
+            "uid": "bf3zagsjhwxs0d"
           },
           "fieldConfig": {
             "defaults": {
@@ -3921,7 +3921,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "metrics": [
                 {
@@ -3941,7 +3941,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s9huwgzke"
+            "uid": "ff3zagsy7bf28a"
           },
           "fieldConfig": {
             "defaults": {
@@ -4009,7 +4009,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s9huwgzke"
+                "uid": "ff3zagsy7bf28a"
               },
               "metrics": [
                 {
@@ -4032,7 +4032,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s9huwgzke"
+            "uid": "ff3zagsy7bf28a"
           },
           "fieldConfig": {
             "defaults": {
@@ -4116,7 +4116,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s9huwgzke"
+                "uid": "ff3zagsy7bf28a"
               },
               "metrics": [
                 {
@@ -4166,7 +4166,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s9huwgzke"
+            "uid": "ff3zagsy7bf28a"
           },
           "fieldConfig": {
             "defaults": {
@@ -4263,7 +4263,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s9huwgzke"
+                "uid": "ff3zagsy7bf28a"
               },
               "metrics": [
                 {
@@ -4277,13 +4277,13 @@
               "timeField": "day"
             }
           ],
-          "title": "Ranking of Inactive Users ( \u2265 2 days )",
+          "title": "Ranking of Inactive Users ( ≥ 2 days )",
           "type": "barchart"
         },
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "af335s95iejgga"
+            "uid": "bf3zagsjhwxs0d"
           },
           "fieldConfig": {
             "defaults": {
@@ -4312,7 +4312,7 @@
             "h": 5,
             "w": 3,
             "x": 3,
-            "y": 51
+            "y": 12
           },
           "id": 19,
           "options": {
@@ -4351,7 +4351,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s9huwgzke"
+                "uid": "ff3zagsy7bf28a"
               },
               "metrics": [
                 {
@@ -4371,7 +4371,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "af335s95iejgga"
+            "uid": "bf3zagsjhwxs0d"
           },
           "fieldConfig": {
             "defaults": {
@@ -4400,7 +4400,7 @@
             "h": 5,
             "w": 3,
             "x": 6,
-            "y": 51
+            "y": 12
           },
           "id": 20,
           "options": {
@@ -4439,7 +4439,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "af335s95iejgga"
+                "uid": "bf3zagsjhwxs0d"
               },
               "metrics": [
                 {
@@ -4459,7 +4459,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s9huwgzke"
+            "uid": "ff3zagsy7bf28a"
           },
           "description": "If teams are nested, there may be duplicate calculations. Please refer to the tutorial information above.",
           "fieldConfig": {
@@ -4510,7 +4510,7 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 56
+            "y": 17
           },
           "id": 70,
           "options": {
@@ -4554,7 +4554,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s9huwgzke"
+                "uid": "ff3zagsy7bf28a"
               },
               "hide": false,
               "metrics": [
@@ -4579,7 +4579,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s9huwgzke"
+            "uid": "ff3zagsy7bf28a"
           },
           "fieldConfig": {
             "defaults": {
@@ -4640,7 +4640,7 @@
             "h": 18,
             "w": 24,
             "x": 0,
-            "y": 62
+            "y": 23
           },
           "id": 65,
           "maxPerRow": 2,
@@ -4670,7 +4670,7 @@
               "bucketAggs": [],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s9huwgzke"
+                "uid": "ff3zagsy7bf28a"
               },
               "hide": false,
               "metrics": [
@@ -4808,7 +4808,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -4830,7 +4830,7 @@
                     "0": {
                       "color": "transparent",
                       "index": 0,
-                      "text": "\u00b7"
+                      "text": "·"
                     }
                   },
                   "type": "value"
@@ -4905,7 +4905,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -4927,7 +4927,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -4949,7 +4949,7 @@
                     "0": {
                       "color": "transparent",
                       "index": 0,
-                      "text": "\u00b7"
+                      "text": "·"
                     }
                   },
                   "type": "value"
@@ -5024,7 +5024,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": false,
               "metrics": [
@@ -5046,7 +5046,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -5068,7 +5068,7 @@
                     "NaN": {
                       "color": "transparent",
                       "index": 0,
-                      "text": "\u00b7"
+                      "text": "·"
                     }
                   },
                   "type": "value"
@@ -5143,7 +5143,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -5182,7 +5182,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -5204,7 +5204,7 @@
               },
               "expression": "$A / $B * 100",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -5214,7 +5214,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -5236,7 +5236,7 @@
                     "NaN": {
                       "color": "transparent",
                       "index": 0,
-                      "text": "\u00b7"
+                      "text": "·"
                     }
                   },
                   "type": "value"
@@ -5311,7 +5311,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -5350,7 +5350,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -5372,7 +5372,7 @@
               },
               "expression": "$A / $B * 100",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -5382,7 +5382,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -5404,7 +5404,7 @@
                     "NaN": {
                       "color": "transparent",
                       "index": 0,
-                      "text": "\u00b7"
+                      "text": "·"
                     }
                   },
                   "type": "value"
@@ -5415,8 +5415,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "red",
-                    "value": null
+                    "color": "red"
                   },
                   {
                     "color": "green",
@@ -5449,7 +5448,7 @@
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.4",
+          "pluginVersion": "11.4.0",
           "targets": [
             {
               "alias": "",
@@ -5479,7 +5478,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -5518,7 +5517,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -5540,7 +5539,7 @@
               },
               "expression": "$A / $B *100",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -5550,7 +5549,7 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "cf335s8dp18u8c"
+            "uid": "bf3zagr1e445cb"
           },
           "fieldConfig": {
             "defaults": {
@@ -5572,7 +5571,7 @@
                     "NaN": {
                       "color": "transparent",
                       "index": 0,
-                      "text": "\u00b7"
+                      "text": "·"
                     }
                   },
                   "type": "value"
@@ -5583,8 +5582,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "red",
-                    "value": null
+                    "color": "red"
                   },
                   {
                     "color": "green",
@@ -5617,7 +5615,7 @@
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.4",
+          "pluginVersion": "11.4.0",
           "targets": [
             {
               "alias": "",
@@ -5647,7 +5645,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -5686,7 +5684,7 @@
               ],
               "datasource": {
                 "type": "elasticsearch",
-                "uid": "cf335s8dp18u8c"
+                "uid": "bf3zagr1e445cb"
               },
               "hide": true,
               "metrics": [
@@ -5708,7 +5706,7 @@
               },
               "expression": "$A / $B *100",
               "hide": false,
-              "refId": "\u00b7",
+              "refId": "·",
               "type": "math"
             }
           ],
@@ -5717,836 +5715,6 @@
         }
       ],
       "title": "Breakdown Heatmap",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 8
-      },
-      "id": 75,
-      "panels": [
-        {
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "bf33drtnw8w00a"
-          },
-          "description": "Distribution showing how many users have used GitHub Copilot Agent feature versus those who haven't.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              "decimals": 0,
-              "mappings": [
-                {
-                  "options": {
-                    "false": {
-                      "color": "red",
-                      "index": 1,
-                      "text": "\u274c No Agent Usage"
-                    },
-                    "true": {
-                      "color": "green",
-                      "index": 0,
-                      "text": "\u2705 Used Agent"
-                    }
-                  },
-                  "type": "value"
-                }
-              ],
-              "min": 0,
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "used_agent"
-                },
-                "properties": [
-                  {
-                    "id": "displayName",
-                    "value": "\u274c No Agent Usage"
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "(true|1)"
-                },
-                "properties": [
-                  {
-                    "id": "displayName",
-                    "value": "\u2705 Used Agent"
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "green",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 1
-          },
-          "id": 70,
-          "interval": "4h",
-          "maxDataPoints": 100,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true,
-              "values": [
-                "value",
-                "percent"
-              ]
-            },
-            "pieType": "pie",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.4.4",
-          "targets": [
-            {
-              "alias": "",
-              "bucketAggs": [
-                {
-                  "field": "used_agent",
-                  "id": "2",
-                  "settings": {
-                    "min_doc_count": "1",
-                    "order": "desc",
-                    "orderBy": "_count",
-                    "size": "2"
-                  },
-                  "type": "terms"
-                }
-              ],
-              "metrics": [
-                {
-                  "id": "1",
-                  "type": "count"
-                }
-              ],
-              "query": "",
-              "refId": "A",
-              "timeField": "@timestamp"
-            }
-          ],
-          "title": "Agent Usage Distribution",
-          "type": "piechart"
-        },
-        {
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "bf33drtnw8w00a"
-          },
-          "description": "Shows user activity trends over time with 4-hour intervals optimized for large datasets",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "Activity Count",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "bars",
-                "fillOpacity": 80,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "vis": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 2,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "decimals": 0,
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Activity Count"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "blue",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 1
-          },
-          "id": 71,
-          "interval": "4h",
-          "maxDataPoints": 100,
-          "options": {
-            "legend": {
-              "calcs": [
-                "mean",
-                "max"
-              ],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.4.4",
-          "targets": [
-            {
-              "alias": "Activity Count",
-              "bucketAggs": [
-                {
-                  "field": "day",
-                  "id": "2",
-                  "settings": {
-                    "interval": "4h",
-                    "min_doc_count": 0,
-                    "offset": "0",
-                    "trimEdges": 0
-                  },
-                  "type": "date_histogram"
-                }
-              ],
-              "datasource": {
-                "type": "elasticsearch",
-                "uid": "bf33drtnw8w00a"
-              },
-              "hide": false,
-              "metrics": [
-                {
-                  "id": "1",
-                  "type": "count"
-                }
-              ],
-              "query": "",
-              "refId": "A",
-              "timeField": "day"
-            }
-          ],
-          "title": "User Activity Over Time",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "bf33drtnw8w00a"
-          },
-          "description": "Distribution showing how many users have used GitHub Copilot Chat feature versus those who haven't.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              "decimals": 0,
-              "mappings": [
-                {
-                  "options": {
-                    "0": {
-                      "color": "red",
-                      "text": "\u274c No Chat Usage"
-                    },
-                    "1": {
-                      "color": "green",
-                      "text": "\u2705 Used Chat"
-                    },
-                    "false": {
-                      "color": "red",
-                      "text": "\u274c No Chat Usage"
-                    },
-                    "true": {
-                      "color": "green",
-                      "text": "\u2705 Used Chat"
-                    }
-                  },
-                  "type": "value"
-                }
-              ],
-              "unit": "short"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "\u274c No Chat Usage"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "\u2705 Used Chat"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "green",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "(0|false)"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "(1|true)"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "green",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 9
-          },
-          "id": 72,
-          "interval": "4h",
-          "maxDataPoints": 100,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true,
-              "values": [
-                "value",
-                "percent"
-              ]
-            },
-            "pieType": "pie",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.4.4",
-          "targets": [
-            {
-              "alias": "",
-              "bucketAggs": [
-                {
-                  "field": "used_chat",
-                  "id": "2",
-                  "settings": {
-                    "min_doc_count": "1",
-                    "order": "desc",
-                    "orderBy": "_count",
-                    "size": "2"
-                  },
-                  "type": "terms"
-                }
-              ],
-              "metrics": [
-                {
-                  "id": "1",
-                  "type": "count"
-                }
-              ],
-              "query": "",
-              "refId": "A",
-              "timeField": "@timestamp"
-            }
-          ],
-          "title": "Chat Usage Distribution",
-          "type": "piechart"
-        },
-        {
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "bf33drtnw8w00a"
-          },
-          "description": "Daily interaction trends by user showing GitHub Copilot engagement patterns and usage consistency over time.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": [
-              {
-                "__systemRef": "hideSeriesFrom",
-                "matcher": {
-                  "id": "byNames",
-                  "options": {
-                    "mode": "exclude",
-                    "names": [
-                      "Count"
-                    ],
-                    "prefix": "All except:",
-                    "readOnly": true
-                  }
-                },
-                "properties": [
-                  {
-                    "id": "custom.hideFrom",
-                    "value": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": true
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 9
-          },
-          "id": 73,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.4.4",
-          "targets": [
-            {
-              "alias": "",
-              "bucketAggs": [
-                {
-                  "field": "day",
-                  "id": "2",
-                  "settings": {
-                    "interval": "auto"
-                  },
-                  "type": "date_histogram"
-                }
-              ],
-              "datasource": {
-                "type": "elasticsearch",
-                "uid": "bf33drtnw8w00a"
-              },
-              "metrics": [
-                {
-                  "id": "1",
-                  "type": "count"
-                }
-              ],
-              "query": "",
-              "refId": "A",
-              "timeField": "day"
-            }
-          ],
-          "title": "User Activity Over Time (Alternative)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "bf33drtnw8w00a"
-          },
-          "description": "The User Activity Summary Table is a comprehensive overview panel that shows detailed metrics for each user in a tabular format. It's like a \"report card\" for each GitHub Copilot user",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "auto",
-                "cellOptions": {
-                  "type": "auto"
-                },
-                "filterable": true,
-                "inspect": false,
-                "minWidth": 100
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Used Chat"
-                },
-                "properties": [
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "0": {
-                            "color": "dark-red",
-                            "index": 0,
-                            "text": "false"
-                          },
-                          "1": {
-                            "color": "dark-green",
-                            "index": 1,
-                            "text": "true"
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Used Agent"
-                },
-                "properties": [
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "0": {
-                            "color": "dark-red",
-                            "index": 1,
-                            "text": "false"
-                          },
-                          "1": {
-                            "color": "dark-green",
-                            "index": 0,
-                            "text": "true"
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 17
-          },
-          "id": 74,
-          "interval": "4h",
-          "maxDataPoints": 1000,
-          "options": {
-            "cellHeight": "sm",
-            "footer": {
-              "countRows": false,
-              "enablePagination": true,
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
-            },
-            "showHeader": true
-          },
-          "pluginVersion": "11.4.4",
-          "targets": [
-            {
-              "alias": "",
-              "bucketAggs": [
-                {
-                  "field": "user_login",
-                  "id": "7",
-                  "settings": {
-                    "min_doc_count": "1",
-                    "order": "desc",
-                    "orderBy": "_term",
-                    "size": "10"
-                  },
-                  "type": "terms"
-                }
-              ],
-              "hide": false,
-              "metrics": [
-                {
-                  "field": "user_initiated_interaction_count",
-                  "id": "1",
-                  "type": "sum"
-                },
-                {
-                  "field": "code_generation_activity_count",
-                  "id": "3",
-                  "type": "sum"
-                },
-                {
-                  "field": "code_acceptance_activity_count",
-                  "id": "4",
-                  "type": "sum"
-                },
-                {
-                  "field": "loc_suggested_to_add_sum",
-                  "id": "5",
-                  "type": "sum"
-                },
-                {
-                  "field": "loc_added_sum",
-                  "id": "6",
-                  "type": "sum"
-                },
-                {
-                  "field": "used_chat",
-                  "id": "8",
-                  "type": "max"
-                },
-                {
-                  "field": "used_agent",
-                  "id": "9",
-                  "type": "max"
-                }
-              ],
-              "query": "",
-              "refId": "A",
-              "timeField": "day"
-            }
-          ],
-          "timeFrom": "72h",
-          "title": "User Activity Summary Table",
-          "transformations": [
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {},
-                "includeByName": {},
-                "indexByName": {},
-                "renameByName": {
-                  "Max used_agent": "Used Agent",
-                  "Max used_chat": "Used Chat",
-                  "Sum code_acceptance_activity_count": "Code Acceptances",
-                  "Sum code_generation_activity_count": "Code Generations",
-                  "Sum loc_added_sum": "Lines Added",
-                  "Sum loc_suggested_to_add_sum": " Lines Suggested",
-                  "Sum user_initiated_interaction_count": "User Interactions",
-                  "user_login": "User"
-                }
-              }
-            },
-            {
-              "id": "calculateField",
-              "options": {
-                "alias": "Acceptance Rate %",
-                "binary": {
-                  "left": {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Code Acceptances"
-                    }
-                  },
-                  "operator": "/",
-                  "right": {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "Code Generations"
-                    }
-                  }
-                },
-                "mode": "binary",
-                "reduce": {
-                  "reducer": "sum"
-                }
-              }
-            }
-          ],
-          "type": "table"
-        }
-      ],
-      "title": "User Metrics Analytics",
       "type": "row"
     }
   ],
@@ -6565,7 +5733,7 @@
         },
         "datasource": {
           "type": "elasticsearch",
-          "uid": "af335s95iejgga"
+          "uid": "bf3zagsjhwxs0d"
         },
         "definition": "{\"find\": \"terms\", \"field\":  \"organization_slug\", \"query\": \"organization_slug:*\"}",
         "includeAll": true,
@@ -6586,7 +5754,7 @@
         },
         "datasource": {
           "type": "elasticsearch",
-          "uid": "ef335s8wp9fk0e"
+          "uid": "cf3zags6xxb7ka"
         },
         "definition": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
         "includeAll": true,
@@ -6606,7 +5774,7 @@
         },
         "datasource": {
           "type": "elasticsearch",
-          "uid": "cf335s8dp18u8c"
+          "uid": "bf3zagr1e445cb"
         },
         "definition": "{\"find\": \"terms\", \"field\":  \"language\", \"query\": \"language:*\"}",
         "includeAll": true,
@@ -6625,7 +5793,7 @@
         },
         "datasource": {
           "type": "elasticsearch",
-          "uid": "cf335s8dp18u8c"
+          "uid": "bf3zagr1e445cb"
         },
         "definition": "{\"find\": \"terms\", \"field\":  \"editor\", \"query\": \"editor:*\"}",
         "includeAll": true,
@@ -6644,7 +5812,7 @@
         },
         "datasource": {
           "type": "elasticsearch",
-          "uid": "cf335s8dp18u8c"
+          "uid": "bf3zagr1e445cb"
         },
         "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
         "includeAll": true,
@@ -6663,7 +5831,7 @@
         },
         "datasource": {
           "type": "elasticsearch",
-          "uid": "df335s8pk1vy8f"
+          "uid": "cf3zagrrm1qtcd"
         },
         "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
         "includeAll": true,
@@ -6684,7 +5852,7 @@
         },
         "datasource": {
           "type": "elasticsearch",
-          "uid": "cf335s9huwgzke"
+          "uid": "ff3zagsy7bf28a"
         },
         "definition": "{\"find\": \"terms\", \"field\":  \"assignee_team_slug\", \"query\": \"assignee_team_slug:*\"}",
         "includeAll": true,
@@ -6706,7 +5874,7 @@
         },
         "datasource": {
           "type": "elasticsearch",
-          "uid": "cf335s9huwgzke"
+          "uid": "ff3zagsy7bf28a"
         },
         "definition": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_login:*\"}",
         "includeAll": true,
@@ -6727,20 +5895,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Copilot Usage Advanced Dashboard + User Metrics",
-  "uid": "df335sc3i3fnkf",
-  "version": 6,
-  "weekStart": "",
-  // --- User Metrics Row (merged from corrected-user-metrics-dashboard.json) ---
-  {
-    "type": "row",
-    "title": "User Metrics",
-    "description": "User-level Copilot metrics and analytics (merged)",
-    "gridPos": { "h": 1, "w": 24, "x": 0, "y": 999 },
-    "id": 9000,
-    "collapsed": false,
-    "panels": [
-      // ...existing code from user-metrics-corrected-dashboard.json panels, with datasource.uid and queries updated for consistency...
-    ]
-  }
+  "title": "Copilot Usage Advanced Dashboard",
+  "uid": "df3zb2he8s3cwc",
+  "version": 5,
+  "weekStart": ""
 }

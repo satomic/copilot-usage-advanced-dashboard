@@ -86,13 +86,30 @@ def github_api_request_handler(url, error_return_value=[]):
         "Authorization": f"Bearer {Paras.github_pat}",
         "X-GitHub-Api-Version": "2022-11-28",
     }
-    response = requests.get(url, headers=headers)
-    data = response.json()
-
-    if isinstance(data, dict) and data.get("status", "200") != "200":
-        logger.error(f"Request failed reason: {data}")
+    
+    try:
+        response = requests.get(url, headers=headers)
+        logger.info(f"Response status code: {response.status_code}")
+        
+        if response.status_code != 200:
+            logger.error(f"HTTP {response.status_code} error for URL: {url}")
+            logger.error(f"Response text: {response.text}")
+            return error_return_value
+        
+        data = response.json()
+        logger.info(f"Successfully received data from: {url}")
+        
+        if isinstance(data, dict) and data.get("status", "200") != "200":
+            logger.error(f"Request failed reason: {data}")
+            return error_return_value
+        return data
+        
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Request exception for URL {url}: {e}")
         return error_return_value
-    return data
+    except json.JSONDecodeError as e:
+        logger.error(f"JSON decode error for URL {url}: {e}")
+        return error_return_value
 
 
 def dict_save_to_json_file(
@@ -618,10 +635,9 @@ class GitHubOrganizationManager:
                 # Download JSON data from the link with better error handling
                 try:
                     logger.info(f"Requesting download link: {download_link}")
+                    # Do NOT send Authorization header to Azure Blob Storage
                     headers = {
-                        "Accept": "application/vnd.github+json",
-                        "Authorization": f"Bearer {Paras.github_pat}",
-                        "X-GitHub-Api-Version": "2022-11-28",
+                        "Accept": "application/json"
                     }
                     response = requests.get(download_link, headers=headers)
                     
@@ -1014,17 +1030,23 @@ def main(organization_slug):
         f"Processing Copilot user metrics for {slug_type}: {organization_slug}"
     )
     try:
+        logger.info("Calling get_copilot_user_metrics()...")
         user_metrics_data = github_org_manager.get_copilot_user_metrics()
+        logger.info(f"get_copilot_user_metrics() returned: {type(user_metrics_data)} with {len(user_metrics_data) if user_metrics_data else 0} items")
+        
         if not user_metrics_data:
             logger.warning(
                 f"No Copilot user metrics found for {slug_type}: {organization_slug}"
             )
         else:
+            logger.info(f"Writing {len(user_metrics_data)} user metrics to Elasticsearch...")
             for user_metric in user_metrics_data:
                 es_manager.write_to_es(Indexes.index_user_metrics, user_metric)
-            logger.info(f"Processed {len(user_metrics_data)} user metrics records for {slug_type}: {organization_slug}")
+            logger.info(f"Successfully processed {len(user_metrics_data)} user metrics records for {slug_type}: {organization_slug}")
     except Exception as e:
         logger.error(f"Failed to process user metrics for {slug_type} {organization_slug}: {e}")
+        import traceback
+        logger.error(f"Full traceback: {traceback.format_exc()}")
 
     # Process usage data
     copilot_usage_datas = github_org_manager.get_copilot_usages(team_slug="all")

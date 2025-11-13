@@ -1,0 +1,759 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "User-level Copilot metrics with corrected stat panels (date histogram bucket)",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 5,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 100,
+      "panels": [],
+      "title": "User-Level Copilot Metrics Summary",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-user-metrics"
+      },
+      "description": "Total unique users who have Copilot activity in the selected time range.",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.4",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "day",
+              "id": "2",
+              "settings": {
+                "interval": "1d",
+                "min_doc_count": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "user_login",
+              "id": "1",
+              "type": "cardinality"
+            }
+          ],
+          "query": "*",
+          "refId": "A",
+          "timeField": "day"
+        }
+      ],
+      "title": "Total Users",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-user-metrics"
+      },
+      "description": "Total number of Copilot code suggestions generated in the selected time range.",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.4",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "day",
+              "id": "2",
+              "settings": {
+                "interval": "1d",
+                "min_doc_count": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "code_generation_activity_count",
+              "id": "1",
+              "type": "sum"
+            }
+          ],
+          "query": "*",
+          "refId": "A",
+          "timeField": "day"
+        }
+      ],
+      "title": "Total Suggestions",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-user-metrics"
+      },
+      "description": "Total number of Copilot code suggestions accepted by users in the selected time range.",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.4",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "day",
+              "id": "2",
+              "settings": {
+                "interval": "1d",
+                "min_doc_count": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "code_acceptance_activity_count",
+              "id": "1",
+              "type": "sum"
+            }
+          ],
+          "query": "*",
+          "refId": "A",
+          "timeField": "day"
+        }
+      ],
+      "title": "Total Acceptances",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-user-metrics"
+      },
+      "description": "Acceptance rate = Total Acceptances / Total Suggestions for the selected time range.",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.4",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "day",
+              "id": "2",
+              "settings": {
+                "interval": "1d",
+                "min_doc_count": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "code_acceptance_activity_count",
+              "id": "1",
+              "type": "sum"
+            },
+            {
+              "field": "code_generation_activity_count",
+              "id": "2",
+              "type": "sum"
+            }
+          ],
+          "query": "*",
+          "refId": "A",
+          "timeField": "day"
+        }
+      ],
+      "title": "Acceptance Rate",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Acceptance Rate",
+            "binary": {
+              "left": "Sum code_acceptance_activity_count",
+              "operator": "/",
+              "right": "Sum code_generation_activity_count"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "mean"
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 200,
+      "panels": [],
+      "title": "User Breakdown",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-user-metrics"
+      },
+      "description": "Detailed analytics for each user, including agent and chat usage.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.4.4",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "user_login",
+              "id": "9",
+              "settings": {
+                "order": "desc",
+                "orderBy": "3",
+                "size": "100"
+              },
+              "type": "terms"
+            }
+          ],
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            },
+            {
+              "field": "user_initiated_interaction_count",
+              "id": "2",
+              "type": "sum"
+            },
+            {
+              "field": "code_generation_activity_count",
+              "id": "3",
+              "type": "sum"
+            },
+            {
+              "field": "code_acceptance_activity_count",
+              "id": "4",
+              "type": "sum"
+            },
+            {
+              "field": "loc_suggested_to_add_sum",
+              "id": "5",
+              "type": "avg"
+            },
+            {
+              "field": "loc_added_sum",
+              "id": "6",
+              "type": "avg"
+            },
+            {
+              "field": "used_agent",
+              "id": "7",
+              "type": "sum"
+            },
+            {
+              "field": "used_chat",
+              "id": "8",
+              "type": "sum"
+            }
+          ],
+          "query": "*",
+          "refId": "A",
+          "timeField": "day"
+        }
+      ],
+      "title": "Detailed User Analytics",
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 300,
+      "panels": [],
+      "title": "Activity Trends",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-user-metrics"
+      },
+      "description": "Number of unique active users per day.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 19
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.4",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "day",
+              "id": "2",
+              "settings": {
+                "interval": "1d",
+                "min_doc_count": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "user_login",
+              "id": "1",
+              "type": "cardinality"
+            }
+          ],
+          "query": "*",
+          "refId": "A",
+          "timeField": "day"
+        }
+      ],
+      "title": "Daily Active Users",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "elasticsearch-user-metrics"
+      },
+      "description": "Sum of code generation and acceptance activity per day.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.4",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "day",
+              "id": "3",
+              "settings": {
+                "interval": "1d",
+                "min_doc_count": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "code_generation_activity_count",
+              "id": "1",
+              "type": "sum"
+            },
+            {
+              "field": "code_acceptance_activity_count",
+              "id": "2",
+              "type": "sum"
+            }
+          ],
+          "query": "*",
+          "refId": "A",
+          "timeField": "day"
+        }
+      ],
+      "title": "Code Generation & Acceptance Activity",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "refresh": "5s",
+  "schemaVersion": 40,
+  "tags": [
+    "copilot",
+    "user-metrics",
+    "analytics",
+    "corrected"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "User Metrics - Corrected",
+  "uid": "corrected-user-metrics-dashboard",
+  "version": 22,
+  "weekStart": ""
+}
