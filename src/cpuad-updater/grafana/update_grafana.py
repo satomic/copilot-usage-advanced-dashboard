@@ -314,6 +314,10 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
             "name": "elasticsearch-user-metrics",
             "index": "copilot_user_metrics",
         },
+        {
+            "name": "elasticsearch-user-adoption",
+            "index": "copilot_user_adoption",
+        },
     ]
 
     # Template for the payload
@@ -383,6 +387,7 @@ def generate_grafana_model(grafana_token):
         "elasticsearch-seat-info-settings",
         "elasticsearch-total",
         "elasticsearch-user-metrics",
+        "elasticsearch-user-adoption",
     ]
 
     default_template_path = "dashboard-template.json"

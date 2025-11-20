@@ -527,73 +527,20 @@
           ],
           "transformations": [
             {
-              "id": "renameByRegex",
+              "id": "organize",
               "options": {
-                "regex": "^user_login$",
-                "renamePattern": "User"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Count$",
-                "renamePattern": "Events Logged"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Sum user_initiated_interaction_count$",
-                "renamePattern": "User-initiated Interactions"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Sum code_generation_activity_count$",
-                "renamePattern": "Code Suggestions Generated"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Sum code_acceptance_activity_count$",
-                "renamePattern": "Code Suggestions Accepted"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Average loc_suggested_to_add_sum$",
-                "renamePattern": "Average LOC Suggested"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Average loc_added_sum$",
-                "renamePattern": "Average LOC Added"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Sum used_agent$",
-                "renamePattern": "Agent Usage"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Sum used_chat$",
-                "renamePattern": "Chat Usage"
-              }
-            },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "^Unique count.*",
-                "renamePattern": "Active Days"
+                "excludeByName": {},
+                "indexByName": {},
+                "renameByName": {
+                  "user_login": "User",
+                  "Count": "Events Logged",
+                  "Active Days": "Active Days",
+                  "Cardinality day": "Active Days",
+                  "Unique count day": "Active Days",
+                  "Unique Count day": "Active Days",
+                  "Unique count": "Active Days",
+                  "Unique Count": "Active Days"
+                }
               }
             }
           ],
@@ -827,22 +774,62 @@
         {
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-user-metrics"
+            "uid": "cf4on5lgvtxxcf"
           },
-          "description": "Share of the top 10 Copilot users out of total interactions in the selected window.",
+          "description": "Top 10 Copilot adopters by Adoption%",
           "fieldConfig": {
             "defaults": {
               "color": {
-                "mode": "palette-classic"
+                "mode": "thresholds"
               },
               "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Adoption %",
+                "axisPlacement": "auto",
+                "fillOpacity": 80,
+                "gradientMode": "scheme",
                 "hideFrom": {
-                  "legend": false,
                   "tooltip": false,
-                  "viz": false
+                  "viz": false,
+                  "legend": false
+                },
+                "lineWidth": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
                 }
               },
               "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 40
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 60
+                  },
+                  {
+                    "color": "green",
+                    "value": 80
+                  },
+                  {
+                    "color": "blue",
+                    "value": 95
+                  }
+                ]
+              },
               "unit": "none"
             },
             "overrides": []
@@ -855,33 +842,25 @@
           },
           "id": 108,
           "options": {
-            "displayLabels": [
-              "value",
-              "percent"
-            ],
+            "barRadius": 0,
+            "barWidth": 0.97,
+            "fullHighlight": false,
+            "groupWidth": 0.7,
             "legend": {
+              "calcs": [],
               "displayMode": "list",
-              "placement": "right",
-              "showLegend": true,
-              "sortBy": "Value",
-              "sortDesc": true,
-              "values": [
-                "value",
-                "percent"
-              ]
+              "placement": "bottom",
+              "showLegend": false
             },
-            "pieType": "pie",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": true
-            },
+            "orientation": "horizontal",
+            "showValue": "auto",
+            "stacking": "none",
             "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
+              "mode": "single",
+              "sort": "none"
+            },
+            "xTickLabelRotation": 0,
+            "xTickLabelSpacing": 0
           },
           "pluginVersion": "11.4.4",
           "targets": [
@@ -889,12 +868,12 @@
               "alias": "",
               "bucketAggs": [
                 {
-                  "field": "user_login",
+                  "field": "user_login.keyword",
                   "id": "2",
                   "settings": {
                     "min_doc_count": "1",
                     "order": "desc",
-                    "orderBy": "4",
+                    "orderBy": "1",
                     "size": "10"
                   },
                   "type": "terms"
@@ -902,37 +881,39 @@
               ],
               "metrics": [
                 {
-                  "field": "user_initiated_interaction_count",
+                  "field": "adoption_pct",
                   "id": "1",
-                  "type": "sum",
-                  "alias": "User Interactions"
-                },
-                {
-                  "field": "used_agent",
-                  "id": "2",
-                  "type": "sum",
-                  "alias": "Agent Usage"
-                },
-                {
-                  "field": "used_chat",
-                  "id": "3",
-                  "type": "sum",
-                  "alias": "Chat Usage"
-                },
-                {
-                  "field": "day",
-                  "id": "4",
-                  "type": "cardinality",
-                  "alias": "Active Days"
+                  "type": "max"
                 }
               ],
               "query": "*",
               "refId": "A",
-              "timeField": "day"
+              "timeField": "@timestamp",
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "cf4on5lgvtxxcf"
+              },
+              "hide": false
+            }
+          ],
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "indexByName": {
+                  "user_login": 0,
+                  "Max": 1
+                },
+                "renameByName": {
+                  "user_login": "User",
+                  "Max": "Adoption %"
+                }
+              }
             }
           ],
           "title": "Top 10 Copilot Users",
-          "type": "piechart"
+          "type": "barchart"
         }
       ],
       "title": "User Metrics",

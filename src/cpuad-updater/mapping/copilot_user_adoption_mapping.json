@@ -1,0 +1,93 @@
+{
+  "mappings": {
+    "properties": {
+      "last_updated_at": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "unique_hash": {
+        "type": "keyword"
+      },
+      "organization_slug": {
+        "type": "keyword"
+      },
+      "slug_type": {
+        "type": "keyword"
+      },
+      "user_login": {
+        "type": "keyword"
+      },
+      "bucket_type": {
+        "type": "keyword"
+      },
+      "rank": {
+        "type": "integer"
+      },
+      "is_top10": {
+        "type": "boolean"
+      },
+      "adoption_score": {
+        "type": "double"
+      },
+      "adoption_pct": {
+        "type": "double"
+      },
+      "consistency_bonus": {
+        "type": "double"
+      },
+      "events_logged": {
+        "type": "long"
+      },
+      "volume": {
+        "type": "long"
+      },
+      "code_generation_activity_count": {
+        "type": "long"
+      },
+      "code_acceptance_activity_count": {
+        "type": "long"
+      },
+      "loc_added_sum": {
+        "type": "long"
+      },
+      "loc_suggested_to_add_sum": {
+        "type": "long"
+      },
+      "average_loc_added": {
+        "type": "double"
+      },
+      "interactions_per_day": {
+        "type": "double"
+      },
+      "acceptance_rate": {
+        "type": "double"
+      },
+      "feature_breadth": {
+        "type": "double"
+      },
+      "agent_usage": {
+        "type": "long"
+      },
+      "chat_usage": {
+        "type": "long"
+      },
+      "active_days": {
+        "type": "long"
+      },
+      "report_start_day": {
+        "type": "date"
+      },
+      "report_end_day": {
+        "type": "date"
+      },
+      "others_count": {
+        "type": "long"
+      }
+    }
+  }
+}

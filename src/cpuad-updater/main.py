@@ -2,6 +2,7 @@ import json
 import requests
 import os
 import hashlib
+import math
 from elasticsearch import Elasticsearch, NotFoundError
 from datetime import datetime, timedelta
 from log_utils import configure_logger, current_time
@@ -63,6 +64,7 @@ class Indexes:
         "INDEX_NAME_BREAKDOWN_CHAT", "copilot_usage_breakdown_chat"
     )
     index_user_metrics = os.getenv("INDEX_USER_METRICS", "copilot_user_metrics")
+    index_user_adoption = os.getenv("INDEX_USER_ADOPTION", "copilot_user_adoption")
 
 
 logger = configure_logger(log_path=Paras.log_path)
@@ -129,10 +131,263 @@ def dict_save_to_json_file(
 
 
 def generate_unique_hash(data, key_properties=[]):
-    key_string = "-".join([data.get(key_propertie) for key_propertie in key_properties])
+    key_elements = []
+    for key_property in key_properties:
+        value = data.get(key_property)
+        key_elements.append(str(value) if value is not None else "")
+    key_string = "-".join(key_elements)
     unique_hash = hashlib.sha256(key_string.encode()).hexdigest()
     return unique_hash
 
+
+def _compute_percentile(sorted_values, percentile):
+    if not sorted_values:
+        return 0.0
+    k = (len(sorted_values) - 1) * (percentile / 100)
+    lower = math.floor(k)
+    upper = math.ceil(k)
+    if lower == upper:
+        return float(sorted_values[int(k)])
+    lower_value = sorted_values[lower]
+    upper_value = sorted_values[upper]
+    weight_upper = k - lower
+    weight_lower = upper - k
+    return float(lower_value) * weight_lower + float(upper_value) * weight_upper
+
+
+def _robust_scale(value, lower, upper):
+    if upper <= lower:
+        return 1.0
+    return max(0.0, min(1.0, (value - lower) / (upper - lower)))
+
+
+def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, top_n=10):
+    if not metrics_data:
+        return []
+
+    grouped = {}
+    report_start_days = set()
+    report_end_days = set()
+
+    for record in metrics_data:
+        login = record.get("user_login") or "unknown"
+        entry = grouped.setdefault(login, {
+            "events_logged": 0,
+            "volume": 0,
+            "code_generation": 0,
+            "code_acceptance": 0,
+            "loc_added": 0,
+            "loc_suggested": 0,
+            "agent_usage": 0,
+            "chat_usage": 0,
+            "days": set(),
+        })
+
+        entry["events_logged"] += 1
+        entry["volume"] += record.get("user_initiated_interaction_count", 0)
+        entry["code_generation"] += record.get("code_generation_activity_count", 0)
+        entry["code_acceptance"] += record.get("code_acceptance_activity_count", 0)
+        entry["loc_added"] += record.get("loc_added_sum", 0)
+        entry["loc_suggested"] += record.get("loc_suggested_to_add_sum", 0)
+        if record.get("used_agent"):
+            entry["agent_usage"] += 1
+        if record.get("used_chat"):
+            entry["chat_usage"] += 1
+        day_val = record.get("day")
+        if day_val:
+            entry["days"].add(day_val)
+
+        start_day = record.get("report_start_day")
+        if start_day:
+            report_start_days.add(start_day)
+        end_day = record.get("report_end_day")
+        if end_day:
+            report_end_days.add(end_day)
+
+    global_start_day = min(report_start_days) if report_start_days else None
+    global_end_day = max(report_end_days) if report_end_days else None
+
+    summaries = []
+    for login, stats in grouped.items():
+        active_days = len(stats["days"])
+        interaction_per_day = (
+            stats["volume"] / active_days if active_days else 0.0
+        )
+        acceptance_rate = (
+            stats["code_acceptance"] / stats["code_generation"]
+            if stats["code_generation"]
+            else 0.0
+        )
+        average_loc_added = (
+            stats["loc_added"] / active_days if active_days else 0.0
+        )
+        feature_breadth = stats["agent_usage"] + stats["chat_usage"]
+
+        summary = {
+            "user_login": login,
+            "organization_slug": organization_slug,
+            "slug_type": slug_type,
+            "events_logged": stats["events_logged"],
+            "volume": stats["volume"],
+            "code_generation_activity_count": stats["code_generation"],
+            "code_acceptance_activity_count": stats["code_acceptance"],
+            "loc_added_sum": stats["loc_added"],
+            "loc_suggested_to_add_sum": stats["loc_suggested"],
+            "average_loc_added": average_loc_added,
+            "interactions_per_day": interaction_per_day,
+            "acceptance_rate": acceptance_rate,
+            "feature_breadth": feature_breadth,
+            "agent_usage": stats["agent_usage"],
+            "chat_usage": stats["chat_usage"],
+            "active_days": active_days,
+            "report_start_day": global_start_day,
+            "report_end_day": global_end_day,
+            "bucket_type": "user",
+            "is_top10": False,
+            "rank": None,
+        }
+
+        summary["unique_hash"] = generate_unique_hash(
+            summary,
+            key_properties=[
+                "organization_slug",
+                "user_login",
+                "report_start_day",
+                "report_end_day",
+                "bucket_type",
+            ],
+        )
+
+        summaries.append(summary)
+
+    if not summaries:
+        return []
+
+    signals = {
+        "volume": [entry["volume"] for entry in summaries],
+        "interactions_per_day": [entry["interactions_per_day"] for entry in summaries],
+        "acceptance_rate": [entry["acceptance_rate"] for entry in summaries],
+        "average_loc_added": [entry["average_loc_added"] for entry in summaries],
+        "feature_breadth": [entry["feature_breadth"] for entry in summaries],
+    }
+
+    bounds = {}
+    for key, values in signals.items():
+        sorted_values = sorted(values)
+        lower = _compute_percentile(sorted_values, 5)
+        upper = _compute_percentile(sorted_values, 95)
+        bounds[key] = (lower, upper)
+
+    for entry in summaries:
+        norm_volume = _robust_scale(entry["volume"], *bounds["volume"])
+        norm_interactions = _robust_scale(
+            entry["interactions_per_day"], *bounds["interactions_per_day"]
+        )
+        norm_acceptance = _robust_scale(
+            entry["acceptance_rate"], *bounds["acceptance_rate"]
+        )
+        norm_loc_added = _robust_scale(
+            entry["average_loc_added"], *bounds["average_loc_added"]
+        )
+        norm_feature = _robust_scale(
+            entry["feature_breadth"], *bounds["feature_breadth"]
+        )
+
+        base_score = (
+            0.2 * norm_volume
+            + 0.2 * norm_interactions
+            + 0.2 * norm_acceptance
+            + 0.2 * norm_loc_added
+            + 0.2 * norm_feature
+        )
+        entry["_base_score"] = base_score
+
+    max_active_days = max(entry["active_days"] for entry in summaries)
+    for entry in summaries:
+        bonus = 0.1 * (entry["active_days"] / max_active_days) if max_active_days else 0.0
+        bonus = min(bonus, 0.1)
+        entry["consistency_bonus"] = bonus
+        entry["adoption_score"] = entry["_base_score"] * (1 + bonus)
+
+    max_score = max(entry["adoption_score"] for entry in summaries)
+    for entry in summaries:
+        entry["adoption_pct"] = (
+            round(entry["adoption_score"] / max_score * 100, 1)
+            if max_score
+            else 0.0
+        )
+
+    summaries.sort(key=lambda e: e["adoption_pct"], reverse=True)
+    leaderboard = summaries[:top_n]
+    for rank, entry in enumerate(leaderboard, start=1):
+        entry["rank"] = rank
+        entry["is_top10"] = True
+
+    entries = []
+    for entry in leaderboard:
+        entry["bucket_type"] = "user"
+        entries.append(entry)
+
+    others = summaries[top_n:]
+    if others:
+        others_count = len(others)
+        others_entry = {
+            "user_login": "Others",
+            "organization_slug": organization_slug,
+            "slug_type": slug_type,
+            "events_logged": sum(o["events_logged"] for o in others),
+            "volume": sum(o["volume"] for o in others),
+            "code_generation_activity_count": sum(
+                o["code_generation_activity_count"] for o in others
+            ),
+            "code_acceptance_activity_count": sum(
+                o["code_acceptance_activity_count"] for o in others
+            ),
+            "loc_added_sum": sum(o["loc_added_sum"] for o in others),
+            "loc_suggested_to_add_sum": sum(
+                o["loc_suggested_to_add_sum"] for o in others
+            ),
+            "average_loc_added": sum(o["average_loc_added"] for o in others) / others_count,
+            "interactions_per_day": sum(
+                o["interactions_per_day"] for o in others
+            )
+            / others_count,
+            "acceptance_rate": sum(o["acceptance_rate"] for o in others) / others_count,
+            "feature_breadth": sum(o["feature_breadth"] for o in others) / others_count,
+            "agent_usage": sum(o["agent_usage"] for o in others),
+            "chat_usage": sum(o["chat_usage"] for o in others),
+            "active_days": sum(o["active_days"] for o in others),
+            "report_start_day": global_start_day,
+            "report_end_day": global_end_day,
+            "bucket_type": "others",
+            "is_top10": False,
+            "rank": None,
+            "others_count": others_count,
+            "consistency_bonus": 0.0,
+        }
+
+        others_entry["adoption_score"] = (
+            sum(o["adoption_score"] for o in others) / others_count
+        )
+        score_scale = max_score if max_score else 1
+        others_entry["adoption_pct"] = round(
+            others_entry["adoption_score"] / score_scale * 100, 1
+        )
+        others_entry["unique_hash"] = generate_unique_hash(
+            others_entry,
+            key_properties=[
+                "organization_slug",
+                "user_login",
+                "report_start_day",
+                "report_end_day",
+                "bucket_type",
+            ],
+        )
+        entries.append(others_entry)
+
+    for entry in entries:
+        entry.pop("_base_score", None)
+    return entries
 
 def assign_position_in_tree(nodes):
     # Create a dictionary with node id as key and node data as value
@@ -612,6 +867,57 @@ class GitHubOrganizationManager:
         Uses the /copilot/metrics/reports/users-28-day/latest endpoint
         The API returns download links which contain the actual user metrics JSON data
         """
+        # If a local metrics file is provided (for troubleshooting/demo), use it directly
+        local_path = os.getenv("LOCAL_USER_METRICS_FILE")
+        if local_path and os.path.exists(local_path):
+            logger.info(f"Using LOCAL_USER_METRICS_FILE instead of download links: {local_path}")
+            records = []
+            try:
+                with open(local_path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if not line:
+                            continue
+                        try:
+                            rec = json.loads(line)
+                        except json.JSONDecodeError as e:
+                            logger.error(f"Failed to parse line as JSON, skipping. Error: {e}")
+                            continue
+
+                        rec["organization_slug"] = self.organization_slug
+                        rec["slug_type"] = self.slug_type
+                        rec["last_updated_at"] = current_time()
+                        rec["utc_offset"] = self.utc_offset
+
+                        hash_properties = ["organization_slug", "user_login", "day"]
+                        if "user_login" in rec and "day" in rec:
+                            rec["unique_hash"] = generate_unique_hash(rec, hash_properties)
+                        else:
+                            fallback_properties = [
+                                "organization_slug",
+                                "last_updated_at",
+                            ]
+                            rec["unique_hash"] = generate_unique_hash(
+                                rec, fallback_properties
+                            )
+
+                        records.append(rec)
+                logger.info(
+                    f"Loaded {len(records)} user metrics records from LOCAL_USER_METRICS_FILE"
+                )
+            except Exception as e:
+                logger.error(
+                    f"Error reading LOCAL_USER_METRICS_FILE {local_path}: {e}"
+                )
+                records = []
+
+            dict_save_to_json_file(
+                records,
+                f"{self.organization_slug}_copilot_user_metrics_local",
+                save_to_json=save_to_json,
+            )
+            return records
+
         url = f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/metrics/reports/users-28-day/latest"
         
         logger.info(f"Fetching user metrics download links from: {url}")
@@ -653,13 +959,26 @@ class GitHubOrganizationManager:
                         logger.warning(f"Download link {i} returned empty content")
                         continue
                     
-                    # Try to parse as JSON
+                    # Try to parse as JSON (handle NDJSON line-by-line)
                     try:
                         user_metrics_response = response.json()
                     except json.JSONDecodeError as json_error:
-                        logger.error(f"Download link {i} returned non-JSON content. Error: {json_error}")
-                        logger.error(f"Response content preview (first 500 chars): {response.text[:500]}")
-                        continue
+                        # Likely NDJSON (newline-delimited JSON), parse line-by-line
+                        logger.info(f"Download link {i} appears to be NDJSON, parsing line-by-line")
+                        user_metrics_response = []
+                        for line in response.text.splitlines():
+                            line = line.strip()
+                            if not line:
+                                continue
+                            try:
+                                user_metrics_response.append(json.loads(line))
+                            except json.JSONDecodeError as line_error:
+                                logger.error(f"Failed to parse NDJSON line: {line_error}")
+                                continue
+                        if not user_metrics_response:
+                            logger.error(f"Download link {i} returned non-parseable content. Original error: {json_error}")
+                            logger.error(f"Response content preview (first 500 chars): {response.text[:500]}")
+                            continue
                     
                 except requests.exceptions.RequestException as req_error:
                     logger.error(f"Request error for download link {i}: {req_error}")
@@ -937,6 +1256,9 @@ class ElasticsearchManager:
     def write_to_es(self, index_name, data, update_condition=None):
         last_updated_at = current_time()
         data["last_updated_at"] = last_updated_at
+        # Add @timestamp for Grafana time-based filtering (ISO 8601 format)
+        from datetime import datetime
+        data["@timestamp"] = datetime.now().isoformat()
         doc_id = data.get(self.primary_key)
         logger.info(f"Writing data to Elasticsearch index: {index_name}")
         try:
@@ -1042,6 +1364,17 @@ def main(organization_slug):
             logger.info(f"Writing {len(user_metrics_data)} user metrics to Elasticsearch...")
             for user_metric in user_metrics_data:
                 es_manager.write_to_es(Indexes.index_user_metrics, user_metric)
+            adoption_entries = build_user_adoption_leaderboard(
+                user_metrics_data, organization_slug, slug_type
+            )
+            if adoption_entries:
+                logger.info(
+                    f"Writing {len(adoption_entries)} adoption leaderboard entries to Elasticsearch..."
+                )
+                for adoption_entry in adoption_entries:
+                    es_manager.write_to_es(
+                        Indexes.index_user_adoption, adoption_entry
+                    )
             logger.info(f"Successfully processed {len(user_metrics_data)} user metrics records for {slug_type}: {organization_slug}")
     except Exception as e:
         logger.error(f"Failed to process user metrics for {slug_type} {organization_slug}: {e}")

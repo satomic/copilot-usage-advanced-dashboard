@@ -31,6 +31,7 @@ INDEX_NAME_TOTAL=learning_copilot_usage_total
 INDEX_NAME_BREAKDOWN=learning_copilot_usage_breakdown
 INDEX_NAME_BREAKDOWN_CHAT=learning_copilot_usage_breakdown_chat
 INDEX_USER_METRICS=learning_copilot_user_metrics
+INDEX_USER_ADOPTION=learning_copilot_user_adoption
 ```
 
 ## How This Keeps You Safe

@@ -31,8 +31,9 @@ services:
       - elasticsearch
     volumes:
       - grafana:/var/lib/grafana
-      - ./grafana-dashboards:/var/lib/grafana/dashboards
-      - ./grafana-dashboards/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./grafana-provisioning/dashboards:/var/lib/grafana/dashboards
+      - ./grafana-provisioning/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./user_advance_metrics_dashboard.json:/var/lib/grafana/dashboards/user_advance_metrics_dashboard.json
     environment:
       GF_LOG_LEVEL: debug
       GF_SERVER_HTTP_PORT: 80
@@ -71,9 +72,10 @@ services:
       - elasticsearch
     environment:
       GITHUB_PAT: ${GITHUB_PAT}
-      ORGANIZATION_SLUGS: standalone:octodemo-copilot-standalone
+      ORGANIZATION_SLUGS: ${ORGANIZATION_SLUGS:-standalone:octodemo-copilot-standalone}
       ELASTICSEARCH_URL: http://elasticsearch:9200
       INDEX_USER_METRICS: copilot_user_metrics
+      INDEX_USER_ADOPTION: copilot_user_adoption
       # Add other environment variables as needed
     restart: "no"
 

@@ -28,6 +28,9 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Copy mapping folder to the working directory
 COPY mapping /app/mapping
 
+# Copy grafana folder to the working directory
+COPY grafana /app/grafana
+
 # Copy the scripts to the working directory
 COPY *.py /app/
 COPY version /app/
