@@ -120,7 +120,7 @@
                   "field": "day",
                   "id": "2",
                   "settings": {
-                    "interval": "1d",
+                    "orderBy": "4",
                     "min_doc_count": 0
                   },
                   "type": "date_histogram"
@@ -131,6 +131,25 @@
                   "field": "user_login",
                   "id": "1",
                   "type": "cardinality"
+                  "alias": "User Interactions"
+                }
+                {
+                  "field": "used_agent",
+                  "id": "2",
+                  "type": "sum",
+                  "alias": "Agent Usage"
+                },
+                {
+                  "field": "used_chat",
+                  "id": "3",
+                  "type": "sum",
+                  "alias": "Chat Usage"
+                },
+                {
+                  "field": "day",
+                  "id": "4",
+                  "type": "cardinality",
+                  "alias": "Active Days"
                 }
               ],
               "query": "*",
@@ -857,7 +876,8 @@
           "id": 108,
           "options": {
             "displayLabels": [
-              "value"
+              "value",
+              "percent"
             ],
             "legend": {
               "displayMode": "list",
@@ -866,7 +886,8 @@
               "sortBy": "Value",
               "sortDesc": true,
               "values": [
-                "value"
+                "value",
+                "percent"
               ]
             },
             "pieType": "pie",
