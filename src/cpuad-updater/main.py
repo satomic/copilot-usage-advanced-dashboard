@@ -1432,16 +1432,33 @@ def main(organization_slug):
 
 
 if __name__ == "__main__":
-    try:
-        logger.info(
-            f"Starting data processing for organizations: {Paras.organization_slugs}"
-        )
-        # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting
-        organization_slugs = Paras.organization_slugs.split(",")
-        for organization_slug in organization_slugs:
-            main(organization_slug.strip())
-    except Exception as e:
-        logger.error(f"An error occurred: {e}")
-        logger.error(f"Full traceback: {traceback.format_exc()}")
-    finally:
-        logger.info("-----------------Finished-----------------")
+    import os
+    
+    # Get execution interval from environment (default: 1 hour)
+    execution_interval_hours = int(os.getenv("EXECUTION_INTERVAL_HOURS", "1"))
+    execution_interval_seconds = execution_interval_hours * 3600
+    
+    logger.info(f"Starting Copilot metrics collector with {execution_interval_hours}h interval")
+    
+    while True:
+        try:
+            logger.info(
+                f"Starting data processing for organizations: {Paras.organization_slugs}"
+            )
+            # Split Paras.organization_slugs and process each organization, remember to remove spaces after splitting
+            organization_slugs = Paras.organization_slugs.split(",")
+            for organization_slug in organization_slugs:
+                main(organization_slug.strip())
+            
+            logger.info("-----------------Finished Successfully-----------------")
+            logger.info(f"Sleeping for {execution_interval_hours} hour(s) until next run...")
+            time.sleep(execution_interval_seconds)
+            
+        except KeyboardInterrupt:
+            logger.info("Received shutdown signal, exiting gracefully...")
+            break
+        except Exception as e:
+            logger.error(f"An error occurred: {e}")
+            logger.error(f"Full traceback: {traceback.format_exc()}")
+            logger.info(f"Retrying in {execution_interval_hours} hour(s)...")
+            time.sleep(execution_interval_seconds)

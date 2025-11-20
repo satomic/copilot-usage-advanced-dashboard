@@ -76,8 +76,14 @@ services:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       INDEX_USER_METRICS: copilot_user_metrics
       INDEX_USER_ADOPTION: copilot_user_adoption
+      EXECUTION_INTERVAL_HOURS: ${EXECUTION_INTERVAL_HOURS:-1}
       # Add other environment variables as needed
-    restart: "no"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "python"]
+      interval: 5m
+      timeout: 10s
+      retries: 3
 
 volumes:
   data:
