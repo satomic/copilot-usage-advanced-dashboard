@@ -19,9 +19,11 @@
 |1.5| Add daily usage history for each user, old version upgrade guide refer to [this issue](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)  | 20250404 |
 |1.6| refactor timezone handling in main.py & Docker run ENV paras |20250410|
 |1.7| [Add Elasticsearch authentication](https://github.com/satomic/copilot-usage-advanced-dashboard/pull/19) |20250411|
+|1.8| **User Metrics Analytics Module**: Added 5th data source with user adoption leaderboard, Top 10 visualization, hourly automation, and production-ready deployment |20251120|
 
 ## Table of contents
 
+- [🚀 Quick Start](#-quick-start-5-minutes)
 - [Introduction](#Introduction)
   - [Online Demo Environment ✨](#Online-Demo-Environment)
     - [Copilot Usage Advanced Dashboard](#Copilot-Usage-Advanced-Dashboard)
@@ -36,6 +38,7 @@
     - [5. Copilot Chat](#5-Copilot-Chat)
     - [6. Seat Analysis](#6-Seat-Analysis)
     - [7. Breakdown Heatmap](#7-Breakdown-Heatmap)
+    - [8. User Metrics Analytics](#8-User-Metrics-Analytics)
   - [Copilot Usage Advanced Dashboard Original](#Copilot-Usage-Advanced-Dashboard-Original)
     - [1. Copilot Seat Info & Top Languages](#1-Copilot-Seat-Info--Top-Languages)
     - [2. Copilot Usage Total Insight](#2-Copilot-Usage-Total-Insight)
@@ -48,6 +51,64 @@
 
 ---
 
+## 🚀 Quick Start (5 Minutes)
+
+### Prerequisites
+- Docker Desktop installed ([Download](https://www.docker.com/products/docker-desktop))
+- GitHub Personal Access Token with `manage_billing:copilot` scope ([Create Token](https://github.com/settings/tokens))
+- Your GitHub Organization/Enterprise slug
+
+### Setup Steps
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/vanchaudhary/copilot-usage-advanced-dashboard.git
+cd copilot-usage-advanced-dashboard
+```
+
+2. **Configure environment**
+```bash
+cp .env.template .env
+# Edit .env file with your GitHub PAT and organization slug
+```
+
+Minimal required configuration:
+```env
+GITHUB_PAT=ghp_your_token_here
+ORGANIZATION_SLUGS=your-org-name
+```
+
+3. **Start the dashboard**
+```bash
+docker-compose up -d
+```
+
+4. **Access Grafana**
+- URL: **http://localhost:8080**
+- Username: `admin`
+- Password: `copilot`
+- ✨ Dashboard loads automatically - no manual import needed!
+
+### What Happens Automatically
+✅ Elasticsearch starts and creates 7 indexes  
+✅ Grafana starts with pre-configured datasources  
+✅ Dashboard provisions automatically from `/grafana-provisioning/dashboards/`  
+✅ `cpuad-updater` fetches data from 5 GitHub APIs every hour  
+✅ User metrics populate in "User Metrics" row (9 panels)  
+✅ System self-heals if any container crashes  
+
+### Environment Variables
+
+| Variable | Required | Description | Default |
+|----------|----------|-------------|---------|  
+| `GITHUB_PAT` | ✅ Yes | GitHub Personal Access Token | - |
+| `ORGANIZATION_SLUGS` | ✅ Yes | Comma-separated org slugs | - |
+| `ELASTICSEARCH_URL` | No | Elasticsearch endpoint | `http://elasticsearch:9200` |
+| `EXECUTION_INTERVAL_HOURS` | No | Data fetch frequency (hours) | `1` |
+| `INDEX_USER_METRICS` | No | User metrics index name | `copilot_user_metrics` |
+| `INDEX_USER_ADOPTION` | No | Adoption leaderboard index | `copilot_user_adoption` |
+
+---
 
 # Introduction
 
@@ -57,6 +118,7 @@
 - [Get a summary of Copilot metrics for a team](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-metrics?apiVersion=2022-11-28#get-copilot-metrics-for-a-team)
 - [Get Copilot seat information and settings for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#get-copilot-seat-information-and-settings-for-an-organization)
 - [List all Copilot seat assignments for an organization](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28#list-all-copilot-seat-assignments-for-an-organization)
+- [**NEW in v1.8** - Get Copilot User Metrics (28-day rolling window)](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-user-metrics)
 
 representing Copilot usage in multi organizations & teams from different dimensions. The features are summarized as follows:
 - Data is persisted in Elasticsearch and visualized in Grafana, **not just the past 28 days**. So you can freely choose the time period you want to visualize, such as the past year or a specific month.
@@ -197,7 +259,57 @@ The choice of variables is dynamically associated with the data display
 
 ![](image/image_i7-wXGj-UA.png)
 
-## Copilot Usage Advanced Dashboard Original
+### 8. User Metrics Analytics
+
+> **NEW in v1.8**: Complete user-level analytics powered by GitHub Copilot User Metrics API. Track individual user adoption, engagement patterns, and feature utilization with automated hourly updates.
+
+Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-user-metrics), this module provides comprehensive per-user analytics including:
+
+**Key Metrics:**
+- **Total Users** = `cardinality(user_login)` - Unique users with Copilot activity
+- **Total Suggestions** = `sum(code_generation_activity_count)` - Code suggestions generated across all users
+- **Total Acceptances** = `sum(code_acceptance_activity_count)` - Code suggestions accepted by users
+- **Acceptance Rate** = `sum(code_acceptance_activity_count) / sum(code_generation_activity_count)` - Overall acceptance percentage
+- **Active Days** = `cardinality(day)` - Distinct days each user engaged with Copilot
+- **Adoption Score** = `(active_days / total_days_in_period) × 100` - User engagement percentage
+
+**Per-User Analytics Table:**
+- User-initiated Interactions = `sum(user_initiated_interaction_count)`
+- Code Suggestions Generated = `sum(code_generation_activity_count)`
+- Code Suggestions Accepted = `sum(code_acceptance_activity_count)`
+- Average LOC Suggested = `avg(loc_suggested_to_add_sum)`
+- Average LOC Added = `avg(loc_added_sum)`
+- Agent Usage = `sum(used_agent)` - Copilot Agent feature usage count
+- Chat Usage = `sum(used_chat)` - Copilot Chat feature usage count
+- Active Days = `cardinality(day)` - Days with any Copilot activity
+
+**Top 10 Copilot Users Leaderboard:**
+- Visualizes top 10 users by adoption percentage
+- Color-coded gradient from red (low adoption) to blue (high adoption)
+  - 🔴 Red (0-40%): Needs attention
+  - 🟠 Orange (40-60%): Moderate usage
+  - 🟡 Yellow (60-80%): Good engagement
+  - 🟢 Green (80-95%): Excellent adoption
+  - 🔵 Blue (95-100%): Power user
+
+**Automated Data Collection:**
+- Runs every hour (configurable via `EXECUTION_INTERVAL_HOURS`)
+- Fetches 28-day rolling window data from GitHub API
+- Calculates adoption scores automatically
+- Stores in 2 Elasticsearch indexes: `copilot_user_metrics` (raw data) and `copilot_user_adoption` (leaderboard scores)
+- No manual intervention required
+
+![](image/user-metrics-dashboard.png)
+
+**Use Cases:**
+- Identify power users and champions for Copilot evangelism
+- Track onboarding progress for new Copilot users
+- Spot users who need additional training or support
+- Measure team-level adoption trends over time
+- Monitor Chat and Agent feature adoption rates
+- Correlate active days with productivity metrics
+
+
 
 ### 1. Copilot Seat Info & Top Languages
 
