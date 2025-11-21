@@ -36,7 +36,7 @@ fi
 
 echo "is provisioned: $AZD_IS_PROVISIONED"
 
-if [ "${AZD_IS_PROVISIONED,,}" != "true" ]; then
+if [[ "$(echo "${AZD_IS_PROVISIONED}" | tr '[:upper:]' '[:lower:]')" != "true" ]]; then
     echo "Azure resources are not provisioned. Please run 'azd provision' to set up the necessary resources before running this script."
     exit 1
 fi
