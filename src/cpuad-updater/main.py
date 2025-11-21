@@ -9,6 +9,8 @@ import time
 from metrics_2_usage_convertor import convert_metrics_to_usage
 import traceback
 from zoneinfo import ZoneInfo
+from dotenv import load_dotenv
+load_dotenv()
 
 
 def get_utc_offset():
@@ -111,7 +113,7 @@ def dict_save_to_json_file(
 
 
 def generate_unique_hash(data, key_properties=[]):
-    key_string = "-".join([data.get(key_propertie) for key_propertie in key_properties])
+    key_string = "-".join([str(data.get(key_propertie, "")) for key_propertie in key_properties])
     unique_hash = hashlib.sha256(key_string.encode()).hexdigest()
     return unique_hash
 
@@ -262,13 +264,7 @@ class GitHubOrganizationManager:
         position_in_tree="leaf_team",
         usage_or_metrics="metrics",
     ):
-        urls = {
-            self.organization_slug,
-            (
-                position_in_tree,
-                f"https://api.github.com/{self.api_type}/{self.organization_slug}/copilot/{usage_or_metrics}",
-            ),
-        }
+        urls = {}
         if team_slug:
             if team_slug != "all":
                 urls = {
@@ -776,8 +772,43 @@ class ElasticsearchManager:
     def write_to_es(self, index_name, data, update_condition=None):
         last_updated_at = current_time()
         data["last_updated_at"] = last_updated_at
+        
+        # Add @timestamp field for Grafana time-series support
+        if "day" in data:
+            # Convert day field to proper timestamp
+            day_str = data["day"]
+            if isinstance(day_str, str) and len(day_str) >= 10:
+                data["@timestamp"] = f"{day_str[:10]}T00:00:00.000Z"
+            else:
+                data["@timestamp"] = last_updated_at
+        else:
+            data["@timestamp"] = last_updated_at
+            
         doc_id = data.get(self.primary_key)
-        logger.info(f"Writing data to Elasticsearch index: {index_name}")
+        # doc_id = "NFZyUG5wa0JzUDAyUXVVWHEyeGk6X3kwTThvV3dFYkxPdTRsMktCdDBpZw==" # Static ID for testing - FIXED
+        
+        # Fallback: generate unique_hash if missing
+        if not doc_id:
+            logger.warning(f"Primary key '{self.primary_key}' not found, generating fallback ID")
+            # Generate a fallback unique hash based on available data
+            fallback_keys = ['organization_slug', 'team_slug', 'day', 'assignee_login']
+            available_keys = [key for key in fallback_keys if key in data]
+            if available_keys:
+                doc_id = generate_unique_hash(data, available_keys)
+                data[self.primary_key] = doc_id
+                logger.info(f"Generated fallback document ID: {doc_id} using keys: {available_keys}")
+            else:
+                # Last resort: use timestamp-based ID
+                doc_id = hashlib.sha256(f"{index_name}-{current_time()}".encode()).hexdigest()
+                data[self.primary_key] = doc_id
+                logger.info(f"Generated timestamp-based document ID: {doc_id}")
+        
+        if not doc_id:
+            logger.error(f"No document ID found for primary key '{self.primary_key}' in data. Available keys: {list(data.keys())}")
+            logger.error(f"Data sample: {str(data)[:200]}...")
+            return
+            
+        logger.info(f"Writing data to Elasticsearch index: {index_name} with ID: {doc_id}")
         try:
             # Get existing document
             existing_doc = self.es.get(index=index_name, id=doc_id)
@@ -804,10 +835,10 @@ class ElasticsearchManager:
 
             # Always update document, possibly with some preserved fields
             self.es.update(index=index_name, id=doc_id, doc=data)
-            logger.info(f"[updated] to [{index_name}]: {data}")
+            logger.info(f"[updated] to [{index_name}]: {doc_id}")
         except NotFoundError:
             self.es.index(index=index_name, id=doc_id, document=data)
-            logger.info(f"[created] to [{index_name}]: {data}")
+            logger.info(f"[created] to [{index_name}]: {doc_id}")
 
 
 def main(organization_slug):
@@ -825,7 +856,7 @@ def main(organization_slug):
 
     logger.info(f"Starting data processing for {slug_type}: {organization_slug}")
     github_org_manager = GitHubOrganizationManager(
-        organization_slug, is_standalone=is_standalone
+        organization_slug, save_to_json=True, is_standalone=is_standalone
     )
     es_manager = ElasticsearchManager()
 
@@ -843,8 +874,14 @@ def main(organization_slug):
             f"No Copilot seat info & settings found for {slug_type}: {organization_slug}"
         )
     else:
+        # Ensure unique_hash is present
+        if 'unique_hash' not in data_seat_info_settings:
+            logger.warning("unique_hash missing from seat info settings, generating one")
+            data_seat_info_settings['unique_hash'] = generate_unique_hash(
+                data_seat_info_settings, key_properties=["organization_slug", "day"]
+            )
         es_manager.write_to_es(Indexes.index_seat_info, data_seat_info_settings)
-        logger.info(f"Data processing completed for {slug_type}: {organization_slug}")
+        logger.info(f"Seat info data processing completed for {slug_type}: {organization_slug}")
 
     # Process seat assignments
     logger.info(

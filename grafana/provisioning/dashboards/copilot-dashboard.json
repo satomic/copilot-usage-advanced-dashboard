@@ -1,0 +1,146 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "GitHub Copilot Usage Dashboard",
+    "tags": ["copilot", "github"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Total Suggestions Count",
+        "type": "stat",
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "copilot-elasticsearch"
+            },
+            "query": "*",
+            "alias": "",
+            "metrics": [
+              {
+                "id": "1",
+                "type": "sum",
+                "field": "total_suggestions_count"
+              }
+            ],
+            "bucketAggs": [],
+            "timeField": "@timestamp"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Copilot Usage Over Time",
+        "type": "timeseries",
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "copilot-elasticsearch"
+            },
+            "query": "*",
+            "alias": "",
+            "metrics": [
+              {
+                "id": "1",
+                "type": "sum",
+                "field": "total_suggestions_count"
+              }
+            ],
+            "bucketAggs": [
+              {
+                "id": "2",
+                "type": "date_histogram",
+                "field": "@timestamp",
+                "settings": {
+                  "interval": "1d",
+                  "min_doc_count": 0,
+                  "trimEdges": 0
+                }
+              }
+            ],
+            "timeField": "@timestamp"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        }
+      },
+      {
+        "id": 3,
+        "title": "Active vs Inactive Seats",
+        "type": "piechart",
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "copilot-elasticsearch"
+            },
+            "query": "*",
+            "alias": "Active Seats",
+            "metrics": [
+              {
+                "id": "1",
+                "type": "max",
+                "field": "seat_active_this_cycle"
+              }
+            ],
+            "bucketAggs": [],
+            "timeField": "@timestamp"
+          },
+          {
+            "refId": "B",
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "copilot-elasticsearch"
+            },
+            "query": "*",
+            "alias": "Inactive Seats",
+            "metrics": [
+              {
+                "id": "1",
+                "type": "max",
+                "field": "seat_inactive_this_cycle"
+              }
+            ],
+            "bucketAggs": [],
+            "timeField": "@timestamp"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        }
+      }
+    ],
+    "time": {
+      "from": "now-30d",
+      "to": "now"
+    },
+    "refresh": "5m",
+    "schemaVersion": 37,
+    "version": 1
+  }
+}
