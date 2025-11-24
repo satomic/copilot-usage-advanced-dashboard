@@ -1,0 +1,245 @@
+{
+  "mappings": {
+    "properties": {
+      "report_start_day": {
+        "type": "date"
+      },
+      "report_end_day": {
+        "type": "date"
+      },
+      "day": {
+        "type": "date"
+      },
+      "enterprise_id": {
+        "type": "keyword"
+      },
+      "user_id": {
+        "type": "long"
+      },
+      "user_login": {
+        "type": "keyword"
+      },
+      "organization_slug": {
+        "type": "keyword"
+      },
+      "slug_type": {
+        "type": "keyword"
+      },
+      "last_updated_at": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "unique_hash": {
+        "type": "keyword"
+      },
+      "utc_offset": {
+        "type": "keyword"
+      },
+      "user_initiated_interaction_count": {
+        "type": "long"
+      },
+      "code_generation_activity_count": {
+        "type": "long"
+      },
+      "code_acceptance_activity_count": {
+        "type": "long"
+      },
+      "used_agent": {
+        "type": "boolean"
+      },
+      "used_chat": {
+        "type": "boolean"
+      },
+      "loc_suggested_to_add_sum": {
+        "type": "long"
+      },
+      "loc_suggested_to_delete_sum": {
+        "type": "long"
+      },
+      "loc_added_sum": {
+        "type": "long"
+      },
+      "loc_deleted_sum": {
+        "type": "long"
+      },
+      "totals_by_ide": {
+        "type": "nested",
+        "properties": {
+          "ide": {
+            "type": "keyword"
+          },
+          "user_initiated_interaction_count": {
+            "type": "long"
+          },
+          "code_generation_activity_count": {
+            "type": "long"
+          },
+          "code_acceptance_activity_count": {
+            "type": "long"
+          },
+          "loc_suggested_to_add_sum": {
+            "type": "long"
+          },
+          "loc_suggested_to_delete_sum": {
+            "type": "long"
+          },
+          "loc_added_sum": {
+            "type": "long"
+          },
+          "loc_deleted_sum": {
+            "type": "long"
+          },
+          "last_known_plugin_version": {
+            "type": "nested",
+            "properties": {
+              "sampled_at": {
+                "type": "date"
+              },
+              "plugin": {
+                "type": "keyword"
+              },
+              "plugin_version": {
+                "type": "keyword"
+              }
+            }
+          },
+          "last_known_ide_version": {
+            "type": "nested",
+            "properties": {
+              "sampled_at": {
+                "type": "date"
+              },
+              "ide_version": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "totals_by_feature": {
+        "type": "nested",
+        "properties": {
+          "feature": {
+            "type": "keyword"
+          },
+          "user_initiated_interaction_count": {
+            "type": "long"
+          },
+          "code_generation_activity_count": {
+            "type": "long"
+          },
+          "code_acceptance_activity_count": {
+            "type": "long"
+          },
+          "loc_suggested_to_add_sum": {
+            "type": "long"
+          },
+          "loc_suggested_to_delete_sum": {
+            "type": "long"
+          },
+          "loc_added_sum": {
+            "type": "long"
+          },
+          "loc_deleted_sum": {
+            "type": "long"
+          }
+        }
+      },
+      "totals_by_language_feature": {
+        "type": "nested",
+        "properties": {
+          "language": {
+            "type": "keyword"
+          },
+          "feature": {
+            "type": "keyword"
+          },
+          "code_generation_activity_count": {
+            "type": "long"
+          },
+          "code_acceptance_activity_count": {
+            "type": "long"
+          },
+          "loc_suggested_to_add_sum": {
+            "type": "long"
+          },
+          "loc_suggested_to_delete_sum": {
+            "type": "long"
+          },
+          "loc_added_sum": {
+            "type": "long"
+          },
+          "loc_deleted_sum": {
+            "type": "long"
+          }
+        }
+      },
+      "totals_by_language_model": {
+        "type": "nested",
+        "properties": {
+          "language": {
+            "type": "keyword"
+          },
+          "model": {
+            "type": "keyword"
+          },
+          "code_generation_activity_count": {
+            "type": "long"
+          },
+          "code_acceptance_activity_count": {
+            "type": "long"
+          },
+          "loc_suggested_to_add_sum": {
+            "type": "long"
+          },
+          "loc_suggested_to_delete_sum": {
+            "type": "long"
+          },
+          "loc_added_sum": {
+            "type": "long"
+          },
+          "loc_deleted_sum": {
+            "type": "long"
+          }
+        }
+      },
+      "totals_by_model_feature": {
+        "type": "nested",
+        "properties": {
+          "model": {
+            "type": "keyword"
+          },
+          "feature": {
+            "type": "keyword"
+          },
+          "user_initiated_interaction_count": {
+            "type": "long"
+          },
+          "code_generation_activity_count": {
+            "type": "long"
+          },
+          "code_acceptance_activity_count": {
+            "type": "long"
+          },
+          "loc_suggested_to_add_sum": {
+            "type": "long"
+          },
+          "loc_suggested_to_delete_sum": {
+            "type": "long"
+          },
+          "loc_added_sum": {
+            "type": "long"
+          },
+          "loc_deleted_sum": {
+            "type": "long"
+          }
+        }
+      }
+    }
+  }
+}
