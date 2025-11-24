@@ -1257,7 +1257,6 @@ class ElasticsearchManager:
         last_updated_at = current_time()
         data["last_updated_at"] = last_updated_at
         # Add @timestamp for Grafana time-based filtering (ISO 8601 format)
-        from datetime import datetime
         data["@timestamp"] = datetime.now().isoformat()
         doc_id = data.get(self.primary_key)
         logger.info(f"Writing data to Elasticsearch index: {index_name}")
