@@ -62,7 +62,7 @@
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/vanchaudhary/copilot-usage-advanced-dashboard.git
+git clone https://github.com/satomic/copilot-usage-advanced-dashboard.git
 cd copilot-usage-advanced-dashboard
 ```
 
