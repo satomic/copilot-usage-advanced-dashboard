@@ -322,6 +322,12 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
 
     # Template for the payload
     def create_payload(name, index):
+        # Use appropriate timeField based on the index
+        if index == "copilot_user_adoption":
+            time_field = "@timestamp"
+        else:
+            time_field = "day"
+        
         return {
             "name": name,
             "type": "elasticsearch",
@@ -336,7 +342,7 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
                 "logLevelField": "",
                 "logMessageField": "",
                 "maxConcurrentShardRequests": 5,
-                "timeField": "day",
+                "timeField": time_field,
                 "timeInterval": "1d",
             },
         }
@@ -439,19 +445,46 @@ def generate_grafana_model(grafana_token):
 
     # load template content as json
     try:
-        dashboard = json.loads(template_content)
-        # get the id
-        dashboard_id = dashboard.get("dashboard", {}).get("id")
-        # get title
-        dashboard_title = dashboard.get("dashboard", {}).get("title")
-        logging.info(f"Dashboard ID: {dashboard_id}")
-        logging.info(f"Dashboard Title: {dashboard_title}")
+        dashboard_obj = json.loads(template_content)
+        
+        # Check if this is a dashboard object (has "dashboard" key)
+        if "dashboard" in dashboard_obj:
+            # get the id
+            dashboard_id = dashboard_obj.get("dashboard", {}).get("id")
+            # get title
+            dashboard_title = dashboard_obj.get("dashboard", {}).get("title")
+            logging.info(f"Dashboard ID: {dashboard_id}")
+            logging.info(f"Dashboard Title: {dashboard_title}")
 
-        # change id to null
-        dashboard["dashboard"]["id"] = None
-
-        # updated template content
-        template_content = json.dumps(dashboard, indent=4)
+            # change id to null
+            dashboard_obj["dashboard"]["id"] = None
+            
+            # Remove UID to allow creating new dashboard
+            if "uid" in dashboard_obj["dashboard"]:
+                dashboard_obj["dashboard"]["uid"] = None
+            
+            # Construct the proper API payload for Grafana
+            # The API expects: {"dashboard": {...}, "folderId": 0, "overwrite": true}
+            # NOT the full export format with "meta"
+            api_payload = {
+                "dashboard": dashboard_obj["dashboard"],
+                "folderId": 0,
+                "overwrite": True,
+                "message": "Dashboard created by cpuad-updater"
+            }
+            
+            # updated template content
+            template_content = json.dumps(api_payload, indent=4)
+        else:
+            # Old format - dashboard content directly
+            logging.info("Using legacy dashboard format")
+            dashboard_id = dashboard_obj.get("id")
+            dashboard_title = dashboard_obj.get("title")
+            logging.info(f"Dashboard ID: {dashboard_id}")
+            logging.info(f"Dashboard Title: {dashboard_title}")
+            
+            dashboard_obj["id"] = None
+            template_content = json.dumps(dashboard_obj, indent=4)
 
         with open(model_output_path, "w") as output_file:
             output_file.write(template_content)

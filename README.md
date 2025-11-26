@@ -265,32 +265,55 @@ The choice of variables is dynamically associated with the data display
 
 Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-user-metrics), this module provides comprehensive per-user analytics including:
 
-**Key Metrics:**
-- **Total Users** = `cardinality(user_login)` - Unique users with Copilot activity
-- **Total Suggestions** = `sum(code_generation_activity_count)` - Code suggestions generated across all users
-- **Total Acceptances** = `sum(code_acceptance_activity_count)` - Code suggestions accepted by users
-- **Acceptance Rate** = `sum(code_acceptance_activity_count) / sum(code_generation_activity_count)` - Overall acceptance percentage
-- **Active Days** = `cardinality(day)` - Distinct days each user engaged with Copilot
-- **Adoption Score** = `(active_days / total_days_in_period) × 100` - User engagement percentage
+#### Summary Panels & Detailed User Analytics
 
-**Per-User Analytics Table:**
-- User-initiated Interactions = `sum(user_initiated_interaction_count)`
-- Code Suggestions Generated = `sum(code_generation_activity_count)`
-- Code Suggestions Accepted = `sum(code_acceptance_activity_count)`
-- Average LOC Suggested = `avg(loc_suggested_to_add_sum)`
-- Average LOC Added = `avg(loc_added_sum)`
-- Agent Usage = `sum(used_agent)` - Copilot Agent feature usage count
-- Chat Usage = `sum(used_chat)` - Copilot Chat feature usage count
-- Active Days = `cardinality(day)` - Days with any Copilot activity
+![](image/user-metrics-summary.png)
 
-**Top 10 Copilot Users Leaderboard:**
-- Visualizes top 10 users by adoption percentage
-- Color-coded gradient from red (low adoption) to blue (high adoption)
-  - 🔴 Red (0-40%): Needs attention
-  - 🟠 Orange (40-60%): Moderate usage
-  - 🟡 Yellow (60-80%): Good engagement
-  - 🟢 Green (80-95%): Excellent adoption
-  - 🔵 Blue (95-100%): Power user
+**Four key metric panels provide at-a-glance insights:**
+
+- **Total Users** = `cardinality(user_login)` - Unique count of users with Copilot activity in the selected time range
+- **Total Suggestions** = `sum(code_generation_activity_count)` - Total number of code suggestions generated across all users
+- **Total Acceptances** = `sum(code_acceptance_activity_count)` - Total number of code suggestions accepted by users
+- **Acceptance Rate** = `sum(code_acceptance_activity_count) / sum(code_generation_activity_count)` - Overall acceptance percentage showing code quality and relevance
+
+**Comprehensive per-user breakdown with sortable columns:**
+
+- **User** - GitHub username/login
+- **User Initiated Interactions** = `sum(user_initiated_interaction_count)` - Direct user actions requesting Copilot suggestions
+- **Code Suggestions Generated** = `sum(code_generation_activity_count)` - Number of code completions offered to the user
+- **Code Suggestions Accepted** = `sum(code_acceptance_activity_count)` - Number of suggestions the user accepted
+- **Average LOC Suggested** = `avg(loc_suggested_to_add_sum)` - Average lines of code suggested per interaction
+- **Average LOC Added** = `avg(loc_added_sum)` - Average lines of code actually added from suggestions
+- **Agent Usage** = `sum(used_agent)` - Count of Copilot Agent feature usage (GitHub Copilot Workspace, CLI, etc.)
+- **Chat Usage** = `sum(used_chat)` - Count of Copilot Chat interactions
+- **Active Days** = `cardinality(day)` - Number of distinct days the user engaged with Copilot
+
+#### Activity Visualizations & Top 10 Users Leaderboard
+
+![](image/user-metrics-charts.png)
+
+**Two time-series charts show engagement patterns:**
+
+**Daily Active Users:**
+- Line chart showing unique user count per day
+- Helps identify usage trends, peak days, and adoption velocity
+- Formula: `cardinality(user_login)` per day
+
+**Code Generation & Acceptance Activity:**
+- Dual-line chart comparing suggestions generated (green) vs accepted (yellow)
+- Reveals code quality trends and user satisfaction over time
+- Green line: `sum(code_generation_activity_count)` per day
+- Yellow line: `sum(code_acceptance_activity_count)` per day
+
+**Horizontal bar chart showcasing top performers by adoption percentage:**
+
+- **Adoption Score** = `(active_days / 28) × 100` - Percentage of days in the 28-day window with Copilot activity
+- Color-coded gradient indicating engagement level:
+  - 🔴 Red (0-40%): Needs attention - may require training or support
+  - 🟠 Orange (40-60%): Moderate usage - room for improvement
+  - 🟡 Yellow (60-80%): Good engagement - regular user
+  - 🟢 Green (80-95%): Excellent adoption - heavy user
+  - 🔵 Blue (95-100%): Power user - Copilot champion candidate
 
 **Automated Data Collection:**
 - Runs every hour (configurable via `EXECUTION_INTERVAL_HOURS`)
@@ -299,8 +322,6 @@ Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/ent
 - Stores in 2 Elasticsearch indexes: `copilot_user_metrics` (raw data) and `copilot_user_adoption` (leaderboard scores)
 - No manual intervention required
 
-![](image/user-metrics-dashboard.png)
-
 **Use Cases:**
 - Identify power users and champions for Copilot evangelism
 - Track onboarding progress for new Copilot users
@@ -308,6 +329,7 @@ Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/ent
 - Measure team-level adoption trends over time
 - Monitor Chat and Agent feature adoption rates
 - Correlate active days with productivity metrics
+- Generate executive reports on Copilot ROI
 
 
 
