@@ -265,22 +265,18 @@ The choice of variables is dynamically associated with the data display
 
 Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-user-metrics), this module provides comprehensive per-user analytics including:
 
-#### Summary Panels
+#### Summary Panels & Detailed User Analytics
 
 ![](image/user-metrics-summary.png)
 
-Four key metric panels provide at-a-glance insights:
+**Four key metric panels provide at-a-glance insights:**
 
 - **Total Users** = `cardinality(user_login)` - Unique count of users with Copilot activity in the selected time range
 - **Total Suggestions** = `sum(code_generation_activity_count)` - Total number of code suggestions generated across all users
 - **Total Acceptances** = `sum(code_acceptance_activity_count)` - Total number of code suggestions accepted by users
 - **Acceptance Rate** = `sum(code_acceptance_activity_count) / sum(code_generation_activity_count)` - Overall acceptance percentage showing code quality and relevance
 
-#### Detailed User Analytics Table
-
-![](image/user-metrics-table.png)
-
-Comprehensive per-user breakdown with sortable columns:
+**Comprehensive per-user breakdown with sortable columns:**
 
 - **User** - GitHub username/login
 - **User Initiated Interactions** = `sum(user_initiated_interaction_count)` - Direct user actions requesting Copilot suggestions
@@ -292,11 +288,11 @@ Comprehensive per-user breakdown with sortable columns:
 - **Chat Usage** = `sum(used_chat)` - Count of Copilot Chat interactions
 - **Active Days** = `cardinality(day)` - Number of distinct days the user engaged with Copilot
 
-#### Activity Visualizations
+#### Activity Visualizations & Top 10 Users Leaderboard
 
 ![](image/user-metrics-charts.png)
 
-Two time-series charts show engagement patterns:
+**Two time-series charts show engagement patterns:**
 
 **Daily Active Users:**
 - Line chart showing unique user count per day
@@ -309,11 +305,7 @@ Two time-series charts show engagement patterns:
 - Green line: `sum(code_generation_activity_count)` per day
 - Yellow line: `sum(code_acceptance_activity_count)` per day
 
-#### Top 10 Copilot Users Leaderboard
-
-![](image/user-metrics-leaderboard.png)
-
-Horizontal bar chart showcasing top performers by adoption percentage:
+**Horizontal bar chart showcasing top performers by adoption percentage:**
 
 - **Adoption Score** = `(active_days / 28) × 100` - Percentage of days in the 28-day window with Copilot activity
 - Color-coded gradient indicating engagement level:
