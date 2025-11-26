@@ -447,8 +447,8 @@ def generate_grafana_model(grafana_token):
     try:
         dashboard_obj = json.loads(template_content)
         
-        # Check if this is the full dashboard export format (with "dashboard" and "meta" keys)
-        if "dashboard" in dashboard_obj and "meta" in dashboard_obj:
+        # Check if this is a dashboard object (has "dashboard" key)
+        if "dashboard" in dashboard_obj:
             # get the id
             dashboard_id = dashboard_obj.get("dashboard", {}).get("id")
             # get title
