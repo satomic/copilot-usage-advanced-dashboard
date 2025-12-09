@@ -307,7 +307,8 @@ Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/ent
 
 **Horizontal bar chart showcasing top performers by adoption percentage:**
 
-- **Adoption Score** = `(active_days / 28) × 100` - Percentage of days in the 28-day window with Copilot activity
+- **Adoption Score** = `(active_days / $__rangeDays) × 100` - Percentage of the distinct active days inside the range you have selected in Grafana (the denominator is computed from Grafana’s `$__rangeDays` so it matches 30, 90, 365-day filters automatically).
+- The Top 10 panel now runs directly on `copilot_user_metrics`, counts the unique `day` values per user inside the range, and normalizes by the computed range length (`$__rangeDays`). That way the percentage re-scales whenever you change the dashboard period even though the raw documents still come from repeated 28-day API snapshots stored in Elasticsearch.
 - Color-coded gradient indicating engagement level:
   - 🔴 Red (0-40%): Needs attention - may require training or support
   - 🟠 Orange (40-60%): Moderate usage - room for improvement

@@ -47,11 +47,11 @@
             "showLineNumbers": false,
             "showMiniMap": false
           },
-          "content": "For 📚tutorials & 💬feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click🔗",
+          "content": "For tutorials & feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click the link below",
           "mode": "markdown"
         },
         "pluginVersion": "11.4.0",
-        "title": "For 📖tutorials & 💖feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click👉",
+        "title": "For tutorials & feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click the link below",
         "type": "text"
       },
       {
@@ -4266,7 +4266,7 @@
                 "timeField": "day"
               }
             ],
-            "title": "Ranking of Inactive Users ( â‰¥ 2 days )",
+            "title": "Ranking of Inactive Users ( 2 days )",
             "type": "barchart"
           },
           {
@@ -6444,7 +6444,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-adoption-uid"
+              "uid": "ff57sd6383egwa"
             },
             "description": "Top 10 Copilot adopters by Adoption%",
             "fieldConfig": {
@@ -6551,7 +6551,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-user-adoption-uid"
+                  "uid": "ff57sd6383egwa"
                 },
                 "hide": false,
                 "metrics": [
@@ -6568,20 +6568,20 @@
             ],
             "title": "Top 10 Copilot Users",
             "transformations": [
-              {
-                "id": "organize",
-                "options": {
-                  "excludeByName": {},
-                  "indexByName": {
-                    "Max": 1,
-                    "user_login": 0
-                  },
-                  "renameByName": {
-                    "Max": "Adoption %",
-                    "user_login": "User"
-                  }
-                }
-              }
+                 {
+                   "id": "organize",
+                   "options": {
+                     "excludeByName": {},
+                     "indexByName": {
+                       "Max": 1,
+                       "user_login": 0
+                     },
+                     "renameByName": {
+                       "Max": "Adoption %",
+                       "user_login": "User"
+                     }
+                   }
+                 }
             ],
             "type": "barchart"
           }
