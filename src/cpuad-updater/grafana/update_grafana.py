@@ -341,7 +341,6 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
                 "index": index,
                 "logLevelField": "",
                 "logMessageField": "",
-                "maxConcurrentShardRequests": 5,
                 "timeField": time_field,
                 "timeInterval": "1d",
             },
@@ -355,21 +354,31 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
             f"{grafana_url.rstrip('/')}/api/datasources/name/{ds['name']}",
             headers=headers
         )
-        if check_resp.status_code == 200:
-            logging.info(f"Data source {ds['name']} already exists, skipping.")
-            continue
-
         payload = create_payload(ds["name"], ds["index"])
-        logging.info(f"Creating data source: {ds['name']}...")
 
-        response = safe_request(
-            "POST",
-            f"{grafana_url.rstrip('/')}/api/datasources",
-            headers=headers,
-            json=payload,
-            max_retries=max_retries,
-            retry_interval=retry_interval,
-        )
+        if check_resp.status_code == 200:
+            ds_details = check_resp.json()
+            payload["id"] = ds_details["id"]
+            payload["uid"] = ds_details["uid"]
+            logging.info(f"Updating data source: {ds['name']}...")
+            safe_request(
+                "PUT",
+                f"{grafana_url.rstrip('/')}/api/datasources/{ds_details['id']}",
+                headers=headers,
+                json=payload,
+                max_retries=max_retries,
+                retry_interval=retry_interval,
+            )
+        else:
+            logging.info(f"Creating data source: {ds['name']}...")
+            safe_request(
+                "POST",
+                f"{grafana_url.rstrip('/')}/api/datasources",
+                headers=headers,
+                json=payload,
+                max_retries=max_retries,
+                retry_interval=retry_interval,
+            )
 
         verify_resp = safe_request(
             "GET",
@@ -396,7 +405,8 @@ def generate_grafana_model(grafana_token):
         "elasticsearch-user-adoption",
     ]
 
-    default_template_path = "dashboard-template.json"
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    default_template_path = os.path.join(script_dir, "dashboard-template.json")
     model_output_path = f'dashboard-model-{datetime.today().strftime("%Y-%m-%d")}.json'
     mapping_output_path = f'dashboard-model-data_sources_name_uid_mapping-{datetime.today().strftime("%Y-%m-%d")}.json'
 

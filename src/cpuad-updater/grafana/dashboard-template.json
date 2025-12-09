@@ -4266,7 +4266,7 @@
                 "timeField": "day"
               }
             ],
-            "title": "Ranking of Inactive Users ( â‰¥ 2 days )",
+            "title": "Ranking of Inactive Users ( 2 days )",
             "type": "barchart"
           },
           {
