@@ -8,5 +8,5 @@ providers:
     editable: true
     options:
       path: /var/lib/grafana/dashboards
-      foldersFromFilesStructure: true
+      foldersFromFilesStructure: false
       allowUiUpdates: true

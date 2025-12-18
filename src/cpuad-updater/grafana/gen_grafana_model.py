@@ -11,6 +11,9 @@ data_source_names = [
     "elasticsearch-seat-assignments",
     "elasticsearch-seat-info-settings",
     "elasticsearch-total",
+    "elasticsearch-user-adoption",
+    "elasticsearch-user-metrics",
+    "elasticsearch-user-metrics-summary",
 ]
 
 grafana_folder = "grafana"

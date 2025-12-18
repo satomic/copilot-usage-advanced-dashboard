@@ -315,6 +315,10 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
             "index": "copilot_user_metrics",
         },
         {
+            "name": "elasticsearch-user-metrics-summary",
+            "index": "copilot_user_metrics_summary",
+        },
+        {
             "name": "elasticsearch-user-adoption",
             "index": "copilot_user_adoption",
         },
@@ -323,7 +327,7 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
     # Template for the payload
     def create_payload(name, index):
         # Use appropriate timeField based on the index
-        if index == "copilot_user_adoption":
+        if index in ["copilot_user_adoption", "copilot_user_metrics_summary"]:
             time_field = "@timestamp"
         else:
             time_field = "day"
@@ -402,6 +406,7 @@ def generate_grafana_model(grafana_token):
         "elasticsearch-seat-info-settings",
         "elasticsearch-total",
         "elasticsearch-user-metrics",
+        "elasticsearch-user-metrics-summary",
         "elasticsearch-user-adoption",
     ]
 

@@ -67,7 +67,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -136,7 +136,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -167,7 +167,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -199,7 +199,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -267,7 +267,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -287,7 +287,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -355,7 +355,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -375,7 +375,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -443,7 +443,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -463,7 +463,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -560,7 +560,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -588,7 +588,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -630,7 +630,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -658,7 +658,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -700,7 +700,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -728,7 +728,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -761,7 +761,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-total-uid"
+              "uid": "cf7cm8ys3cw00b"
             },
             "description": "If teams are nested, there may be duplicate calculations. Please refer to the tutorial information above.",
             "fieldConfig": {
@@ -852,7 +852,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-total-uid"
+                  "uid": "cf7cm8ys3cw00b"
                 },
                 "hide": false,
                 "metrics": [
@@ -875,7 +875,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -987,7 +987,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -1014,7 +1014,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": false,
                 "metrics": [
@@ -1036,7 +1036,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -1148,7 +1148,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -1175,7 +1175,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": false,
                 "metrics": [
@@ -1211,7 +1211,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -1308,7 +1308,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -1328,7 +1328,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "description": "",
             "fieldConfig": {
@@ -1399,7 +1399,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": false,
                 "metrics": [
@@ -1420,7 +1420,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -1490,7 +1490,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -1521,7 +1521,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -1553,7 +1553,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -1784,7 +1784,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -1881,7 +1881,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -1901,7 +1901,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "description": "",
             "fieldConfig": {
@@ -1972,7 +1972,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": false,
                 "metrics": [
@@ -1993,7 +1993,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -2063,7 +2063,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -2094,7 +2094,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -2126,7 +2126,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -2357,7 +2357,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -2454,7 +2454,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -2474,7 +2474,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "description": "",
             "fieldConfig": {
@@ -2545,7 +2545,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": false,
                 "metrics": [
@@ -2566,7 +2566,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -2636,7 +2636,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -2667,7 +2667,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -2699,7 +2699,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -2930,7 +2930,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-chat-uid"
+              "uid": "cf7cm8ygdc1kwa"
             },
             "fieldConfig": {
               "defaults": {
@@ -2999,7 +2999,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-chat-uid"
+                  "uid": "cf7cm8ygdc1kwa"
                 },
                 "hide": true,
                 "metrics": [
@@ -3030,7 +3030,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-chat-uid"
+                  "uid": "cf7cm8ygdc1kwa"
                 },
                 "hide": true,
                 "metrics": [
@@ -3062,7 +3062,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-chat-uid"
+              "uid": "cf7cm8ygdc1kwa"
             },
             "fieldConfig": {
               "defaults": {
@@ -3174,7 +3174,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-chat-uid"
+                  "uid": "cf7cm8ygdc1kwa"
                 },
                 "metrics": [
                   {
@@ -3201,7 +3201,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-chat-uid"
+                  "uid": "cf7cm8ygdc1kwa"
                 },
                 "hide": false,
                 "metrics": [
@@ -3223,7 +3223,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-chat-uid"
+              "uid": "cf7cm8ygdc1kwa"
             },
             "fieldConfig": {
               "defaults": {
@@ -3291,7 +3291,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-chat-uid"
+                  "uid": "cf7cm8ygdc1kwa"
                 },
                 "metrics": [
                   {
@@ -3311,7 +3311,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-chat-uid"
+              "uid": "cf7cm8ygdc1kwa"
             },
             "fieldConfig": {
               "defaults": {
@@ -3379,7 +3379,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-chat-uid"
+                  "uid": "cf7cm8ygdc1kwa"
                 },
                 "metrics": [
                   {
@@ -3399,7 +3399,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-total-uid"
+              "uid": "cf7cm8ys3cw00b"
             },
             "description": "If teams are nested, there may be duplicate calculations. Please refer to the tutorial information above.",
             "fieldConfig": {
@@ -3493,7 +3493,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-assignments-uid"
+                  "uid": "ef7cm8z8o6mm8b"
                 },
                 "hide": false,
                 "metrics": [
@@ -3518,7 +3518,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-chat-uid"
+              "uid": "cf7cm8ygdc1kwa"
             },
             "fieldConfig": {
               "defaults": {
@@ -3586,7 +3586,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-chat-uid"
+                  "uid": "cf7cm8ygdc1kwa"
                 },
                 "metrics": [
                   {
@@ -3606,7 +3606,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-chat-uid"
+              "uid": "cf7cm8ygdc1kwa"
             },
             "fieldConfig": {
               "defaults": {
@@ -3671,7 +3671,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-total-uid"
+                  "uid": "cf7cm8ys3cw00b"
                 },
                 "metrics": [
                   {
@@ -3705,7 +3705,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-assignments-uid"
+              "uid": "ef7cm8z8o6mm8b"
             },
             "fieldConfig": {
               "defaults": {
@@ -3810,7 +3810,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-assignments-uid"
+                  "uid": "ef7cm8z8o6mm8b"
                 },
                 "metrics": [
                   {
@@ -3842,7 +3842,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-info-settings-uid"
+              "uid": "ff7cm8yzsjmdcb"
             },
             "fieldConfig": {
               "defaults": {
@@ -3910,7 +3910,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "metrics": [
                   {
@@ -3930,7 +3930,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-assignments-uid"
+              "uid": "ef7cm8z8o6mm8b"
             },
             "fieldConfig": {
               "defaults": {
@@ -3998,7 +3998,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-assignments-uid"
+                  "uid": "ef7cm8z8o6mm8b"
                 },
                 "metrics": [
                   {
@@ -4021,7 +4021,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-assignments-uid"
+              "uid": "ef7cm8z8o6mm8b"
             },
             "fieldConfig": {
               "defaults": {
@@ -4105,7 +4105,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-assignments-uid"
+                  "uid": "ef7cm8z8o6mm8b"
                 },
                 "metrics": [
                   {
@@ -4155,7 +4155,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-assignments-uid"
+              "uid": "ef7cm8z8o6mm8b"
             },
             "fieldConfig": {
               "defaults": {
@@ -4252,7 +4252,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-assignments-uid"
+                  "uid": "ef7cm8z8o6mm8b"
                 },
                 "metrics": [
                   {
@@ -4266,13 +4266,13 @@
                 "timeField": "day"
               }
             ],
-            "title": "Ranking of Inactive Users ( 2 days )",
+            "title": "Ranking of Inactive Users",
             "type": "barchart"
           },
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-info-settings-uid"
+              "uid": "ff7cm8yzsjmdcb"
             },
             "fieldConfig": {
               "defaults": {
@@ -4340,7 +4340,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-assignments-uid"
+                  "uid": "ef7cm8z8o6mm8b"
                 },
                 "metrics": [
                   {
@@ -4360,7 +4360,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-info-settings-uid"
+              "uid": "ff7cm8yzsjmdcb"
             },
             "fieldConfig": {
               "defaults": {
@@ -4428,7 +4428,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-info-settings-uid"
+                  "uid": "ff7cm8yzsjmdcb"
                 },
                 "metrics": [
                   {
@@ -4448,7 +4448,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-assignments-uid"
+              "uid": "ef7cm8z8o6mm8b"
             },
             "description": "If teams are nested, there may be duplicate calculations. Please refer to the tutorial information above.",
             "fieldConfig": {
@@ -4543,7 +4543,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-assignments-uid"
+                  "uid": "ef7cm8z8o6mm8b"
                 },
                 "hide": false,
                 "metrics": [
@@ -4568,7 +4568,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-seat-assignments-uid"
+              "uid": "ef7cm8z8o6mm8b"
             },
             "fieldConfig": {
               "defaults": {
@@ -4659,7 +4659,7 @@
                 "bucketAggs": [],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-seat-assignments-uid"
+                  "uid": "ef7cm8z8o6mm8b"
                 },
                 "hide": false,
                 "metrics": [
@@ -4797,7 +4797,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -4893,7 +4893,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": false,
                 "metrics": [
@@ -4915,7 +4915,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -5011,7 +5011,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": false,
                 "metrics": [
@@ -5033,7 +5033,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -5129,7 +5129,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -5168,7 +5168,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -5200,7 +5200,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -5296,7 +5296,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -5335,7 +5335,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -5367,7 +5367,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -5463,7 +5463,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -5502,7 +5502,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -5534,7 +5534,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-breakdown-uid"
+              "uid": "bf7cm8y9fm70gb"
             },
             "fieldConfig": {
               "defaults": {
@@ -5630,7 +5630,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -5669,7 +5669,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "elasticsearch-breakdown-uid"
+                  "uid": "bf7cm8y9fm70gb"
                 },
                 "hide": true,
                 "metrics": [
@@ -5715,7 +5715,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-metrics"
+              "uid": "ef7cm8zkt6v40c"
             },
             "description": "Total unique users who have Copilot activity in the selected time range.",
             "fieldConfig": {
@@ -5808,7 +5808,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-metrics"
+              "uid": "ef7cm8zkt6v40c"
             },
             "description": "Total number of Copilot code suggestions generated in the selected time range.",
             "fieldConfig": {
@@ -5886,7 +5886,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-metrics"
+              "uid": "ef7cm8zkt6v40c"
             },
             "description": "Total number of Copilot code suggestions accepted by users in the selected time range.",
             "fieldConfig": {
@@ -5964,7 +5964,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-metrics"
+              "uid": "ef7cm8zkt6v40c"
             },
             "description": "Acceptance rate = Total Acceptances / Total Suggestions for the selected time range.",
             "fieldConfig": {
@@ -6065,7 +6065,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-metrics"
+              "uid": "ef7cm8zkt6v40c"
             },
             "description": "Detailed analytics for each user, including agent and chat usage; Count reflects total Copilot activity events while Active Days reports how many distinct days each user interacted with Copilot.",
             "fieldConfig": {
@@ -6093,7 +6093,38 @@
                   ]
                 }
               },
-              "overrides": []
+              "overrides": [
+                {
+                  "matcher": {
+                    "id": "byName",
+                    "options": "User"
+                  },
+                  "properties": [
+                    {
+                      "id": "links",
+                      "value": [
+                        {
+                          "title": "View ${__data.fields.User} Details",
+                          "url": "#panelId-107&var-user_filter=${__data.fields.User}"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "custom.cellOptions",
+                      "value": {
+                        "type": "color-text"
+                      }
+                    },
+                    {
+                      "id": "color",
+                      "value": {
+                        "mode": "fixed",
+                        "fixedColor": "blue"
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             "gridPos": {
               "h": 12,
@@ -6121,7 +6152,7 @@
                 "bucketAggs": [
                   {
                     "field": "user_login",
-                    "id": "9",
+                    "id": "bucket_user",
                     "settings": {
                       "order": "desc",
                       "orderBy": "3",
@@ -6130,6 +6161,10 @@
                     "type": "terms"
                   }
                 ],
+                "datasource": {
+                  "type": "elasticsearch",
+                  "uid": "ef7cm8zkt6v40c"
+                },
                 "metrics": [
                   {
                     "alias": "Events Logged",
@@ -6183,6 +6218,24 @@
                     "field": "day",
                     "id": "9",
                     "type": "cardinality"
+                  },
+                  {
+                    "alias": "Total LOC Suggested",
+                    "field": "loc_suggested_to_add_sum",
+                    "id": "10",
+                    "type": "sum"
+                  },
+                  {
+                    "alias": "Total LOC Added",
+                    "field": "loc_added_sum",
+                    "id": "11",
+                    "type": "sum"
+                  },
+                  {
+                    "alias": "Total LOC Deleted",
+                    "field": "loc_deleted_sum",
+                    "id": "12",
+                    "type": "sum"
                   }
                 ],
                 "query": "*",
@@ -6202,15 +6255,127 @@
                   "renameByName": {
                     "Average loc_added_sum": "Average LOC Added",
                     "Average loc_suggested_to_add_sum": "Average LOC Suggested",
-                    "Cardinality day": "Active Days",
+                    "Cardinality day": "Days Active",
                     "Count": "Events Logged",
-                    "Sum code_acceptance_activity_count": "Code Suggestions Accepted",
-                    "Sum code_generation_activity_count": "Code Suggestions Generated",
+                    "Sum code_acceptance_activity_count": "Acceptances",
+                    "Sum code_generation_activity_count": "Completions", 
                     "Sum used_agent": "Agent Usage",
                     "Sum used_chat": "Chat Usage",
-                    "Sum user_initiated_interaction_count": "User Initiated Interactions",
-                    "Unique count": "Active Days",
-                    "Unique count day": "Active Days",
+                    "Sum user_initiated_interaction_count": "Interactions",
+                    "Sum loc_suggested_to_add_sum": "LoC Suggested",
+                    "Sum loc_added_sum": "LoC Added", 
+                    "Sum loc_deleted_sum": "LoC Deleted",
+                    "Unique count day": "Days Active",
+                    "user_login": "User",
+                    "Unique Count": "Days Active"
+                  },
+                  "includeByName": {}
+                }
+              },
+              {
+                "id": "calculateField",
+                "options": {
+                  "alias": "Acceptance %",
+                  "binary": {
+                    "left": "Acceptances",
+                    "operator": "/",
+                    "right": "Completions"
+                  },
+                  "mode": "binary",
+                  "reduce": {
+                    "include": [],
+                    "reducer": "sum"
+                  }
+                }
+              }
+            ],
+            "type": "table"
+          },
+          {
+            "datasource": {
+              "type": "elasticsearch",
+              "uid": "elasticsearch-user-metrics-summary-uid"
+            },
+            "description": "Top model, language, and feature used by each user across all days",
+            "fieldConfig": {
+              "defaults": {},
+              "overrides": []
+            },
+            "gridPos": {
+              "h": 8,
+              "w": 24,
+              "x": 0,
+              "y": 14
+            },
+            "id": 107,
+            "options": {
+              "cellHeight": "sm",
+              "footer": {
+                "countRows": false,
+                "enablePagination": true,
+                "fields": "",
+                "reducer": [
+                  "sum"
+                ],
+                "show": false
+              },
+              "showHeader": true,
+              "sortBy": []
+            },
+            "fieldConfig": {
+              "defaults": {
+                "custom": {
+                  "filterable": true
+                }
+              },
+              "overrides": []
+            },
+            "pluginVersion": "11.4.4",
+            "targets": [
+              {
+                "bucketAggs": [],
+                "datasource": {
+                  "type": "elasticsearch",
+                  "uid": "elasticsearch-user-metrics-summary-uid"
+                },
+                "metrics": [
+                  {
+                    "id": "1",
+                    "settings": {
+                      "size": "100"
+                    },
+                    "type": "raw_data"
+                  }
+                ],
+                "query": "*",
+                "refId": "A",
+                "timeField": "@timestamp"
+              }
+            ],
+            "title": "User Top Preferences",
+            "transformations": [
+              {
+                "id": "organize",
+                "options": {
+                  "excludeByName": {
+                    "@timestamp": true,
+                    "_id": true,
+                    "_index": true,
+                    "_type": true,
+                    "organization_slug": true,
+                    "highlight": true,
+                    "sort": true
+                  },
+                  "indexByName": {
+                    "user_login": 0,
+                    "top_model": 1,
+                    "top_language": 2,
+                    "top_feature": 3
+                  },
+                  "renameByName": {
+                    "top_feature": "Top Feature",
+                    "top_language": "Top Language",
+                    "top_model": "Top Model",
                     "user_login": "User"
                   }
                 }
@@ -6221,7 +6386,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-metrics"
+              "uid": "ef7cm8zkt6v40c"
             },
             "description": "Number of unique active users per day.",
             "fieldConfig": {
@@ -6283,7 +6448,7 @@
               "h": 8,
               "w": 12,
               "x": 0,
-              "y": 18
+              "y": 22
             },
             "id": 106,
             "options": {
@@ -6330,7 +6495,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-metrics"
+              "uid": "ef7cm8zkt6v40c"
             },
             "description": "Sum of code generation and acceptance activity per day.",
             "fieldConfig": {
@@ -6444,7 +6609,7 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "ff57sd6383egwa"
+              "uid": "elasticsearch-user-adoption"
             },
             "description": "Top 10 Copilot adopters by Adoption%",
             "fieldConfig": {
@@ -6543,7 +6708,7 @@
                     "settings": {
                       "min_doc_count": "1",
                       "order": "desc",
-                      "orderBy": "1",
+                      "orderBy": "_term",
                       "size": "10"
                     },
                     "type": "terms"
@@ -6551,7 +6716,7 @@
                 ],
                 "datasource": {
                   "type": "elasticsearch",
-                  "uid": "ff57sd6383egwa"
+                  "uid": "elasticsearch-user-adoption"
                 },
                 "hide": false,
                 "metrics": [
@@ -6561,9 +6726,9 @@
                     "type": "max"
                   }
                 ],
-                "query": "*",
+                "query": "",
                 "refId": "A",
-                "timeField": "@timestamp"
+                "timeField": "day"
               }
             ],
             "title": "Top 10 Copilot Users",
@@ -6604,7 +6769,7 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-seat-info-settings-uid"
+            "uid": "ff7cm8yzsjmdcb"
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"organization_slug\", \"query\": \"organization_slug:*\"}",
           "includeAll": true,
@@ -6625,7 +6790,7 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-total-uid"
+            "uid": "cf7cm8ys3cw00b"
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
           "includeAll": true,
@@ -6645,7 +6810,7 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-breakdown-uid"
+            "uid": "bf7cm8y9fm70gb"
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"language\", \"query\": \"language:*\"}",
           "includeAll": true,
@@ -6664,7 +6829,7 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-breakdown-uid"
+            "uid": "bf7cm8y9fm70gb"
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"editor\", \"query\": \"editor:*\"}",
           "includeAll": true,
@@ -6683,7 +6848,7 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-breakdown-uid"
+            "uid": "bf7cm8y9fm70gb"
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
           "includeAll": true,
@@ -6702,7 +6867,7 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-breakdown-chat-uid"
+            "uid": "cf7cm8ygdc1kwa"
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
           "includeAll": true,
@@ -6723,7 +6888,7 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-seat-assignments-uid"
+            "uid": "ef7cm8z8o6mm8b"
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"assignee_team_slug\", \"query\": \"assignee_team_slug:*\"}",
           "includeAll": true,
@@ -6745,7 +6910,7 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-seat-assignments-uid"
+            "uid": "ef7cm8z8o6mm8b"
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_login:*\"}",
           "includeAll": true,
@@ -6757,6 +6922,26 @@
           "refresh": 2,
           "regex": "",
           "type": "query"
+        },
+        {
+          "current": {
+            "text": "All",
+            "value": "$__all"
+          },
+          "hide": 2,
+          "includeAll": true,
+          "label": "User Filter",
+          "name": "user_filter",
+          "options": [
+            {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            }
+          ],
+          "query": "All",
+          "skipUrlSync": false,
+          "type": "textbox"
         }
       ]
     },
@@ -6773,34 +6958,46 @@
         "name": "elasticsearch-breakdown",
         "type": "datasource",
         "pluginId": "elasticsearch",
-        "value": "elasticsearch-breakdown-uid"
+        "value": "bf7cm8y9fm70gb"
       },
       {
         "name": "elasticsearch-breakdown-chat",
         "type": "datasource",
         "pluginId": "elasticsearch",
-        "value": "elasticsearch-breakdown-chat-uid"
+        "value": "cf7cm8ygdc1kwa"
       },
       {
         "name": "elasticsearch-seat-assignments",
         "type": "datasource",
         "pluginId": "elasticsearch",
-        "value": "elasticsearch-seat-assignments-uid"
+        "value": "ef7cm8z8o6mm8b"
       },
       {
         "name": "elasticsearch-seat-info-settings",
         "type": "datasource",
         "pluginId": "elasticsearch",
-        "value": "elasticsearch-seat-info-settings-uid"
+        "value": "ff7cm8yzsjmdcb"
       },
       {
         "name": "elasticsearch-total",
         "type": "datasource",
         "pluginId": "elasticsearch",
-        "value": "elasticsearch-total-uid"
+        "value": "cf7cm8ys3cw00b"
+      },
+      {
+        "name": "elasticsearch-user-metrics",
+        "type": "datasource",
+        "pluginId": "elasticsearch",
+        "value": "ef7cm8zkt6v40c"
+      },
+      {
+        "name": "elasticsearch-user-adoption",
+        "type": "datasource",
+        "pluginId": "elasticsearch",
+        "value": "af7cm8zqmyc5cd"
       }
     ],
-    "description": "For 📚tutorials & 💬feedback, please visit the repo \"Copilot Usage Advanced Dashboard\", Click🔗"
+    "description": "For tutorials and feedback, visit the repo Copilot Usage Advanced Dashboard."
   },
   "overwrite": true,
   "folderId": 0
