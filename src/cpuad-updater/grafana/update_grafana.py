@@ -18,6 +18,7 @@ logging.basicConfig(
 )
 
 elasticsearch_url = os.getenv("ELASTICSEARCH_URL")
+dashboard_uid = os.getenv("GRAFANA_DASHBOARD_UID", "copilot-usage-advanced-dashboard")
 
 if not elasticsearch_url:
     raise ValueError("Please set the ELASTICSEARCH_URL environment variable")
@@ -315,6 +316,10 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
             "index": "copilot_user_metrics",
         },
         {
+            "name": "elasticsearch-user-metrics-top-by-day",
+            "index": os.getenv("INDEX_USER_METRICS_TOP_BY_DAY", "copilot_user_metrics_top_by_day"),
+        },
+        {
             "name": "elasticsearch-user-metrics-summary",
             "index": "copilot_user_metrics_summary",
         },
@@ -406,9 +411,11 @@ def generate_grafana_model(grafana_token):
         "elasticsearch-seat-info-settings",
         "elasticsearch-total",
         "elasticsearch-user-metrics",
+        "elasticsearch-user-metrics-top-by-day",
         "elasticsearch-user-metrics-summary",
         "elasticsearch-user-adoption",
     ]
+
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
     default_template_path = os.path.join(script_dir, "dashboard-template.json")
@@ -473,10 +480,9 @@ def generate_grafana_model(grafana_token):
 
             # change id to null
             dashboard_obj["dashboard"]["id"] = None
-            
-            # Remove UID to allow creating new dashboard
-            if "uid" in dashboard_obj["dashboard"]:
-                dashboard_obj["dashboard"]["uid"] = None
+
+            # Ensure a stable dashboard UID so links work and imports overwrite.
+            dashboard_obj["dashboard"]["uid"] = dashboard_uid
             
             # Construct the proper API payload for Grafana
             # The API expects: {"dashboard": {...}, "folderId": 0, "overwrite": true}

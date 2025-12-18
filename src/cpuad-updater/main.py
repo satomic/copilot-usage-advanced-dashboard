@@ -11,6 +11,7 @@ from metrics_2_usage_convertor import convert_metrics_to_usage
 import traceback
 from zoneinfo import ZoneInfo
 from create_user_summary import create_user_summaries
+from create_user_top_by_day import create_user_top_by_day
 
 
 def get_utc_offset():
@@ -1446,6 +1447,18 @@ def main(organization_slug):
         logger.info("User summaries created successfully")
     except Exception as e:
         logger.error(f"Failed to create user summaries: {e}")
+        logger.error(f"Full traceback: {traceback.format_exc()}")
+
+    # Create top-by-day docs for drill-down time series panels
+    try:
+        logger.info("Creating user top-by-day documents for drill-down...")
+        create_user_top_by_day(
+            source_index=Indexes.index_user_metrics,
+            dest_index=os.getenv("INDEX_USER_METRICS_TOP_BY_DAY", "copilot_user_metrics_top_by_day"),
+        )
+        logger.info("User top-by-day documents created successfully")
+    except Exception as e:
+        logger.error(f"Failed to create user top-by-day documents: {e}")
         logger.error(f"Full traceback: {traceback.format_exc()}")
 
     # Process usage data

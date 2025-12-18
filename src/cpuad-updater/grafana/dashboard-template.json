@@ -6104,8 +6104,8 @@
                       "id": "links",
                       "value": [
                         {
-                          "title": "View ${__data.fields.User} Details",
-                          "url": "#panelId-107&var-user_filter=${__data.fields.User}"
+                          "title": "View ${__value.text} Details",
+                          "url": "/d/copilot-usage-advanced-dashboard/copilot-usage-advanced-dashboard?from=${__from}&to=${__to}&var-user_filter=${__value.raw}&viewPanel=107"
                         }
                       ]
                     },
@@ -6294,11 +6294,34 @@
           {
             "datasource": {
               "type": "elasticsearch",
-              "uid": "elasticsearch-user-metrics-summary-uid"
+              "uid": "elasticsearch-user-metrics-top-by-day-uid"
             },
-            "description": "Top model, language, and feature used by each user across all days",
+            "description": "Day-wise top labels for selected user.",
             "fieldConfig": {
-              "defaults": {},
+              "defaults": {
+                "custom": {
+                  "align": "auto",
+                  "cellOptions": {
+                    "type": "auto"
+                  },
+                  "filterable": true,
+                  "inspect": false
+                },
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
               "overrides": []
             },
             "gridPos": {
@@ -6319,65 +6342,51 @@
                 ],
                 "show": false
               },
-              "showHeader": true,
-              "sortBy": []
-            },
-            "fieldConfig": {
-              "defaults": {
-                "custom": {
-                  "filterable": true
-                }
-              },
-              "overrides": []
+              "showHeader": true
             },
             "pluginVersion": "11.4.4",
             "targets": [
               {
+                "alias": "",
                 "bucketAggs": [],
-                "datasource": {
-                  "type": "elasticsearch",
-                  "uid": "elasticsearch-user-metrics-summary-uid"
-                },
                 "metrics": [
                   {
                     "id": "1",
                     "settings": {
-                      "size": "100"
+                      "size": "500"
                     },
                     "type": "raw_data"
                   }
                 ],
-                "query": "*",
+                "query": "user_login:$user_filter",
                 "refId": "A",
-                "timeField": "@timestamp"
+                "timeField": "day"
               }
             ],
-            "title": "User Top Preferences",
+            "title": "More Detailed view of User by Day",
             "transformations": [
               {
-                "id": "organize",
+                "id": "filterFieldsByName",
                 "options": {
-                  "excludeByName": {
-                    "@timestamp": true,
-                    "_id": true,
-                    "_index": true,
-                    "_type": true,
-                    "organization_slug": true,
-                    "highlight": true,
-                    "sort": true
-                  },
-                  "indexByName": {
-                    "user_login": 0,
-                    "top_model": 1,
-                    "top_language": 2,
-                    "top_feature": 3
-                  },
-                  "renameByName": {
-                    "top_feature": "Top Feature",
-                    "top_language": "Top Language",
-                    "top_model": "Top Model",
-                    "user_login": "User"
+                  "byVariable": false,
+                  "include": {
+                    "names": [
+                      "day",
+                      "top_ide",
+                      "top_feature",
+                      "top_language_feature",
+                      "top_language_model",
+                      "top_model_feature"
+                    ]
                   }
+                }
+              },
+              {
+                "id": "formatTime",
+                "options": {
+                  "outputFormat": "Y-M-D",
+                  "timeField": "day",
+                  "useTimezone": true
                 }
               }
             ],
@@ -6925,21 +6934,21 @@
         },
         {
           "current": {
-            "text": "All",
-            "value": "$__all"
+            "text": "__none__",
+            "value": "__none__"
           },
           "hide": 2,
-          "includeAll": true,
+          "includeAll": false,
           "label": "User Filter",
           "name": "user_filter",
           "options": [
             {
               "selected": true,
-              "text": "All",
-              "value": "$__all"
+              "text": "__none__",
+              "value": "__none__"
             }
           ],
-          "query": "All",
+          "query": "__none__",
           "skipUrlSync": false,
           "type": "textbox"
         }
