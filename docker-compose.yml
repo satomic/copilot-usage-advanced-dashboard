@@ -59,7 +59,7 @@ services:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       GRAFANA_URL: http://grafana:80
       GRAFANA_USERNAME: admin
-      GRAFANA_PASSWORD: Copilot2024
+      GRAFANA_PASSWORD: copilot
     restart: "no"
 
   cpuad-updater:

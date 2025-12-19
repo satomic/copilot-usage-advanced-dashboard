@@ -10,6 +10,8 @@ import time
 from metrics_2_usage_convertor import convert_metrics_to_usage
 import traceback
 from zoneinfo import ZoneInfo
+from create_user_summary import create_user_summaries
+from create_user_top_by_day import create_user_top_by_day
 
 
 def get_utc_offset():
@@ -24,6 +26,60 @@ def get_utc_offset():
     offset_minutes = int((offset_sec % 3600) // 60)
     offset_str = f"{offset_hours:+03}:{abs(offset_minutes):02}"
     return offset_str
+
+
+def calculate_top_values(user_data):
+    """Calculate top model, language, and feature from user metrics data"""
+    
+    # Initialize counters
+    model_counts = {}
+    language_counts = {}
+    feature_counts = {}
+    
+    # Extract from totals_by_language_model
+    for entry in user_data.get('totals_by_language_model', []):
+        language = entry.get('language', 'unknown')
+        model = entry.get('model', 'unknown')
+        activity_count = entry.get('code_generation_activity_count', 0)
+        
+        language_counts[language] = language_counts.get(language, 0) + activity_count
+        model_counts[model] = model_counts.get(model, 0) + activity_count
+    
+    # Extract from totals_by_feature
+    for entry in user_data.get('totals_by_feature', []):
+        feature = entry.get('feature', 'unknown')
+        activity_count = entry.get('code_generation_activity_count', 0) + entry.get('user_initiated_interaction_count', 0)
+        
+        feature_counts[feature] = feature_counts.get(feature, 0) + activity_count
+    
+    # Extract from totals_by_language_feature (additional language data)
+    for entry in user_data.get('totals_by_language_feature', []):
+        language = entry.get('language', 'unknown')
+        activity_count = entry.get('code_generation_activity_count', 0)
+        
+        language_counts[language] = language_counts.get(language, 0) + activity_count
+    
+    # Find top values (most used)
+    top_model = max(model_counts.items(), key=lambda x: x[1])[0] if model_counts else 'unknown'
+    top_language = max(language_counts.items(), key=lambda x: x[1])[0] if language_counts else 'unknown'
+    top_feature = max(feature_counts.items(), key=lambda x: x[1])[0] if feature_counts else 'unknown'
+    
+    # Map feature names to more user-friendly names
+    feature_mapping = {
+        'chat_panel_ask_mode': 'Chat',
+        'chat_panel_agent_mode': 'Agent',
+        'agent_edit': 'Agent',
+        'code_completion': 'Code Completion',
+        'inline_chat': 'Inline Chat'
+    }
+    
+    top_feature = feature_mapping.get(top_feature, top_feature)
+    
+    return {
+        'top_model': top_model,
+        'top_language': top_language, 
+        'top_feature': top_feature
+    }
 
 
 class Paras:
@@ -1027,9 +1083,13 @@ class GitHubOrganizationManager:
                 # Process each user metrics record
                 for user_data in user_metrics_data:
                     if isinstance(user_data, dict):
+                        # Calculate top values from nested data
+                        top_values = calculate_top_values(user_data)
+                        
                         # Add organizational context and metadata
                         enriched_user_data = {
                             **user_data,
+                            **top_values,  # Add calculated top values
                             'organization_slug': self.organization_slug,
                             'slug_type': self.slug_type,
                             'last_updated_at': current_time_str,
@@ -1378,6 +1438,27 @@ def main(organization_slug):
     except Exception as e:
         logger.error(f"Failed to process user metrics for {slug_type} {organization_slug}: {e}")
         import traceback
+        logger.error(f"Full traceback: {traceback.format_exc()}")
+
+    # Create user summaries with aggregated top_model/language/feature
+    try:
+        logger.info("Creating user summaries with aggregated top values...")
+        create_user_summaries()
+        logger.info("User summaries created successfully")
+    except Exception as e:
+        logger.error(f"Failed to create user summaries: {e}")
+        logger.error(f"Full traceback: {traceback.format_exc()}")
+
+    # Create top-by-day docs for drill-down time series panels
+    try:
+        logger.info("Creating user top-by-day documents for drill-down...")
+        create_user_top_by_day(
+            source_index=Indexes.index_user_metrics,
+            dest_index=os.getenv("INDEX_USER_METRICS_TOP_BY_DAY", "copilot_user_metrics_top_by_day"),
+        )
+        logger.info("User top-by-day documents created successfully")
+    except Exception as e:
+        logger.error(f"Failed to create user top-by-day documents: {e}")
         logger.error(f"Full traceback: {traceback.format_exc()}")
 
     # Process usage data
