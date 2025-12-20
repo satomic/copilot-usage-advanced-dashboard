@@ -94,7 +94,7 @@ class Paras:
 
     # ElasticSearch
     primary_key = os.getenv("PRIMARY_KEY", "unique_hash")
-    elasticsearch_url = os.getenv("ELASTICSEARCH_URL", "http://$ELASTICSEARCH_URL")
+    elasticsearch_url = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
     elasticsearch_user = os.getenv("ELASTICSEARCH_USER", None)
     elasticsearch_pass = os.getenv("ELASTICSEARCH_PASS", None)
 

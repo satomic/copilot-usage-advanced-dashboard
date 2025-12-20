@@ -11,12 +11,13 @@ logger = logging.getLogger(__name__)
 
 def get_es_client():
     """Initialize Elasticsearch client"""
-    es_host = os.getenv("ELASTICSEARCH_HOST", "elasticsearch")
-    es_port = int(os.getenv("ELASTICSEARCH_PORT", "9200"))
-    es_url = f"http://{es_host}:{es_port}"
+    # es_host = os.getenv("ELASTICSEARCH_HOST", "elasticsearch")
+    # es_port = int(os.getenv("ELASTICSEARCH_PORT", "9200"))
+    # es_url = f"http://{es_host}:{es_port}"
+    es_url = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
     
     es_user = os.getenv("ELASTICSEARCH_USER")
-    es_password = os.getenv("ELASTICSEARCH_PASSWORD")
+    es_password = os.getenv("ELASTICSEARCH_PASS")
     
     if es_user and es_password:
         es = Elasticsearch([es_url], http_auth=(es_user, es_password))

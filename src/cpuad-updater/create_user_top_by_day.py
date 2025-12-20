@@ -32,12 +32,13 @@ DEFAULT_DEST_INDEX = os.getenv("INDEX_USER_METRICS_TOP_BY_DAY", "copilot_user_me
 
 
 def get_es_client() -> Elasticsearch:
-    es_host = os.getenv("ELASTICSEARCH_HOST", "elasticsearch")
-    es_port = int(os.getenv("ELASTICSEARCH_PORT", "9200"))
-    es_url = f"http://{es_host}:{es_port}"
+    # es_host = os.getenv("ELASTICSEARCH_HOST", "elasticsearch")
+    # es_port = int(os.getenv("ELASTICSEARCH_PORT", "9200"))
+    # es_url = f"http://{es_host}:{es_port}"
+    es_url = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
 
     es_user = os.getenv("ELASTICSEARCH_USER")
-    es_password = os.getenv("ELASTICSEARCH_PASSWORD")
+    es_password = os.getenv("ELASTICSEARCH_PASS")
 
     if es_user and es_password:
         logger.info(f"Connecting to Elasticsearch at {es_url} with authentication")
