@@ -46,7 +46,7 @@
         "plan_type" : {
           "type" : "keyword"
         },
-		    "days_since_last_activity" : {
+        "days_since_last_activity" : {
           "type" : "long"
         },
         "is_active_today" : {
