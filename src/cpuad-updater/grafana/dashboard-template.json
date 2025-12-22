@@ -3818,7 +3818,7 @@
                     "type": "count"
                   }
                 ],
-                "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND assignee_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -3919,7 +3919,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: $organization_name",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -4010,7 +4010,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND days_since_last_activity: [-1 TO -1]",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND assignee_login: (${assignee_login:lucene}) AND days_since_last_activity: [-1 TO -1]",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -4117,7 +4117,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND days_since_last_activity: [-1 TO -1]",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND assignee_login: (${assignee_login:lucene}) AND days_since_last_activity: [-1 TO -1]",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -4261,7 +4261,7 @@
                     "type": "max"
                   }
                 ],
-                "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login AND days_since_last_activity: [2 TO *]",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND assignee_login: (${assignee_login:lucene}) AND days_since_last_activity: [2 TO *]",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -4349,7 +4349,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: $organization_name",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -4437,7 +4437,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: $organization_name",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -4556,7 +4556,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND assignee_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -4671,7 +4671,7 @@
                     "type": "raw_data"
                   }
                 ],
-                "query": "organization_slug: $organization_name AND assignee_team_slug: $assignee_team_name AND assignee_login: $assignee_login",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND assignee_login: (${assignee_login:lucene})",
                 "refId": "Acceped Prompts",
                 "timeField": "day"
               }
@@ -5784,7 +5784,7 @@
                     "type": "count"
                   }
                 ],
-                "query": "*",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -5875,7 +5875,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "*",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -5953,7 +5953,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "*",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6037,7 +6037,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "*",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6238,7 +6238,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "*",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6493,7 +6493,7 @@
                     "type": "cardinality"
                   }
                 ],
-                "query": "*",
+                "query": "organization_slug: (${organization_name:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6620,7 +6620,7 @@
               "type": "elasticsearch",
               "uid": "elasticsearch-user-adoption-uid"
             },
-            "description": "Top 10 Copilot adopters by Adoption%",
+            "description": "Top 10 users by composite Adoption Score (volume, interactions/day, acceptance rate, LOC added, feature breadth, consistency). Only users active in selected time range.",
             "fieldConfig": {
               "defaults": {
                 "color": {
@@ -6674,7 +6674,7 @@
                     }
                   ]
                 },
-                "unit": "none"
+                "unit": "percentunit"
               },
               "overrides": []
             },
@@ -6717,8 +6717,8 @@
                     "settings": {
                       "min_doc_count": "1",
                       "order": "desc",
-                      "orderBy": "_term",
-                      "size": "10"
+                      "orderBy": "1",
+                      "size": "100"
                     },
                     "type": "terms"
                   }
@@ -6727,35 +6727,34 @@
                   "type": "elasticsearch",
                   "uid": "elasticsearch-user-adoption-uid"
                 },
-                "hide": false,
                 "metrics": [
                   {
-                    "field": "adoption_pct",
                     "id": "1",
-                    "type": "max"
+                    "type": "avg",
+                    "field": "adoption_pct"
                   }
                 ],
-                "query": "",
+                "query": "organization_slug: (${organization_name:lucene}) AND bucket_type:user",
                 "refId": "A",
-                "timeField": "day"
+                "timeField": "@timestamp"
               }
             ],
-            "title": "Top 10 Copilot Users",
+            "title": "Top 10 Consistent Copilot Users",
             "transformations": [
-                 {
-                   "id": "organize",
-                   "options": {
-                     "excludeByName": {},
-                     "indexByName": {
-                       "Max": 1,
-                       "user_login": 0
-                     },
-                     "renameByName": {
-                       "Max": "Adoption %",
-                       "user_login": "User"
-                     }
-                   }
-                 }
+              {
+                "id": "organize",
+                "options": {
+                  "renameByName": {
+                    "user_login": "User",
+                    "Average adoption_pct": "Adoption %"
+                  }
+                }
+              },
+              {
+                "id": "sortBy",
+                "options": { "fields": [ { "field": "Adoption %", "desc": true } ] }
+              },
+              { "id": "limit", "options": { "limit": 10 } }
             ],
             "type": "barchart"
           }
@@ -6782,6 +6781,7 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"organization_slug\", \"query\": \"organization_slug:*\"}",
           "includeAll": true,
+          "allValue": "*",
           "label": "Organization",
           "name": "organization_name",
           "options": [],
@@ -6803,6 +6803,7 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"team_slug\", \"query\": \"team_slug:*\"}",
           "includeAll": true,
+          "allValue": "*",
           "label": "Team",
           "multi": true,
           "name": "team_name",
@@ -6823,6 +6824,7 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"language\", \"query\": \"language:*\"}",
           "includeAll": true,
+          "allValue": "*",
           "label": "Language",
           "name": "language_name",
           "options": [],
@@ -6842,6 +6844,7 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"editor\", \"query\": \"editor:*\"}",
           "includeAll": true,
+          "allValue": "*",
           "label": "Editor",
           "name": "editor_name",
           "options": [],
@@ -6861,6 +6864,7 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
           "includeAll": true,
+          "allValue": "*",
           "label": "Model",
           "name": "model_name",
           "options": [],
@@ -6880,6 +6884,7 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"model\", \"query\": \"model:*\"}",
           "includeAll": true,
+          "allValue": "*",
           "label": "Chat Model",
           "name": "model_chat_name",
           "options": [],
@@ -6901,6 +6906,7 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"assignee_team_slug\", \"query\": \"assignee_team_slug:*\"}",
           "includeAll": true,
+          "allValue": "*",
           "label": "Team for Users",
           "multi": true,
           "name": "assignee_team_name",
@@ -6923,6 +6929,7 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_login:*\"}",
           "includeAll": true,
+          "allValue": "*",
           "label": "User",
           "multi": true,
           "name": "assignee_login",
@@ -7003,7 +7010,13 @@
         "name": "elasticsearch-user-adoption",
         "type": "datasource",
         "pluginId": "elasticsearch",
-        "value": "af7cm8zqmyc5cd"
+        "value": "elasticsearch-user-adoption-uid"
+      },
+      {
+        "name": "elasticsearch-user-metrics-top-by-day",
+        "type": "datasource",
+        "pluginId": "elasticsearch",
+        "value": "elasticsearch-user-metrics-top-by-day-uid"
       }
     ],
     "description": "For tutorials and feedback, visit the repo Copilot Usage Advanced Dashboard."
