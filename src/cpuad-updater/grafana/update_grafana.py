@@ -23,20 +23,21 @@ dashboard_uid = os.getenv("GRAFANA_DASHBOARD_UID", "copilot-usage-advanced-dashb
 if not elasticsearch_url:
     raise ValueError("Please set the ELASTICSEARCH_URL environment variable")
 
-grafana_username = os.getenv("GRAFANA_USERNAME")
-
-if not grafana_username:
-    raise ValueError("Please set the GRAFANA_USERNAME environment variable")
-
+grafana_api_token_env = os.getenv("GRAFANA_API_TOKEN")
 grafana_url = os.getenv("GRAFANA_URL", "http://$GRAFANA_URL/")
 
 if not grafana_url:
     raise ValueError("Please set the GRAFANA_URL environment variable")
 
+# Basic auth variables only needed when token is not provided
+grafana_username = os.getenv("GRAFANA_USERNAME")
 grafana_password = os.getenv("GRAFANA_PASSWORD")
 
-if not grafana_password:
-    raise ValueError("Please set the GRAFANA_PASSWORD environment variable")
+if not grafana_api_token_env:
+    if not grafana_username:
+        raise ValueError("Please set the GRAFANA_USERNAME environment variable")
+    if not grafana_password:
+        raise ValueError("Please set the GRAFANA_PASSWORD environment variable")
 
 service_account_name = "sa-for-cpuad"
 
@@ -332,7 +333,10 @@ def add_grafana_data_sources(grafana_token, max_retries=3, retry_interval=5):
     # Template for the payload
     def create_payload(name, index):
         # Use appropriate timeField based on the index
-        if index in ["copilot_user_adoption", "copilot_user_metrics_summary"]:
+        if index == "copilot_user_adoption":
+            # Use @timestamp for adoption index to align with Grafana time filtering
+            time_field = "@timestamp"
+        elif index == "copilot_user_metrics_summary":
             time_field = "@timestamp"
         else:
             time_field = "day"
@@ -521,7 +525,13 @@ if __name__ == "__main__":
 
     poll_for_grafana()
 
-    grafana_token = setup_grafana_service_account()
+    # Prefer using an existing API token if provided (no password required)
+    if grafana_api_token_env:
+        logging.info("Using provided Grafana API token from environment.")
+        grafana_token = grafana_api_token_env
+    else:
+        logging.info("No Grafana API token provided; creating a service account.")
+        grafana_token = setup_grafana_service_account()
 
     logging.info("Adding Grafana data sources...")
 

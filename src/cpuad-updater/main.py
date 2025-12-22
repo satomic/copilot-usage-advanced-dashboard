@@ -279,6 +279,11 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
         )
         feature_breadth = stats["agent_usage"] + stats["chat_usage"]
 
+        # Stamp a day for Grafana time filtering: prefer global_end_day, fallback to current UTC day
+        stamped_day = (
+            global_end_day if global_end_day else datetime.utcnow().strftime("%Y-%m-%d")
+        )
+
         summary = {
             "user_login": login,
             "organization_slug": organization_slug,
@@ -298,6 +303,7 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
             "active_days": active_days,
             "report_start_day": global_start_day,
             "report_end_day": global_end_day,
+            "day": stamped_day,
             "bucket_type": "user",
             "is_top10": False,
             "rank": None,
@@ -387,6 +393,11 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
     others = summaries[top_n:]
     if others:
         others_count = len(others)
+        # Stamp a day for Grafana time filtering: prefer global_end_day, fallback to current UTC day
+        stamped_day = (
+            global_end_day if global_end_day else datetime.utcnow().strftime("%Y-%m-%d")
+        )
+
         others_entry = {
             "user_login": "Others",
             "organization_slug": organization_slug,
@@ -415,6 +426,7 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
             "active_days": sum(o["active_days"] for o in others),
             "report_start_day": global_start_day,
             "report_end_day": global_end_day,
+            "day": stamped_day,
             "bucket_type": "others",
             "is_top10": False,
             "rank": None,
