@@ -7011,6 +7011,12 @@
         "type": "datasource",
         "pluginId": "elasticsearch",
         "value": "elasticsearch-user-adoption-uid"
+      },
+      {
+        "name": "elasticsearch-user-metrics-top-by-day",
+        "type": "datasource",
+        "pluginId": "elasticsearch",
+        "value": "elasticsearch-user-metrics-top-by-day-uid"
       }
     ],
     "description": "For tutorials and feedback, visit the repo Copilot Usage Advanced Dashboard."
