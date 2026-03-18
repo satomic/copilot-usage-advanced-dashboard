@@ -22,6 +22,9 @@
       "user_login": {
         "type": "keyword"
       },
+      "assignee_team_slug": {
+        "type": "keyword"
+      },
       "bucket_type": {
         "type": "keyword"
       },
