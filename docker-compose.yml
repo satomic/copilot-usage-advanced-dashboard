@@ -1,5 +1,5 @@
 # GITHUB_PAT=ghp_xxxxxxx docker compose up --build
-version: '3.8'
+# version: '3.8'  # [OBSOLETE] Docker Compose v2+ ignores this field; see https://docs.docker.com/compose/compose-file/ for details. Commented out to avoid warning.
 
 services:
   elasticsearch:
