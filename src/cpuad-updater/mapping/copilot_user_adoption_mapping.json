@@ -85,8 +85,23 @@
       "report_end_day": {
         "type": "date"
       },
+      "day": {
+        "type": "date"
+      },
       "others_count": {
         "type": "long"
+      },
+      "activity_score_pct": {
+        "type": "double"
+      },
+      "reliance_score_pct": {
+        "type": "double"
+      },
+      "accepted_per_active_day": {
+        "type": "double"
+      },
+      "chat_per_active_day": {
+        "type": "double"
       }
     }
   }

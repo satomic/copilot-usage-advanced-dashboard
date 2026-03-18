@@ -20,6 +20,7 @@
 |1.6| refactor timezone handling in main.py & Docker run ENV paras |20250410|
 |1.7| [Add Elasticsearch authentication](https://github.com/satomic/copilot-usage-advanced-dashboard/pull/19) |20250411|
 |1.8| **User Metrics Analytics Module**: Added 5th data source with user adoption leaderboard, Top 10 visualization, hourly automation, and production-ready deployment |20251120|
+|1.9| **PR & Dotcom Chat Metrics**: Extract `copilot_dotcom_pull_requests` (Requirement 5) and `copilot_dotcom_chat` from Metrics API; **Improved Adoption Scoring**: added explicit Activity Score A (0-100) and Reliance Score B proxy (0-100) |20260318|
 
 ## Table of contents
 
@@ -47,6 +48,7 @@
   - [1. Azure Container Apps](#1-Azure-Container-Apps)
   - [2. Linux with Docker](#2-Linux-with-Docker)
   - [3. Kubernetes](#3-Kubernetes)
+- [Requirements Coverage](#requirements-coverage)
 - [Congratulations](#Congratulations)
 
 ---
@@ -309,6 +311,8 @@ Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/ent
 
 - **Adoption Score** = `(active_days / $__rangeDays) × 100` - Percentage of the distinct active days inside the range you have selected in Grafana (the denominator is computed from Grafana’s `$__rangeDays` so it matches 30, 90, 365-day filters automatically).
 - The Top 10 panel now runs directly on `copilot_user_metrics`, counts the unique `day` values per user inside the range, and normalizes by the computed range length (`$__rangeDays`). That way the percentage re-scales whenever you change the dashboard period even though the raw documents still come from repeated 28-day API snapshots stored in Elasticsearch.
+- **Activity Score A (0-100)** *(v1.9)*: `40% × (active_days/range_days) + 35% × norm(accepted_per_active_day) + 25% × norm(chat_per_active_day)` — stored as `activity_score_pct` in `copilot_user_adoption`.
+- **Reliance Score B (0-100 proxy)** *(v1.9)*: normalized `loc_added / loc_suggested` (line acceptance rate). Stored as `reliance_score_pct`. Note: true “Copilot lines / total lines added” requires git history data unavailable from the Copilot API.
 - Color-coded gradient indicating engagement level:
   - 🔴 Red (0-40%): Needs attention - may require training or support
   - 🟠 Orange (40-60%): Moderate usage - room for improvement
@@ -320,7 +324,7 @@ Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/ent
 - Runs every hour (configurable via `EXECUTION_INTERVAL_HOURS`)
 - Fetches 28-day rolling window data from GitHub API
 - Calculates adoption scores automatically
-- Stores in 2 Elasticsearch indexes: `copilot_user_metrics` (raw data) and `copilot_user_adoption` (leaderboard scores)
+- Stores in 4 Elasticsearch indexes: `copilot_user_metrics` (raw data), `copilot_user_adoption` (leaderboard scores), `copilot_pr_reviews` (PR usage by Copilot), `copilot_dotcom_chat` (GitHub.com chat)
 - No manual intervention required
 
 **Use Cases:**
@@ -414,6 +418,76 @@ If you are not using Azure, you can use Linux with Docker, please refer to the [
 
 ## 3. Kubernetes
 For cloud native deployment on Kubernetes,  please refer to the [Kubernetes deployment document](deploy/kubernetes.md).
+
+---
+
+# Requirements Coverage
+
+This section maps the five common Copilot measurement framework requirements to what this dashboard implements and what requires data not available through the GitHub Copilot API.
+
+## 1. Coverage / Enablement (Adoption "reach")
+
+| Requirement | Status | Where |
+|---|---|---|
+| Licensed seats vs active users (DAU/WAU/MAU) | ✅ Implemented | Seat Analysis panel + total_active_users per day in Org/Teams sections |
+| IDE/Editor coverage (VS Code, JetBrains, etc.) | ✅ Implemented | Editors section, breakdown by editor |
+| Language coverage by repo/language/framework | ✅ Implemented | Languages section, breakdown by language |
+| Copilot Chat enabled | ✅ Implemented | Copilot Chat section, IDE chat breakdown |
+| GitHub.com dotcom chat users | ✅ Implemented (v1.9) | `copilot_dotcom_chat` index; `total_dotcom_chat_engaged_users` in totals |
+
+## 2. Intensity of Use (Adoption "depth")
+
+| Requirement | Status | Where / Notes |
+|---|---|---|
+| Suggestions shown, accepted, rejected | ✅ Implemented | Organization, Teams, Languages, Editors sections |
+| Acceptance rate trend over time | ✅ Implemented | All sections, time-series charts |
+| Lines accepted (total LOC from Copilot) | ✅ Implemented | `total_lines_accepted`, `loc_added_sum` in user metrics |
+| Share of coding from Copilot (Copilot LOC / total LOC) | ⚠️ Proxy only | GitHub Copilot API does not provide "total lines added by user from git". The `reliance_score_pct` field in `copilot_user_adoption` uses `loc_added / loc_suggested` as a proxy for acceptance of Copilot suggestions. True share-of-code requires integrating GitHub contributions/commits data separately. |
+| Chat usage (chats per user, active chat users) | ✅ Implemented | Copilot Chat section; per-user chat in User Metrics |
+| Session metrics (active coding days/week) | ✅ Implemented | `active_days` in User Metrics |
+| Feature usage: autocomplete vs chat vs inline edits | ✅ Implemented | Breakdown heatmap; `used_agent`, `used_chat` in user metrics; `agent_usage`, `chat_usage` in adoption leaderboard |
+
+## 3. Effectiveness / Quality Signals
+
+| Requirement | Status | Notes |
+|---|---|---|
+| Defect correlation (bugs in Copilot-heavy files vs baseline) | ❌ Not implementable via Copilot API | Requires bug tracker / issue tracking integration (Jira, GitHub Issues, etc.) correlated with commit data. Out of scope for this project. |
+| Security findings (SAST/secret scanning for Copilot-heavy changes) | ❌ Not implementable via Copilot API | Requires SAST tooling (CodeQL, Dependabot, etc.) integrated with commit-level Copilot contribution data. Out of scope for this project. |
+| Test impact (tests added, coverage delta, pass rate) | ❌ Not implementable via Copilot API | Requires CI/CD pipeline test result data. Out of scope for this project. |
+
+## 4. Delivery / Productivity Outcomes
+
+| Requirement | Status | Notes |
+|---|---|---|
+| Throughput (PRs merged per engineer/week) | ❌ Not implemented | Implementable via GitHub Pull Requests API (`/repos/{owner}/{repo}/pulls`), but requires per-repo configuration and significant scope expansion. Can be added as a future enhancement. |
+| Story points / work items completed | ❌ Not implementable | Requires external project management data (Jira, Azure DevOps, GitHub Projects). Out of scope for this project. |
+
+## 5. PR Usage by Copilot
+
+| Requirement | Status | Where |
+|---|---|---|
+| PR summaries created by Copilot | ✅ Implemented (v1.9) | `copilot_pr_reviews` index; `total_pr_summaries_created` and `total_pr_engaged_users` in totals |
+| Count of Copilot code review agent completions | ✅ Implemented (v1.9) | Extracted from `copilot_dotcom_pull_requests` in Metrics API response; broken down by repository and model in `copilot_pr_reviews` index |
+
+## Individual User Adoption Scoring
+
+| Requirement | Status | Field in `copilot_user_adoption` |
+|---|---|---|
+| A) Activity Score (0-100): active days + accepted/day + chat/day | ✅ Implemented (v1.9) | `activity_score_pct` |
+| Active days with Copilot in last 30 days | ✅ Implemented | `active_days` |
+| Suggestions accepted per active day | ✅ Implemented | `accepted_per_active_day` |
+| Chat prompts per active day | ✅ Implemented | `chat_per_active_day` |
+| B) Reliance/coverage score (0-100) | ⚠️ Proxy (v1.9) | `reliance_score_pct` — uses `loc_added / loc_suggested` (line acceptance rate) as a proxy. True reliance requires "total lines added by user" from git history, which is not available via the Copilot API. |
+| Overall adoption score (backward compatible) | ✅ Implemented | `adoption_pct` |
+
+### New Elasticsearch Indexes (v1.9)
+
+| Index | Default Name | Content |
+|---|---|---|
+| PR reviews by Copilot | `copilot_pr_reviews` | Per-day, per-repository, per-model PR summary counts |
+| GitHub.com (dotcom) chat | `copilot_dotcom_chat` | Per-day, per-model GitHub.com chat usage |
+
+Both indexes follow the same pattern as existing indexes: set via environment variables `INDEX_NAME_PR_REVIEWS` and `INDEX_NAME_DOTCOM_CHAT`, auto-created on startup, and updated every hour.
 
 ---
 
