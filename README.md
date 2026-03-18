@@ -48,7 +48,6 @@
   - [1. Azure Container Apps](#1-Azure-Container-Apps)
   - [2. Linux with Docker](#2-Linux-with-Docker)
   - [3. Kubernetes](#3-Kubernetes)
-- [Requirements Coverage](#requirements-coverage)
 - [Congratulations](#Congratulations)
 
 ---
