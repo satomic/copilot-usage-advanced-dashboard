@@ -20,6 +20,7 @@
 |1.6| refactor timezone handling in main.py & Docker run ENV paras |20250410|
 |1.7| [Add Elasticsearch authentication](https://github.com/satomic/copilot-usage-advanced-dashboard/pull/19) |20250411|
 |1.8| **User Metrics Analytics Module**: Added 5th data source with user adoption leaderboard, Top 10 visualization, hourly automation, and production-ready deployment |20251120|
+|1.9| **PR & Dotcom Chat Metrics**: Extract `copilot_dotcom_pull_requests` (Requirement 5) and `copilot_dotcom_chat` from Metrics API; **Improved Adoption Scoring**: added explicit Activity Score A (0-100) and Reliance Score B proxy (0-100) |20260318|
 
 ## Table of contents
 
@@ -309,6 +310,8 @@ Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/ent
 
 - **Adoption Score** = `(active_days / $__rangeDays) × 100` - Percentage of the distinct active days inside the range you have selected in Grafana (the denominator is computed from Grafana’s `$__rangeDays` so it matches 30, 90, 365-day filters automatically).
 - The Top 10 panel now runs directly on `copilot_user_metrics`, counts the unique `day` values per user inside the range, and normalizes by the computed range length (`$__rangeDays`). That way the percentage re-scales whenever you change the dashboard period even though the raw documents still come from repeated 28-day API snapshots stored in Elasticsearch.
+- **Activity Score A (0-100)** *(v1.9)*: `40% × (active_days/range_days) + 35% × norm(accepted_per_active_day) + 25% × norm(chat_per_active_day)` — stored as `activity_score_pct` in `copilot_user_adoption`.
+- **Reliance Score B (0-100 proxy)** *(v1.9)*: normalized `loc_added / loc_suggested` (line acceptance rate). Stored as `reliance_score_pct`. Note: true “Copilot lines / total lines added” requires git history data unavailable from the Copilot API.
 - Color-coded gradient indicating engagement level:
   - 🔴 Red (0-40%): Needs attention - may require training or support
   - 🟠 Orange (40-60%): Moderate usage - room for improvement
@@ -320,7 +323,7 @@ Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/ent
 - Runs every hour (configurable via `EXECUTION_INTERVAL_HOURS`)
 - Fetches 28-day rolling window data from GitHub API
 - Calculates adoption scores automatically
-- Stores in 2 Elasticsearch indexes: `copilot_user_metrics` (raw data) and `copilot_user_adoption` (leaderboard scores)
+- Stores in 4 Elasticsearch indexes: `copilot_user_metrics` (raw data), `copilot_user_adoption` (leaderboard scores), `copilot_pr_reviews` (PR usage by Copilot), `copilot_dotcom_chat` (GitHub.com chat)
 - No manual intervention required
 
 **Use Cases:**
