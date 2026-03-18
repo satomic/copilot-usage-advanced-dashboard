@@ -6607,7 +6607,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: (${organization_name:lucene}) AND user_login: (${assignee_login:lucene})",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6939,14 +6939,14 @@
             "type": "elasticsearch",
             "uid": "elasticsearch-seat-assignments-uid"
           },
-          "definition": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_login:*\"}",
+          "definition": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
           "includeAll": true,
           "allValue": "*",
           "label": "User",
           "multi": true,
           "name": "assignee_login",
           "options": [],
-          "query": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_login:*\"}",
+          "query": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
           "refresh": 2,
           "regex": "",
           "type": "query"
