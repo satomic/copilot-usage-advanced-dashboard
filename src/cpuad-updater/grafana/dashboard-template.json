@@ -6941,7 +6941,6 @@
           },
           "definition": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
           "includeAll": true,
-          "allValue": "*",
           "label": "User",
           "multi": true,
           "name": "assignee_login",
