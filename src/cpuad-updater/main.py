@@ -119,6 +119,8 @@ class Indexes:
     index_name_breakdown_chat = os.getenv(
         "INDEX_NAME_BREAKDOWN_CHAT", "copilot_usage_breakdown_chat"
     )
+    index_name_pr_reviews = os.getenv("INDEX_NAME_PR_REVIEWS", "copilot_pr_reviews")
+    index_name_dotcom_chat = os.getenv("INDEX_NAME_DOTCOM_CHAT", "copilot_dotcom_chat")
     index_user_metrics = os.getenv("INDEX_USER_METRICS", "copilot_user_metrics")
     index_user_adoption = os.getenv("INDEX_USER_ADOPTION", "copilot_user_adoption")
 
@@ -263,11 +265,31 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
     global_start_day = min(report_start_days) if report_start_days else None
     global_end_day = max(report_end_days) if report_end_days else None
 
+    # Determine range days for Activity Score: prefer report window, fall back to 28
+    if global_start_day and global_end_day:
+        try:
+            start_dt = datetime.strptime(global_start_day, "%Y-%m-%d")
+            end_dt = datetime.strptime(global_end_day, "%Y-%m-%d")
+            range_days = max((end_dt - start_dt).days + 1, 1)
+        except ValueError:
+            range_days = 28
+    else:
+        range_days = 28
+
     summaries = []
     for login, stats in grouped.items():
         active_days = len(stats["days"])
         interaction_per_day = (
             stats["volume"] / active_days if active_days else 0.0
+        )
+        accepted_per_active_day = (
+            stats["code_acceptance"] / active_days if active_days else 0.0
+        )
+        # Chat engagement rate: fraction of activity records where chat was used.
+        # user_initiated_interaction_count (volume) tracks all user-initiated prompts but
+        # equals interaction_per_day; use chat_usage / events_logged as a distinct signal.
+        chat_per_active_day = (
+            stats["chat_usage"] / stats["events_logged"] if stats["events_logged"] else 0.0
         )
         acceptance_rate = (
             stats["code_acceptance"] / stats["code_generation"]
@@ -276,6 +298,12 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
         )
         average_loc_added = (
             stats["loc_added"] / active_days if active_days else 0.0
+        )
+        # Reliance proxy: fraction of suggested lines the user accepted (0.0-1.0)
+        loc_acceptance_rate = (
+            stats["loc_added"] / stats["loc_suggested"]
+            if stats["loc_suggested"]
+            else 0.0
         )
         feature_breadth = stats["agent_usage"] + stats["chat_usage"]
 
@@ -295,6 +323,9 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
             "loc_added_sum": stats["loc_added"],
             "loc_suggested_to_add_sum": stats["loc_suggested"],
             "average_loc_added": average_loc_added,
+            "accepted_per_active_day": accepted_per_active_day,
+            "chat_per_active_day": chat_per_active_day,
+            "loc_acceptance_rate": loc_acceptance_rate,
             "interactions_per_day": interaction_per_day,
             "acceptance_rate": acceptance_rate,
             "feature_breadth": feature_breadth,
@@ -331,6 +362,9 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
         "acceptance_rate": [entry["acceptance_rate"] for entry in summaries],
         "average_loc_added": [entry["average_loc_added"] for entry in summaries],
         "feature_breadth": [entry["feature_breadth"] for entry in summaries],
+        "accepted_per_active_day": [entry["accepted_per_active_day"] for entry in summaries],
+        "chat_per_active_day": [entry["chat_per_active_day"] for entry in summaries],
+        "loc_acceptance_rate": [entry["loc_acceptance_rate"] for entry in summaries],
     }
 
     bounds = {}
@@ -363,6 +397,29 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
             + 0.2 * norm_feature
         )
         entry["_base_score"] = base_score
+
+        # A) Activity Score (0-100): active days + suggestions accepted/day + chat prompts/day
+        active_days_component = min(entry["active_days"] / range_days, 1.0)
+        accepted_component = _robust_scale(
+            entry["accepted_per_active_day"], *bounds["accepted_per_active_day"]
+        )
+        chat_component = _robust_scale(
+            entry["chat_per_active_day"], *bounds["chat_per_active_day"]
+        )
+        activity_score_pct = round(
+            (0.4 * active_days_component + 0.35 * accepted_component + 0.25 * chat_component) * 100,
+            1,
+        )
+        entry["activity_score_pct"] = activity_score_pct
+
+        # B) Reliance Score proxy (0-100): fraction of Copilot-suggested lines accepted
+        # Note: True reliance = Copilot lines accepted / total lines added (git data not available).
+        # Proxy uses loc_added / loc_suggested (line acceptance rate of Copilot suggestions).
+        reliance_score_pct = round(
+            _robust_scale(entry["loc_acceptance_rate"], *bounds["loc_acceptance_rate"]) * 100,
+            1,
+        )
+        entry["reliance_score_pct"] = reliance_score_pct
 
     max_active_days = max(entry["active_days"] for entry in summaries)
     for entry in summaries:
@@ -415,6 +472,9 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
                 o["loc_suggested_to_add_sum"] for o in others
             ),
             "average_loc_added": sum(o["average_loc_added"] for o in others) / others_count,
+            "accepted_per_active_day": sum(o["accepted_per_active_day"] for o in others) / others_count,
+            "chat_per_active_day": sum(o["chat_per_active_day"] for o in others) / others_count,
+            "loc_acceptance_rate": sum(o["loc_acceptance_rate"] for o in others) / others_count,
             "interactions_per_day": sum(
                 o["interactions_per_day"] for o in others
             )
@@ -424,6 +484,8 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
             "agent_usage": sum(o["agent_usage"] for o in others),
             "chat_usage": sum(o["chat_usage"] for o in others),
             "active_days": sum(o["active_days"] for o in others),
+            "activity_score_pct": round(sum(o["activity_score_pct"] for o in others) / others_count, 1),
+            "reliance_score_pct": round(sum(o["reliance_score_pct"] for o in others) / others_count, 1),
             "report_start_day": global_start_day,
             "report_end_day": global_end_day,
             "day": stamped_day,
@@ -1171,6 +1233,8 @@ class DataSplitter:
             total_data = entry.copy()
             total_data.pop("breakdown", None)
             total_data.pop("breakdown_chat", None)
+            total_data.pop("pr_reviews", None)
+            total_data.pop("dotcom_chat", None)
             total_data = total_data | self.additional_properties
             total_data["unique_hash"] = generate_unique_hash(
                 total_data, key_properties=["organization_slug", "team_slug", "day"]
@@ -1276,8 +1340,59 @@ class DataSplitter:
                 breakdown_chat_list.append(breakdown_chat_entry_with_day)
         return breakdown_chat_list
 
+    def get_pr_reviews_list(self):
+        pr_reviews_list = []
+        logger.info("Generating PR reviews list from data")
+        for entry in self.data:
+            day = entry.get("day")
+            for pr_entry in entry.get("pr_reviews", []):
+                pr_entry_with_day = pr_entry.copy()
+                pr_entry_with_day["day"] = day
+                pr_entry_with_day = pr_entry_with_day | self.additional_properties
 
-class ElasticsearchManager:
+                pr_entry_with_day["unique_hash"] = generate_unique_hash(
+                    pr_entry_with_day,
+                    key_properties=[
+                        "organization_slug",
+                        "team_slug",
+                        "day",
+                        "repository",
+                        "model",
+                    ],
+                )
+
+                pr_reviews_list.append(pr_entry_with_day)
+        return pr_reviews_list
+
+    def get_dotcom_chat_list(self):
+        dotcom_chat_list = []
+        logger.info("Generating dotcom chat list from data")
+        for entry in self.data:
+            day = entry.get("day")
+            for chat_entry in entry.get("dotcom_chat", []):
+                chat_entry_with_day = chat_entry.copy()
+                chat_entry_with_day["day"] = day
+                chat_entry_with_day = chat_entry_with_day | self.additional_properties
+
+                chat_entry_with_day["unique_hash"] = generate_unique_hash(
+                    chat_entry_with_day,
+                    key_properties=[
+                        "organization_slug",
+                        "team_slug",
+                        "day",
+                        "model",
+                    ],
+                )
+
+                # If the denominator value is 0, it is corrected to a uniform value
+                chat_entry_with_day["chat_turns"] = (
+                    self.correction_for_0
+                    if chat_entry_with_day["chat_turns"] == 0
+                    else chat_entry_with_day["chat_turns"]
+                )
+
+                dotcom_chat_list.append(chat_entry_with_day)
+        return dotcom_chat_list
 
     def __init__(self, primary_key=Paras.primary_key):
         self.primary_key = primary_key
@@ -1497,8 +1612,8 @@ def main(organization_slug):
             },
         )
 
-        # get total_list, breakdown_list, breakdown_chat_list from data_splitter
-        # and save to json file
+        # get total_list, breakdown_list, breakdown_chat_list, pr_reviews_list,
+        # dotcom_chat_list from data_splitter and save to json file
         total_list = data_splitter.get_total_list()
         dict_save_to_json_file(total_list, f"{team_slug}_total_list")
 
@@ -1507,6 +1622,12 @@ def main(organization_slug):
 
         breakdown_chat_list = data_splitter.get_breakdown_chat_list()
         dict_save_to_json_file(breakdown_chat_list, f"{team_slug}_breakdown_chat_list")
+
+        pr_reviews_list = data_splitter.get_pr_reviews_list()
+        dict_save_to_json_file(pr_reviews_list, f"{team_slug}_pr_reviews_list")
+
+        dotcom_chat_list = data_splitter.get_dotcom_chat_list()
+        dict_save_to_json_file(dotcom_chat_list, f"{team_slug}_dotcom_chat_list")
 
         # Write to ES
         for total_data in total_list:
@@ -1519,6 +1640,12 @@ def main(organization_slug):
             es_manager.write_to_es(
                 Indexes.index_name_breakdown_chat, breakdown_chat_data
             )
+
+        for pr_review_data in pr_reviews_list:
+            es_manager.write_to_es(Indexes.index_name_pr_reviews, pr_review_data)
+
+        for dotcom_chat_data in dotcom_chat_list:
+            es_manager.write_to_es(Indexes.index_name_dotcom_chat, dotcom_chat_data)
 
         logger.info(f"Data processing completed for team: {team_slug}")
 

@@ -103,6 +103,41 @@ def convert_day(metrics_day):
 
     breakdown_chat_list = list(breakdown_chat_dict.values())
 
+    # Handle Copilot dotcom pull request indicators (Requirement 5: PR Usage by Copilot)
+    dotcom_prs = metrics_day.get("copilot_dotcom_pull_requests")
+    total_pr_summaries_created = 0
+    total_pr_engaged_users = 0
+    pr_reviews_list = []
+
+    if dotcom_prs:
+        total_pr_summaries_created = dotcom_prs.get("total_pr_summaries_created", 0)
+        total_pr_engaged_users = dotcom_prs.get("total_engaged_users", 0)
+        for repo in dotcom_prs.get("repositories", []):
+            repo_name = repo.get("name", "unknown")
+            repo_summaries = repo.get("total_pr_summaries_created", 0)
+            for model in repo.get("models", []):
+                model_name = model.get("name", "unknown")
+                pr_reviews_list.append({
+                    "repository": repo_name,
+                    "model": model_name,
+                    "pr_summaries_created": model.get("total_pr_summaries_created", repo_summaries),
+                })
+
+    # Handle Copilot dotcom chat indicators (Requirement 2: GitHub.com chat usage)
+    dotcom_chat = metrics_day.get("copilot_dotcom_chat")
+    total_dotcom_chat_engaged_users = 0
+    dotcom_chat_list = []
+
+    if dotcom_chat:
+        total_dotcom_chat_engaged_users = dotcom_chat.get("total_engaged_users", 0)
+        for model in dotcom_chat.get("models", []):
+            model_name = model.get("name", "unknown")
+            dotcom_chat_list.append({
+                "model": model_name,
+                "chat_turns": model.get("total_chats", 0),
+                "active_users": model.get("total_engaged_users", 0),
+            })
+
     usage = {
         "day": day,
         "total_suggestions_count": total_suggestions_count,
@@ -115,8 +150,13 @@ def convert_day(metrics_day):
         "total_active_chat_users": total_active_chat_users,
         "total_chat_copy_events": total_chat_copy_events,
         "total_chat_insertion_events": total_chat_insertion_events,
+        "total_pr_summaries_created": total_pr_summaries_created,
+        "total_pr_engaged_users": total_pr_engaged_users,
+        "total_dotcom_chat_engaged_users": total_dotcom_chat_engaged_users,
         "breakdown": breakdown_list,
         "breakdown_chat": breakdown_chat_list,
+        "pr_reviews": pr_reviews_list,
+        "dotcom_chat": dotcom_chat_list,
     }
     return usage
 

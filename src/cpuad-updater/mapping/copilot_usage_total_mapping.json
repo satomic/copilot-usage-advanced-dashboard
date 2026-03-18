@@ -52,6 +52,15 @@
         "total_suggestions_count" : {
           "type" : "long"
         },
+        "total_pr_summaries_created" : {
+          "type" : "long"
+        },
+        "total_pr_engaged_users" : {
+          "type" : "long"
+        },
+        "total_dotcom_chat_engaged_users" : {
+          "type" : "long"
+        },
         "unique_hash" : {
           "type" : "keyword"
         }
