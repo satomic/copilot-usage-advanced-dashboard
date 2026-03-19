@@ -219,7 +219,7 @@ def _robust_scale(value, lower, upper):
     return max(0.0, min(1.0, (value - lower) / (upper - lower)))
 
 
-def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, top_n=10):
+def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, top_n=10, user_team_lookup=None):
     if not metrics_data:
         return []
 
@@ -316,6 +316,7 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
             "user_login": login,
             "organization_slug": organization_slug,
             "slug_type": slug_type,
+            "assignee_team_slug": (user_team_lookup or {}).get(login, "no-team"),
             "events_logged": stats["events_logged"],
             "volume": stats["volume"],
             "code_generation_activity_count": stats["code_generation"],
@@ -459,6 +460,7 @@ def build_user_adoption_leaderboard(metrics_data, organization_slug, slug_type, 
             "user_login": "Others",
             "organization_slug": organization_slug,
             "slug_type": slug_type,
+            "assignee_team_slug": "no-team",
             "events_logged": sum(o["events_logged"] for o in others),
             "volume": sum(o["volume"] for o in others),
             "code_generation_activity_count": sum(
@@ -1533,6 +1535,16 @@ def main(organization_slug):
             )
         logger.info(f"Data processing completed for {slug_type}: {organization_slug}")
 
+    # Build a lookup of user_login -> assignee_team_slug for enriching user metrics
+    user_team_lookup = {}
+    if data_seat_assignments:
+        for seat in data_seat_assignments:
+            login = seat.get("assignee_login")
+            team = seat.get("assignee_team_slug", "no-team")
+            if login:
+                user_team_lookup[login] = team
+        logger.info(f"Built team lookup for {len(user_team_lookup)} users from seat assignments")
+
     # Process user metrics data
     logger.info(
         f"Processing Copilot user metrics for {slug_type}: {organization_slug}"
@@ -1547,11 +1559,15 @@ def main(organization_slug):
                 f"No Copilot user metrics found for {slug_type}: {organization_slug}"
             )
         else:
+            # Enrich each user metric record with assignee_team_slug from seat assignments
+            for user_metric in user_metrics_data:
+                user_metric["assignee_team_slug"] = user_team_lookup.get(user_metric.get("user_login"), "no-team")
+            logger.info(f"Enriched {len(user_metrics_data)} user metrics records with team info")
             logger.info(f"Writing {len(user_metrics_data)} user metrics to Elasticsearch...")
             for user_metric in user_metrics_data:
                 es_manager.write_to_es(Indexes.index_user_metrics, user_metric)
             adoption_entries = build_user_adoption_leaderboard(
-                user_metrics_data, organization_slug, slug_type
+                user_metrics_data, organization_slug, slug_type, user_team_lookup=user_team_lookup
             )
             if adoption_entries:
                 logger.info(

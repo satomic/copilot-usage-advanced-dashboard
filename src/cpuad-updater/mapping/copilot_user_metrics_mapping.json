@@ -19,6 +19,9 @@
       "user_login": {
         "type": "keyword"
       },
+      "assignee_team_slug": {
+        "type": "keyword"
+      },
       "organization_slug": {
         "type": "keyword"
       },
