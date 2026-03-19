@@ -6937,15 +6937,15 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-seat-assignments-uid"
+            "uid": "elasticsearch-user-metrics-uid"
           },
-          "definition": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
+          "definition": "{\"find\": \"terms\", \"field\": \"user_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
           "includeAll": true,
           "label": "User",
           "multi": true,
           "name": "assignee_login",
           "options": [],
-          "query": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
+          "query": "{\"find\": \"terms\", \"field\": \"user_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
           "refresh": 2,
           "regex": "",
           "type": "query"
