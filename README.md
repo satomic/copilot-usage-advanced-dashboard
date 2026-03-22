@@ -45,6 +45,7 @@
     - [2. Copilot Usage Total Insight](#2-Copilot-Usage-Total-Insight)
     - [3. Copilot Usage Breakdown Insight](#3-Copilot-Usage-Breakdown-Insight)
 - [Deployment](#deployment)
+  - [0. Deploy from Workstation with `azd up`](#0-deploy-from-workstation-with-azd-up)
   - [1. Azure Container Apps](#1-Azure-Container-Apps)
   - [2. Linux with Docker](#2-Linux-with-Docker)
   - [3. Kubernetes](#3-Kubernetes)
@@ -392,6 +393,38 @@ You will need to manually create the DevOps variables yourself in the Azure DevO
 
 ## GitHub Actions
 You will create a pipeline using the `azure-dev.yml` file located in the `.github/workflows` folder. You will need to manually create the GitHub variables yourself in the GitHub GUI.
+
+## 0. Deploy from Workstation with `azd up`
+
+You can deploy directly to Azure from your local workstation using the Azure Developer CLI with a single command:
+
+```bash
+azd up
+```
+
+This provisions all Azure infrastructure and deploys the application containers in one step, without needing a CI/CD pipeline.
+
+**Quick Steps:**
+
+```bash
+# 1. Install the Azure Developer CLI (https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
+
+# 2. Log in
+azd auth login
+az login
+
+# 3. Create an environment (you will be prompted for subscription and region)
+azd env new <environment-name>
+
+# 4. Set required variables
+azd env set GITHUB_PAT "ghp_your_token_here"
+azd env set GITHUB_ORGANIZATION_SLUGS "your-org-name"
+
+# 5. Deploy everything
+azd up
+```
+
+For full details including optional variables, troubleshooting, and how to update or tear down the deployment, see the [azd up Deployment Guide](docs/azd-up-guide.md).
 
 ## 1. Azure Container Apps
 if you are using Azure Container Apps, please refer to the [Azure Container Apps deployment document](deploy/azure-container-apps.md).
