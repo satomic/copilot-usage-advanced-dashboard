@@ -15,6 +15,17 @@ services:
             path: Dockerfile
             remoteBuild: true
 hooks:
+    preprovision:
+        windows:
+            shell: pwsh
+            run: ./scripts/Preprovision.ps1
+            continueOnError: false
+            interactive: true
+        posix:
+            shell: sh
+            run: ./scripts/preprovision.sh
+            continueOnError: false
+            interactive: true
     postdeploy:
         windows:
             shell: pwsh
