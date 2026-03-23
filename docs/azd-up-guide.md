@@ -4,6 +4,19 @@ This guide walks you through deploying the Copilot Usage Advanced Dashboard to A
 
 ---
 
+## TL/DR
+
+``` bash
+azd auth login
+az login
+azd env new <your-environment-name>
+azd env set GITHUB_PAT "<ghp_your_token_here>"
+azd env set GITHUB_ORGANIZATION_SLUGS "<your-org-name>" - or - "<csv-list-of-org-names>"
+azd env set GRAFANA_USERNAME "<admin>" -or- "<some-other-admin-username>"
+azd env set GRAFANA_PASSWORD "<your-admin-password>"
+azd up
+```
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
@@ -24,7 +37,7 @@ This guide walks you through deploying the Copilot Usage Advanced Dashboard to A
 ## Prerequisites
 
 | Requirement | Details |
-|---|---|
+| --- | --- |
 | **Azure Subscription** | Owner or Contributor access required |
 | **GitHub PAT** | Token with `manage_billing:copilot`, `read:enterprise`, and `read:org` scopes. [Create one here.](https://github.com/settings/tokens) |
 | **GitHub Organization Slug** | The short name of your GitHub org (e.g. `myorg`) |
@@ -42,41 +55,33 @@ cd copilot-usage-advanced-dashboard
 
 ## Step 2 — Install Required Tools
 
-### Azure Developer CLI (`azd`)
+### Install Azure Developer CLI (`azd`)
 
-**Windows (winget)**
 ```powershell
+# Windows (winget)
 winget install Microsoft.Azd
-```
 
-**macOS (Homebrew)**
-```bash
+# macOS (Homebrew)
 brew tap azure/azd && brew install azd
-```
 
-**Linux**
-```bash
+# Linux
 curl -fsSL https://aka.ms/install-azd.sh | bash
 ```
 
 > Full installation instructions: <https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd>
 
-### Azure CLI (`az`)
+### Install Azure CLI (`az`)
 
 The post-deploy scripts require the Azure CLI.
 
-**Windows (winget)**
 ```powershell
+#Windows (winget)
 winget install Microsoft.AzureCLI
-```
 
-**macOS (Homebrew)**
-```bash
+#macOS (Homebrew)
 brew update && brew install azure-cli
-```
 
-**Linux**
-```bash
+#Linux
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
@@ -184,14 +189,14 @@ azd env get-values | grep GRAFANA_DASHBOARD_URL
 Open the URL in your browser and log in with the Grafana credentials you configured (or the defaults `admin` / `copilot`).
 
 > **Note:** It takes up to one hour for Copilot metrics data to appear in the dashboards because the `cpuad-updater` job runs on an hourly schedule. You can trigger it immediately by running:
->
-> ```bash
-> # Linux/macOS
-> ./scripts/deploy-azure-container-app-job-cpuad-updater.sh
->
-> # Windows
-> ./scripts/Deploy-AzureContainerAppJob-CpuAdUpdater.ps1
-> ```
+
+```bash
+# Linux/macOS
+./scripts/deploy-azure-container-app-job-cpuad-updater.sh
+
+# Windows
+./scripts/Deploy-AzureContainerAppJob-CpuAdUpdater.ps1
+```
 
 ---
 

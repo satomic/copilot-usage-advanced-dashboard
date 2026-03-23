@@ -13,7 +13,6 @@ permissions:
   id-token: write
   contents: read
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,6 +29,8 @@ jobs:
       AZURE_AUTHENTICATION_ENABLED: ${{ vars.AZURE_AUTHENTICATION_ENABLED }}
       AZURE_AUTHENTICATION_CLIENT_ID: ${{ secrets.AZURE_AUTHENTICATION_CLIENT_ID }}
       AZURE_AUTHENTICATION_OPEN_ID_ISSUER: ${{ vars.AZURE_AUTHENTICATION_OPEN_ID_ISSUER }}
+      GRAFANA_USERNAME: ${{ vars.GRAFANA_USERNAME }}
+      GRAFANA_PASSWORD: ${{ secrets.GRAFANA_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,4 +60,3 @@ jobs:
         run: azd deploy --no-prompt
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
-
