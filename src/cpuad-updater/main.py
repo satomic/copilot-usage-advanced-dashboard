@@ -1396,6 +1396,9 @@ class DataSplitter:
                 dotcom_chat_list.append(chat_entry_with_day)
         return dotcom_chat_list
 
+
+# --- ElasticsearchManager class definition ---
+class ElasticsearchManager:
     def __init__(self, primary_key=Paras.primary_key):
         self.primary_key = primary_key
         if Paras.elasticsearch_user is None or Paras.elasticsearch_pass is None:
@@ -1420,7 +1423,6 @@ class DataSplitter:
 
     # Check if all indexes in the indexes are present, and if they don't, they are created based on the files in the mapping folder
     def check_and_create_indexes(self):
-
         # try ping for 1 minute
         for i in range(30):
             if self.es.ping():
