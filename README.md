@@ -359,9 +359,41 @@ You can analyze the effect of Copilot in different languages ​​and different
 
 ***
 
-
+---
 
 # Deployment
+
+## Deploy from Workstation with `azd up`
+
+This provisions all Azure infrastructure and deploys the application containers from your workstation in one step, without needing a CI/CD pipeline.
+
+**Quick Steps:**
+
+``` bash
+# 1. Install the Azure Developer CLI (https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
+
+# 2. Log in
+azd auth login
+az login
+
+# 3. Create an environment - 
+# name must be a short string, but globally unique across all Azure Developer CLI users, so use something like your company initials and project name, e.g. xxx-ghcp-metrics 
+# you will be prompted for subscription and region
+azd env new <your-environment-name>
+
+# 4. Set required variables
+azd env set GITHUB_PAT "ghp_your_token_here"
+azd env set GITHUB_ORGANIZATION_SLUGS "your-org-name - or - csv-list-of-org-names"
+azd env set GRAFANA_USERNAME "admin-or-some-other-admin-username"
+azd env set GRAFANA_PASSWORD "your-admin-password"
+
+# 5. Deploy everything
+azd up
+```
+
+For full details including optional variables, troubleshooting, and how to update or tear down the deployment, see the [azd up Deployment Guide](docs/azd-up-guide.md).
+
+## Deploy with a CI/CD Pipeline
 
 When setting up a deployment you will need to set the following variables for your pipeline manually:
 
@@ -385,7 +417,7 @@ If you are using Azure DevOps, make sure you change the name of the service conn
 30 and 45 of the `azure-dev.yml` file located in the `.azdo/pipelines` folder.
 
 To create a service connection you can use the azd pipeline config --provider azdo command from the terminal.  You can read more here:
-https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/pipeline-azure-pipelines.
+[https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/pipeline-azure-pipelines](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/pipeline-azure-pipelines).
 
 You will need to install the "Install azd" extension from the [marketplace](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.azd) in your Azure DevOps organization if you haven't already done so.
 
@@ -394,39 +426,8 @@ You will need to manually create the DevOps variables yourself in the Azure DevO
 ## GitHub Actions
 You will create a pipeline using the `azure-dev.yml` file located in the `.github/workflows` folder. You will need to manually create the GitHub variables yourself in the GitHub GUI.
 
-## 0. Deploy from Workstation with `azd up`
-
-You can deploy directly to Azure from your local workstation using the Azure Developer CLI with a single command:
-
-```bash
-azd up
-```
-
-This provisions all Azure infrastructure and deploys the application containers in one step, without needing a CI/CD pipeline.
-
-**Quick Steps:**
-
-```bash
-# 1. Install the Azure Developer CLI (https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
-
-# 2. Log in
-azd auth login
-az login
-
-# 3. Create an environment (you will be prompted for subscription and region)
-azd env new <environment-name>
-
-# 4. Set required variables
-azd env set GITHUB_PAT "ghp_your_token_here"
-azd env set GITHUB_ORGANIZATION_SLUGS "your-org-name"
-
-# 5. Deploy everything
-azd up
-```
-
-For full details including optional variables, troubleshooting, and how to update or tear down the deployment, see the [azd up Deployment Guide](docs/azd-up-guide.md).
-
 ## 1. Azure Container Apps
+
 if you are using Azure Container Apps, please refer to the [Azure Container Apps deployment document](deploy/azure-container-apps.md).
 
 ![](image/architecture.drawio.png)
