@@ -17,8 +17,11 @@ When setting up a deployment you will need to set the following variables for yo
 |AZURE_AUTHENTICATION_CLIENT_ID|The Client ID of the Azure AD application.|
 |AZURE_AUTHENTICATION_OPEN_ID_ISSUER|The OpenID Connect issuer URL for Azure AD.|
 
-## Pipeline Updates
-If you are using Azure DevOps, make sure you change the name of the service connection to the name of your service connection.  You will need to change line 30 and 45 of the `azure-dev.yml` file located in the `.azdo/pipelines` folder.
+## Pipeline File Updates
+
+If you are using Azure DevOps, make sure you change the value of the serviceConnectionName variable to be the name of your service connection in the `azure-dev.yml` file located in the `.azdo/pipelines` folder.
+
+## Azure DevOps Updates
 
 To create a service connection you can use the azd pipeline config --provider azdo command from the terminal.  You can read more here: [https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/pipeline-azure-pipelines](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/pipeline-azure-pipelines).
 
@@ -44,20 +47,20 @@ az pipelines variable-group create \
   --project='<yourAzDOProject>' \
   --name CopilotUsageDashboardSecrets \
   --variables \
-      GH_PAT='<value>' \
-      AZURE_USER_PRINCIPAL_ID='<value>' \
-      AZURE_AUTHENTICATION_CLIENT_ID='<value>' \
-      GRAFANA_PASSWORD='<value>' \
-      AZURE_CLIENT_ID='<value>' \
-      AZURE_SUBSCRIPTION_ID='<value>' \
-      AZURE_TENANT_ID='<value>' \
-      AZURE_ENV_NAME='<value>' \
-      AZURE_LOCATION='<value>' \
-      AZURE_RESOURCE_GROUP='<value>' \
-      GH_ORGANIZATION_SLUGS='<value>' \
-      GRAFANA_USERNAME='<value>' \
-      AZURE_AUTHENTICATION_ENABLED='<value>' \
-      AZURE_AUTHENTICATION_OPEN_ID_ISSUER='<value>'
+      GH_PAT='<secretValue>' \
+      AZURE_USER_PRINCIPAL_ID='<secretValue>' \
+      AZURE_AUTHENTICATION_CLIENT_ID='<secretValue>' \
+      GRAFANA_PASSWORD='<secretValue>' \
+      AZURE_CLIENT_ID='<variableValue>' \
+      AZURE_SUBSCRIPTION_ID='<variableValue>' \
+      AZURE_TENANT_ID='<variableValue>' \
+      AZURE_ENV_NAME='<variableValue>' \
+      AZURE_LOCATION='<variableValue>' \
+      AZURE_RESOURCE_GROUP='<variableValue>' \
+      GH_ORGANIZATION_SLUGS='<variableValue>' \
+      GRAFANA_USERNAME='<variableValue>' \
+      AZURE_AUTHENTICATION_ENABLED='<variableValue>' \
+      AZURE_AUTHENTICATION_OPEN_ID_ISSUER='<variableValue>'
 ```
 
 ---
