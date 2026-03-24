@@ -40,7 +40,7 @@ stages:
       # azd delegate auth to az to use service connection with AzureCLI@2
       - pwsh: |
           azd config set auth.useAzCliAuth "true"
-        displayName: AZD Use AZ CLI Authentication.
+        displayName: AZD AZ CLI Auth
         
       - task: AzureCLI@2
         displayName: AZD Provision Infrastructure
