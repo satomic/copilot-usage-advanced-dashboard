@@ -48,24 +48,24 @@ You can also define these variables in the Azure DevOps portal per pipeline, but
 ```bash
 az login
 
-az pipelines variable-group create \
-  --organization=https://dev.azure.com/<yourAzDOOrg>/ \
-  --project='<yourAzDOProject>' \
-  --name CopilotUsageDashboardSecrets \
-  --variables \
-      GH_PAT='<secretValue>' \
-      AZURE_USER_PRINCIPAL_ID='<secretValue>' \
-      AZURE_AUTHENTICATION_CLIENT_ID='<secretValue>' \
-      GRAFANA_PASSWORD='<secretValue>' \
-      AZURE_CLIENT_ID='<variableValue>' \
-      AZURE_SUBSCRIPTION_ID='<variableValue>' \
-      AZURE_TENANT_ID='<variableValue>' \
-      AZURE_ENV_NAME='<variableValue>' \
-      AZURE_LOCATION='<variableValue>' \
-      AZURE_RESOURCE_GROUP='<variableValue>' \
-      GH_ORGANIZATION_SLUGS='<variableValue>' \
-      GRAFANA_USERNAME='<variableValue>' \
-      AZURE_AUTHENTICATION_ENABLED='<variableValue>' \
+az pipelines variable-group create `
+  --organization=https://dev.azure.com/<yourAzDOOrg>/ `
+  --project='<yourAzDOProject>' `
+  --name CopilotUsageDashboardSecrets `
+  --variables `
+      GH_PAT='<secretValue>' `
+      AZURE_USER_PRINCIPAL_ID='<secretValue>' `
+      AZURE_AUTHENTICATION_CLIENT_ID='<secretValue>' `
+      GRAFANA_PASSWORD='<secretValue>' `
+      AZURE_CLIENT_ID='<variableValue>' `
+      AZURE_SUBSCRIPTION_ID='<variableValue>' `
+      AZURE_TENANT_ID='<variableValue>' `
+      AZURE_ENV_NAME='<variableValue>' `
+      AZURE_LOCATION='<variableValue>' `
+      AZURE_RESOURCE_GROUP='<variableValue>' `
+      GH_ORGANIZATION_SLUGS='<variableValue>' `
+      GRAFANA_USERNAME='<variableValue>' `
+      AZURE_AUTHENTICATION_ENABLED='<variableValue>' `
       AZURE_AUTHENTICATION_OPEN_ID_ISSUER='<variableValue>'
 ```
 
