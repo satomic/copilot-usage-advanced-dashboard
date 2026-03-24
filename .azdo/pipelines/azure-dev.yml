@@ -40,10 +40,10 @@ stages:
       # azd delegate auth to az to use service connection with AzureCLI@2
       - pwsh: |
           azd config set auth.useAzCliAuth "true"
-        displayName: Configure AZD to Use AZ CLI Authentication.
+        displayName: AZD Use AZ CLI Authentication.
         
       - task: AzureCLI@2
-        displayName: Provision Infrastructure
+        displayName: AZD Provision Infrastructure
         inputs:
           azureSubscription: $(serviceConnectionName)
           scriptType: bash
@@ -65,7 +65,7 @@ stages:
           AZURE_AUTHENTICATION_OPEN_ID_ISSUER: $(AZURE_AUTHENTICATION_OPEN_ID_ISSUER)
 
       - task: AzureCLI@2
-        displayName: Deploy Application
+        displayName: AZD Deploy Application
         inputs:
           azureSubscription: $(serviceConnectionName)
           scriptType: bash
