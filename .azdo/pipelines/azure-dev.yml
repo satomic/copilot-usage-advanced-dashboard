@@ -10,10 +10,14 @@ pool:
 variables:
   - group: CopilotUsageDashboardSecrets
   - name: serviceConnectionName
-    value: DevOpsAzureRMConnection
+    value: 'DEV Service Connection'  # DevOpsAzureRMConnection
 
 steps:
-  # setup-azd@0 needs to be manually installed in your organization
+  # setup-azd task needs to be manually installed in your organization
+  # You may get this error message:  
+  #   A task is missing. The pipeline references a task called 'setup-azd'. 
+  # This usually indicates the azd task isn't installed - install it from the Marketplace:
+  # https://marketplace.visualstudio.com/items?itemName=ms-azuretools.azd
   # if you can't install it, you can use the below bash script to install azd
   # and remove this step
   - task: setup-azd@1
