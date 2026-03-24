@@ -9,6 +9,7 @@ This guide walks you through deploying the Copilot Usage Advanced Dashboard to A
 ``` bash
 azd auth login
 az login
+azd init
 azd env new <your-environment-name>
 azd env set GITHUB_PAT "<ghp_your_token_here>"
 azd env set GITHUB_ORGANIZATION_SLUGS "<your-org-name>" - or - "<csv-list-of-org-names>"
@@ -103,7 +104,7 @@ az login
 
 ## Step 4 — Create an azd Environment
 
-An `azd` environment holds your configuration and deployment state. Choose a short, descriptive name (e.g. `cpilot-prod`, `my-dashboard`).
+An `azd` environment holds your configuration and deployment state. Choose a short, descriptive name (e.g. `copilot-prod`, `my-dashboard`).
 
 ```bash
 azd env new <environment-name>
