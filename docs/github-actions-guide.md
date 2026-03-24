@@ -2,25 +2,22 @@
 
 When setting up a deployment you will need to set the following variables and secrets in your GitHub environment manually:
 
-|**Secrets**|**Description**|
-|-|-|
-|AZURE_USER_PRINCIPAL_ID|The Object ID of a user you want to grant access to to the Azure Key Vault.|
-|AZURE_AUTHENTICATION_CLIENT_ID|The Client ID of the Azure AD application.|
-|GH_PAT|This is your GitHub Personal Access Token.|
-|GRAFANA_PASSWORD|The password for Grafana.|
-
-|**Variables**|**Description**|
-|-|-|
-|AZURE_CLIENT_ID|The Client ID of the identity you want to use to deploy the application.|
-|AZURE_ENV_NAME|The name of the Azure environment you want to deploy to, such as `copilot-usage-advanced-dashboard-dev`.|
-|AZURE_LOCATION|The Azure location you want to deploy to, such as `eastus`, `westus`, etc.|
-|AZURE_RESOURCE_GROUP|The name of the resource group you want to deploy to.|
-|AZURE_SUBSCRIPTION_ID|The GUID for the subscription you want to deploy to.|
-|AZURE_TENANT_ID|The Azure Tenant ID of the identity you want to use to deploy the application.|
-|GH_ORGANIZATION_SLUGS|This is your GitHub Organization name. This can be a comma-separated list of orgs if you want to index multiple orgs.|
-|AZURE_AUTHENTICATION_ENABLED|Enable Entra ID Single-Sign On (SSO) authentication.|
-|AZURE_AUTHENTICATION_OPEN_ID_ISSUER|The OpenID Connect issuer URL for Azure AD.|
-|GRAFANA_USERNAME|The username for Grafana.|
+|**Type**|**Name**|**Required**|**Description**|
+|-|-|-|-|
+|Variable|AZURE_ENV_NAME|Yes|The name of the Azure environment you want to deploy to, such as `copilot-usage-advanced-dashboard-dev`.|
+|Variable|AZURE_LOCATION|Yes|The Azure location you want to deploy to, such as `eastus`, `westus`, etc.|
+|Variable|AZURE_RESOURCE_GROUP|Yes|The name of the resource group you want to deploy to.|
+|Secret|GH_PAT|Yes|This is your GitHub Personal Access Token.|
+|Variable|GH_ORGANIZATION_SLUGS|Yes|This is your GitHub Organization name. This can be a comma-separated list of orgs if you want to index multiple orgs.|
+|Variable|GRAFANA_USERNAME|Yes/No|The username for Grafana.|
+|Secret|GRAFANA_PASSWORD|Yes/No|The password for Grafana.|
+|Variable|AZURE_CLIENT_ID|Yes|The Client ID of the identity you want to use to deploy the application.|
+|Variable|AZURE_SUBSCRIPTION_ID|Yes|The GUID for the subscription you want to deploy to.|
+|Variable|AZURE_TENANT_ID|Yes|The Azure Tenant ID of the identity you want to use to deploy the application.|
+|Secret|AZURE_USER_PRINCIPAL_ID|Yes|The Object ID of a user you want to grant access to to the Azure Key Vault.|
+|Secret|AZURE_AUTHENTICATION_CLIENT_ID|No|The Client ID of the Azure AD application.|
+|Variable|AZURE_AUTHENTICATION_ENABLED|No|Enable Entra ID Single-Sign On (SSO) authentication.|
+|Variable|AZURE_AUTHENTICATION_OPEN_ID_ISSUER|No|The OpenID Connect issuer URL for Azure AD.|
 
 ---
 
