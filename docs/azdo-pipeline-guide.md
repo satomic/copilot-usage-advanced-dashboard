@@ -23,7 +23,7 @@ When setting up a deployment you will need to set the following variables for yo
 
 If you are using Azure DevOps, make sure you change the value of the serviceConnectionName variable to be the name of your service connection in the `azure-dev.yml` file located in the `.azdo/pipelines` folder.
 
-If you want this to update every time you push to the main branch, uncomment the trigger section in the [.azdo/pipelines/azure-dev.yml](.azdo/pipelines/azure-dev.yml) file.
+If you want this to update every time you push to the main branch, uncomment the trigger section in the [../.azdo/pipelines/azure-dev.yml](.azdo/pipelines/azure-dev.yml) file.
 
 ---
 
