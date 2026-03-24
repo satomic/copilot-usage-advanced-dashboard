@@ -18,7 +18,7 @@
 |1.6|refactor timezone handling in main.py & Docker run ENV paras|20250410|
 |1.7|[Add Elasticsearch authentication](https://github.com/satomic/copilot-usage-advanced-dashboard/pull/19)|20250411|
 |1.8|**User Metrics Analytics Module**: Added 5th data source with user adoption leaderboard, Top 10 visualization, hourly automation, and production-ready deployment|20251120|
-|1.9|**Update User Metrics, Docs, and Deploys**: Updated user specific metrics; improved Adoption Scoring; updated `azd up` deployment process.
+|1.9|**Update User Metrics, Docs, and Deploys**: Updated user specific metrics; improved Adoption Scoring; updated `azd up` deployment process|20260323|
 
 ## Table of contents
 
