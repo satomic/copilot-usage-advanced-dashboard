@@ -53,20 +53,23 @@ az pipelines variable-group create `
   --project='<yourAzDOProject>' `
   --name CopilotUsageDashboardSecrets `
   --variables `
+      AZURE_ENV_NAME='copilot-usage-advanced-dashboard-dev' `
+      AZURE_RESOURCE_GROUP='rg-copilot-usage-advanced-dashboard-dev' `
+      AZURE_LOCATION='eastus' `
+      
       GH_PAT='<secretValue>' `
-      AZURE_USER_PRINCIPAL_ID='<secretValue>' `
-      AZURE_AUTHENTICATION_CLIENT_ID='<secretValue>' `
+      GH_ORGANIZATION_SLUGS='<your-slug-or-slugs>' `
+      GRAFANA_USERNAME='admin' `
       GRAFANA_PASSWORD='<secretValue>' `
+
       AZURE_CLIENT_ID='<variableValue>' `
       AZURE_SUBSCRIPTION_ID='<variableValue>' `
       AZURE_TENANT_ID='<variableValue>' `
-      AZURE_ENV_NAME='<variableValue>' `
-      AZURE_LOCATION='<variableValue>' `
-      AZURE_RESOURCE_GROUP='<variableValue>' `
-      GH_ORGANIZATION_SLUGS='<variableValue>' `
-      GRAFANA_USERNAME='<variableValue>' `
-      AZURE_AUTHENTICATION_ENABLED='<variableValue>' `
-      AZURE_AUTHENTICATION_OPEN_ID_ISSUER='<variableValue>'
+
+      AZURE_USER_PRINCIPAL_ID='<optionalSecretValue>' `
+      AZURE_AUTHENTICATION_CLIENT_ID='<optionalSecretValue>' `
+      AZURE_AUTHENTICATION_ENABLED='<optionalVariableValue>' `
+      AZURE_AUTHENTICATION_OPEN_ID_ISSUER='<optionalVariableValue>'
 ```
 
 ---

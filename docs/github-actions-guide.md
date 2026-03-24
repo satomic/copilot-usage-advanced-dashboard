@@ -47,27 +47,23 @@ If you want this to update every time you push to the main branch, uncomment the
 ``` bash
 gh auth login
 
-gh secret set GH_PAT -b '<value>'
+gh variable set AZURE_ENV_NAME -b 'copilot-usage-advanced-dashboard-dev'
+gh variable set AZURE_RESOURCE_GROUP -b 'rg-copilot-usage-advanced-dashboard-dev'
+gh variable set AZURE_LOCATION -b 'eastus'
 
-gh secret set AZURE_USER_PRINCIPAL_ID -b '<value>'
-gh secret set AZURE_AUTHENTICATION_CLIENT_ID -b '<value>'
+gh secret set GH_PAT -b '<secretValue>'
+gh variable set GH_ORGANIZATION_SLUGS -b '<your-slug-or-slugs>'
+gh variable set GRAFANA_USERNAME -b 'admin'
+gh secret set GRAFANA_PASSWORD -b '<secretValue>'
 
-gh secret set GRAFANA_PASSWORD -b '<value>'
+gh variable set AZURE_CLIENT_ID -b '<variableValue>'
+gh variable set AZURE_SUBSCRIPTION_ID -b '<variableValue>'
+gh variable set AZURE_TENANT_ID -b '<variableValue>'
 
-gh variable set AZURE_CLIENT_ID -b '<value>'
-gh variable set AZURE_SUBSCRIPTION_ID -b '<value>'
-gh variable set AZURE_TENANT_ID -b '<value>'
-
-gh variable set AZURE_ENV_NAME -b '<value>'
-gh variable set AZURE_LOCATION -b '<value>'
-gh variable set AZURE_RESOURCE_GROUP -b '<value>'
-
-gh variable set GH_ORGANIZATION_SLUGS -b '<value>'
-
-gh variable set GRAFANA_USERNAME -b '<value>'
-
-gh variable set AZURE_AUTHENTICATION_ENABLED -b '<value>'
-gh variable set AZURE_AUTHENTICATION_OPEN_ID_ISSUER -b '<value>'
+gh secret set AZURE_USER_PRINCIPAL_ID -b '<optionalSecretValue>'
+gh secret set AZURE_AUTHENTICATION_CLIENT_ID -b '<optionalSecretValue>'
+gh variable set AZURE_AUTHENTICATION_ENABLED -b '<optionalVariableValue>'
+gh variable set AZURE_AUTHENTICATION_OPEN_ID_ISSUER -b '<optionalVariableValue>'
 
 ```
 
