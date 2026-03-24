@@ -1,4 +1,4 @@
-name: Build, push Docker image
+name: Build, push Docker image to GH Container Registry
 
 on:
   push:
