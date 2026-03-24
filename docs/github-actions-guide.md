@@ -38,7 +38,7 @@ You will need to create the variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZUR
 
 The GitHub Actions pipeline uses the `azure-dev.yml` file located in the `.github/workflows` folder. Once the secrets and variables are set up correctly, the pipeline will deploy the application.
 
-If you want this to update every time you push to the main branch, uncomment the `push` section in the [../.github/workflows/azure-dev.yml](.github/workflows/azure-dev.yml) file.
+If you want this to update every time you push to the main branch, uncomment the `push` section in the [.github/workflows/azure-dev.yml](../.github/workflows/azure-dev.yml) file.
 
 ---
 
