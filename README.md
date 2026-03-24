@@ -4,49 +4,35 @@
 
 > ✅**Risk Warning**: This project uses the standard Copilot REST API to obtain data, aggregate data, and visualize it, without any potential risks.
 
-<!-- [Copilot Usage Advanced Dashboard 教程](https://www.wolai.com/tNxKtCqCfb6DR2cuaxmJDZ) -->
 
-|**Version**|**Update Notes**|**Date**|
-|---|---|---|
-|1.0|Document creation|20241217|
-|1.1|Some updates|20241218|
-|1.1|Add new templates|20241221|
-|1.2|Support Copilot Standalone, thanks [sombaner](https://github.com/sombaner)'s great feedback|20241224|
-|1.3|Compatible with metrics API|20250208|
-|1.4|1. [Distinguish between insert and copy events of chat](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/8)<br>2. [Add model filter variables](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/6)<br>3. [Compatible with organizations that do not have teams](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/9)<br>4. Fixed some bugs, for upgrades to older versions before `20250220`, please refer to [Old version (`<=20250220`) upgrade steps](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)|20250222|
-|1.5|Add daily usage history for each user, old version upgrade guide refer to [this issue](https://github.com/satomic/copilot-usage-advanced-dashboard/issues/10)|20250404|
-|1.6|refactor timezone handling in main.py & Docker run ENV paras|20250410|
-|1.7|[Add Elasticsearch authentication](https://github.com/satomic/copilot-usage-advanced-dashboard/pull/19)|20250411|
-|1.8|**User Metrics Analytics Module**: Added 5th data source with user adoption leaderboard, Top 10 visualization, hourly automation, and production-ready deployment|20251120|
-|1.9|**Update User Metrics, Docs, and Deploys**: Updated user specific metrics; improved Adoption Scoring; updated `azd up` deployment process|20260323|
+<!-- [Copilot Usage Advanced Dashboard 教程](https://www.wolai.com/tNxKtCqCfb6DR2cuaxmJDZ) -->
 
 ## Table of contents
 
+- **[Version History](docs/version-history.md)**
+- [Online Demo Environment ✨](#online-demo-environment)
 - [🚀 Quick Start - How to run locally](./docs/run-locally.md)
 - [Introduction](#introduction)
-  - [Online Demo Environment ✨](#online-demo-environment)
-    - [Copilot Usage Advanced Dashboard](#copilot-usage-advanced-dashboard)
-    - [Copilot Usage Advanced Dashboard Original](#copilot-usage-advanced-dashboard-original)
-- [Variables](#variables)
-- [Features](#features)
   - [Copilot Usage Advanced Dashboard](#copilot-usage-advanced-dashboard)
-    - [1. Organization](#1-organization)
-    - [2. Teams](#2-teams)
-    - [3. Languages](#3-languages)
-    - [4. Editors](#4-editors)
-    - [5. Copilot Chat](#5-copilot-chat)
-    - [6. Seat Analysis](#6-seat-analysis)
-    - [7. Breakdown Heatmap](#7-breakdown-heatmap)
-    - [8. User Metrics Analytics](#8-user-metrics-analytics)
   - [Copilot Usage Advanced Dashboard Original](#copilot-usage-advanced-dashboard-original)
-    - [1. Copilot Seat Info & Top Languages](#1-copilot-seat-info--top-languages)
-    - [2. Copilot Usage Total Insight](#2-copilot-usage-total-insight)
-    - [3. Copilot Usage Breakdown Insight](#3-copilot-usage-breakdown-insight)
+- [Features](#features)
+  - [0. Filtering](#filtering-variables)
+  - [1. Organization](#1-organization)
+  - [2. Teams](#2-teams)
+  - [3. Languages](#3-languages)
+  - [4. Editors](#4-editors)
+  - [5. Copilot Chat](#5-copilot-chat)
+  - [6. Seat Analysis](#6-seat-analysis)
+  - [7. Breakdown Heatmap](#7-breakdown-heatmap)
+  - [8. User Metrics Analytics](#8-user-metrics-analytics)
+  - [9. Copilot Seat Info & Top Languages](#9-copilot-seat-info--top-languages)
+  - [10. Copilot Usage Total Insight](#10-copilot-usage-total-insight)
+  - [11. Copilot Usage Breakdown Insight](#11-copilot-usage-breakdown-insight)
 - [Deployment Methods](#deployment-methods)
   - [Deploy from workstation with `azd up`](./docs/azd-up-guide.md)
   - [Deploy with an Azure DevOps Pipeline](./docs/azdo-pipeline-guide.md)
   - [Deploy with a GitHub Action](./docs/github-actions-guide.md)
-- [Azure Security Roles](#azure-security-roles)
+- [Azure Security Roles for Deployment](#azure-security-roles)
 - [Deployment Options](#deployment-options)
   - [1. Azure Container Apps](#1-azure-container-apps)
   - [2. Linux with Docker](#2-linux-with-docker)
@@ -103,11 +89,11 @@ This represents Copilot usage in multi organizations & teams from different dime
 
   ![Dashboard Image](image/cpuad_full_FkIGG_4fzg.png)
 
-# Variables
+# Filtering Variables
 
-Supports four filtering varibales, namely
+Supports four filtering variables, namely
 
-- Organzation
+- Organization
 - Team
 - Language
 - Editor
@@ -286,20 +272,20 @@ Based on the data from [Get Copilot User Metrics](https://docs.github.com/en/ent
 - Correlate active days with productivity metrics
 - Generate executive reports on Copilot ROI
 
-### 1. Copilot Seat Info & Top Languages
+### 9. Copilot Seat Info & Top Languages
 
 - You can view the distribution of seats, Enterprise or Business? and overall activation trends. And for users who don't use Copilot, they are ranked based on the length of inactivity and list users who have never activated.
 - Ranking Language and Teams based on usage
 
 ![Dashboard Image](image/image_raciReXvQY.png)
 
-### 2. Copilot Usage Total Insight
+### 10. Copilot Usage Total Insight
 
 You can analyze the total number of recommendations and adoption rate trends based on Count Lines and Chats
 
 ![Dashboard Image](image/image_6lcv61qm2_.png)
 
-### 3. Copilot Usage Breakdown Insight
+### 11. Copilot Usage Breakdown Insight
 
 You can analyze the effect of Copilot in different languages ​​and different editor combinations.
 
