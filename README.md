@@ -44,8 +44,8 @@
     - [3. Copilot Usage Breakdown Insight](#3-copilot-usage-breakdown-insight)
 - [Deployment Methods](#deployment-methods)
   - [Deploy from workstation with `azd up`](./docs/azd-up-guide.md)
-  - [Deploy with an Azure DevOps Pipeline](./docs/azure-devops-readme.md)
-  - [Deploy with a GitHub Action](./docs/github-actions-readme.md)
+  - [Deploy with an Azure DevOps Pipeline](./docs/azdo-pipeline-guide.md)
+  - [Deploy with a GitHub Action](./docs/github-actions-guide.md)
 - [Azure Security Roles](#azure-security-roles)
 - [Deployment Options](#deployment-options)
   - [1. Azure Container Apps](#1-azure-container-apps)
@@ -311,9 +311,9 @@ You can analyze the effect of Copilot in different languages ​​and different
 
 [Deploy from workstation with `azd up`](./docs/azd-up-guide.md) The easiest way to deploy the entire application from your workstation in one step, no need to set up a CI/CD pipeline. Perfect for quick demos, POCs, or personal use, but not necessarily recommended for production environments.
 
-[Deploy with an Azure DevOps Pipeline](./docs/azure-devops-readme.md) if you are using Azure DevOps.
+[Deploy with an Azure DevOps Pipeline](./docs/azdo-pipeline-guide.md).
 
-[Deploy with a GitHub Action](./docs/github-actions-readme.md) if you are using GitHub Actions.
+[Deploy with a GitHub Action](./docs/github-actions-guide.md).
 
 ---
 

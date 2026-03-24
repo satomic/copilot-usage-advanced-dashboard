@@ -37,3 +37,38 @@ You will need to create the variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZUR
 ## GitHub Action
 
 The GitHub Actions pipeline uses the `azure-dev.yml` file located in the `.github/workflows` folder. Once the secrets and variables are set up correctly, the pipeline will automatically deploy the application when changes are pushed to the `main` branch.
+
+---
+
+## GitHub Sample Commands to set variables and secrets
+
+``` bash
+gh auth login
+
+gh secret set GH_PAT -b '<value>'
+
+gh secret set AZURE_USER_PRINCIPAL_ID -b '<value>'
+gh secret set AZURE_AUTHENTICATION_CLIENT_ID -b '<value>'
+
+gh secret set GRAFANA_PASSWORD -b '<value>'
+
+gh variable set AZURE_CLIENT_ID -b '<value>'
+gh variable set AZURE_SUBSCRIPTION_ID -b '<value>'
+gh variable set AZURE_TENANT_ID -b '<value>'
+
+gh variable set AZURE_ENV_NAME -b '<value>'
+gh variable set AZURE_LOCATION -b '<value>'
+gh variable set AZURE_RESOURCE_GROUP -b '<value>'
+
+gh variable set GH_ORGANIZATION_SLUGS -b '<value>'
+
+gh variable set GRAFANA_USERNAME -b '<value>'
+
+gh variable set AZURE_AUTHENTICATION_ENABLED -b '<value>'
+gh variable set AZURE_AUTHENTICATION_OPEN_ID_ISSUER -b '<value>'
+
+```
+
+---
+
+[Home](../README.md#deployment)

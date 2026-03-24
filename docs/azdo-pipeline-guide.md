@@ -28,4 +28,38 @@ You will need to manually create the DevOps variables yourself in the Azure DevO
 
 ---
 
+## Script to Create Variable Group
+
+To create this variable group, customize and run this command in Azure Cloud Shell.
+
+After running this script, be sure to mark GH_PAT, AZURE_USER_PRINCIPAL_ID, AZURE_AUTHENTICATION_CLIENT_ID, and GRAFANA_PASSWORD as secrets.
+
+You can also define these variables in the Azure DevOps portal per pipeline, but a variable group is more repeatable and scriptable.
+
+```bash
+az login
+
+az pipelines variable-group create \
+  --organization=https://dev.azure.com/<yourAzDOOrg>/ \
+  --project='<yourAzDOProject>' \
+  --name CopilotUsageDashboardSecrets \
+  --variables \
+      GH_PAT='<value>' \
+      AZURE_USER_PRINCIPAL_ID='<value>' \
+      AZURE_AUTHENTICATION_CLIENT_ID='<value>' \
+      GRAFANA_PASSWORD='<value>' \
+      AZURE_CLIENT_ID='<value>' \
+      AZURE_SUBSCRIPTION_ID='<value>' \
+      AZURE_TENANT_ID='<value>' \
+      AZURE_ENV_NAME='<value>' \
+      AZURE_LOCATION='<value>' \
+      AZURE_RESOURCE_GROUP='<value>' \
+      GH_ORGANIZATION_SLUGS='<value>' \
+      GRAFANA_USERNAME='<value>' \
+      AZURE_AUTHENTICATION_ENABLED='<value>' \
+      AZURE_AUTHENTICATION_OPEN_ID_ISSUER='<value>'
+```
+
+---
+
 [Home](../README.md#deployment)

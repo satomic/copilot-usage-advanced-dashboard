@@ -5,6 +5,11 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  - group: CopilotUsageDashboardSecrets
+  - name: serviceConnectionName
+    value: DevOpsAzureRMConnection
+
 steps:
   # setup-azd@0 needs to be manually installed in your organization
   # if you can't install it, you can use the below bash script to install azd
@@ -24,10 +29,11 @@ steps:
   - pwsh: |
       azd config set auth.useAzCliAuth "true"
     displayName: Configure AZD to Use AZ CLI Authentication.
+    
   - task: AzureCLI@2
     displayName: Provision Infrastructure
     inputs:
-      azureSubscription: DevOpsAzureRMConnection
+      azureSubscription: $(serviceConnectionName)
       scriptType: bash
       scriptLocation: inlineScript
       keepAzSessionActive: true
@@ -49,7 +55,7 @@ steps:
   - task: AzureCLI@2
     displayName: Deploy Application
     inputs:
-      azureSubscription: DevOpsAzureRMConnection
+      azureSubscription: $(serviceConnectionName)
       scriptType: bash
       scriptLocation: inlineScript
       keepAzSessionActive: true
