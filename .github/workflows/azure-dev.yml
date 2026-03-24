@@ -1,3 +1,5 @@
+name: Deploy to Azure with azd
+
 # Run when commits are pushed to ado-pipeline
 on:
   workflow_dispatch:

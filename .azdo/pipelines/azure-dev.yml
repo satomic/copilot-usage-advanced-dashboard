@@ -1,3 +1,5 @@
+name: $(date:yyyy).$(date:MM).$(date:dd)$(rev:.r) Deploy to Azure with azd
+
 # # Run when commits are pushed to main
 # trigger:
 #   - main
