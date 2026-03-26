@@ -1,8 +1,18 @@
-name: $(date:yyyy).$(date:MM).$(date:dd)$(rev:.r) Deploy to Azure with azd
+name: $(date:yyyy).$(date:MM).$(date:dd)$(rev:.r) Deploy to Azure with azd - ${{ parameters.azdMode }}
 
 # # Run when commits are pushed to main
 # trigger:
 #   - main
+
+parameters:
+  - name: azdMode
+    displayName: AZD Mode
+    type: string
+    values:
+      - up
+      - provision
+      - deploy
+    default: up
 
 pool:
   vmImage: ubuntu-latest
@@ -42,40 +52,42 @@ stages:
           azd config set auth.useAzCliAuth "true"
         displayName: AZD AZ CLI Auth
         
-      - task: AzureCLI@2
-        displayName: AZD Provision Infrastructure
-        inputs:
-          azureSubscription: $(serviceConnectionName)
-          scriptType: bash
-          scriptLocation: inlineScript
-          keepAzSessionActive: true
-          inlineScript: |
-            azd provision --no-prompt
-        env:
-          AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
-          AZURE_TENANT_ID: $(AZURE_TENANT_ID)
-          AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
-          AZURE_ENV_NAME: $(AZURE_ENV_NAME)
-          AZURE_LOCATION: $(AZURE_LOCATION)
-          AZURE_RESOURCE_GROUP: $(AZURE_RESOURCE_GROUP)
-          GITHUB_PAT: $(GH_PAT)
-          GITHUB_ORGANIZATION_SLUGS: $(GH_ORGANIZATION_SLUGS)
-          GRAFANA_USERNAME: $(GRAFANA_USERNAME)
-          GRAFANA_PASSWORD: $(GRAFANA_PASSWORD)
-          AZURE_AUTHENTICATION_ENABLED: $(AZURE_AUTHENTICATION_ENABLED)
-          AZURE_AUTHENTICATION_CLIENT_ID: $(AZURE_AUTHENTICATION_CLIENT_ID)
-          AZURE_AUTHENTICATION_OPEN_ID_ISSUER: $(AZURE_AUTHENTICATION_OPEN_ID_ISSUER)
+      - ${{ if or(eq(parameters.azdMode, 'up'), eq(parameters.azdMode, 'provision')) }}:
+        - task: AzureCLI@2
+          displayName: AZD Provision Infrastructure
+          inputs:
+            azureSubscription: $(serviceConnectionName)
+            scriptType: bash
+            scriptLocation: inlineScript
+            keepAzSessionActive: true
+            inlineScript: |
+              azd provision --no-prompt
+          env:
+            AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
+            AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+            AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+            AZURE_ENV_NAME: $(AZURE_ENV_NAME)
+            AZURE_LOCATION: $(AZURE_LOCATION)
+            AZURE_RESOURCE_GROUP: $(AZURE_RESOURCE_GROUP)
+            GITHUB_PAT: $(GH_PAT)
+            GITHUB_ORGANIZATION_SLUGS: $(GH_ORGANIZATION_SLUGS)
+            GRAFANA_USERNAME: $(GRAFANA_USERNAME)
+            GRAFANA_PASSWORD: $(GRAFANA_PASSWORD)
+            AZURE_AUTHENTICATION_ENABLED: $(AZURE_AUTHENTICATION_ENABLED)
+            AZURE_AUTHENTICATION_CLIENT_ID: $(AZURE_AUTHENTICATION_CLIENT_ID)
+            AZURE_AUTHENTICATION_OPEN_ID_ISSUER: $(AZURE_AUTHENTICATION_OPEN_ID_ISSUER)
 
-      - task: AzureCLI@2
-        displayName: AZD Deploy Application
-        inputs:
-          azureSubscription: $(serviceConnectionName)
-          scriptType: bash
-          scriptLocation: inlineScript
-          keepAzSessionActive: true
-          inlineScript: |
-            azd deploy --no-prompt
-        env:
-          AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
-          AZURE_ENV_NAME: $(AZURE_ENV_NAME)
-          AZURE_LOCATION: $(AZURE_LOCATION)
+      - ${{ if or(eq(parameters.azdMode, 'up'), eq(parameters.azdMode, 'deploy')) }}:
+        - task: AzureCLI@2
+          displayName: AZD Deploy Application
+          inputs:
+            azureSubscription: $(serviceConnectionName)
+            scriptType: bash
+            scriptLocation: inlineScript
+            keepAzSessionActive: true
+            inlineScript: |
+              azd deploy --no-prompt
+          env:
+            AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+            AZURE_ENV_NAME: $(AZURE_ENV_NAME)
+            AZURE_LOCATION: $(AZURE_LOCATION)

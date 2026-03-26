@@ -1,10 +1,19 @@
 name: Deploy to Azure with azd
-run-name: 'Deploy to Azure with azd by @${{ github.actor }}'
+run-name: 'Deploy to Azure with azd (${{ inputs.azdMode }}) by @${{ github.actor }}'
 
 # Run when commits are pushed to ado-pipeline
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      azdMode:
+        description: AZD Mode
+        default: up
+        type: choice
+        options:
+          - up
+          - provision
+          - deploy
   ## Uncomment this to run when commits are pushed to mainline branch (main or master)
   # push:
   #   branches:
@@ -57,11 +66,13 @@ jobs:
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - name: AZD Provision Infrastructure
+        if: ${{ inputs.azdMode == 'up' || inputs.azdMode == 'provision' }}
         run: azd provision --no-prompt
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
 
       - name: AZD Deploy Application
+        if: ${{ inputs.azdMode == 'up' || inputs.azdMode == 'deploy' }}
         run: azd deploy --no-prompt
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
