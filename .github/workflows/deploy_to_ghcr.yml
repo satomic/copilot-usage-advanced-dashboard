@@ -1,4 +1,4 @@
-name: Build, push Docker image to GH Container Registry
+name: Push Docker image to GH CR
 run-name: 'Push to GHCR by @${{ github.actor }}'
 
 on:
