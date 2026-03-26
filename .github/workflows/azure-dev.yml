@@ -1,4 +1,4 @@
-name: Deploy to Azure with azd
+name: Deploy to Azure Container App
 run-name: 'Deploy to Azure with azd (${{ inputs.azdMode }}) by @${{ github.actor }}'
 
 # Run when commits are pushed to ado-pipeline
