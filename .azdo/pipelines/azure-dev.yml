@@ -1,4 +1,4 @@
-name: $(date:yyyy).$(date:MM).$(date:dd)$(rev:.r) Deploy to Azure with azd - ${{ parameters.azdMode }}
+name: $(date:yyyy).$(date:MM).$(date:dd)$(rev:.r) Deploy to Azure Container App - azd ${{ parameters.azdMode }}
 
 # # Run when commits are pushed to main
 # trigger:
@@ -24,7 +24,7 @@ variables:
 
 stages:
 - stage: RunAzdDeployStage
-  displayName: AZD Deploy
+  displayName: AZD Deploy to ACA
   jobs:
   - job: AzdDeployJob
     displayName: Run AZD Deploy
