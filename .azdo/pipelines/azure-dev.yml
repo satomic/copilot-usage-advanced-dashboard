@@ -1,4 +1,4 @@
-name: $(date:yyyy).$(date:MM).$(date:dd)$(rev:.r) Deploy to Azure Container App - azd ${{ parameters.azdMode }}
+name: $(date:yyyy).$(date:MM).$(date:dd)$(rev:.r) Deploy to Azure Container App
 
 # # Run when commits are pushed to main
 # trigger:
