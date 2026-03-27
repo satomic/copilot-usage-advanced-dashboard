@@ -71,6 +71,18 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
 
+      - name: Resolve Container Registry Endpoint (deploy-only mode)
+        if: ${{ inputs.azdMode == 'deploy' }}
+        run: |
+          $endpoint = az acr list --resource-group "$Env:AZURE_RESOURCE_GROUP" --query "[0].loginServer" -o tsv
+          if (-not $endpoint) {
+            Write-Error "Could not find a container registry in resource group '$Env:AZURE_RESOURCE_GROUP'. Run 'azd provision' first."
+            exit 1
+          }
+          echo "AZURE_CONTAINER_REGISTRY_ENDPOINT=$endpoint" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Host "Resolved AZURE_CONTAINER_REGISTRY_ENDPOINT=$endpoint"
+        shell: pwsh
+
       - name: AZD Deploy Application
         if: ${{ inputs.azdMode == 'up' || inputs.azdMode == 'deploy' }}
         run: azd deploy --no-prompt
