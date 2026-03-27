@@ -5,15 +5,16 @@ run-name: 'Deploy to Azure ACA with azd ${{ inputs.azdMode }} by @${{ github.act
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      azdMode:
-        description: AZD Mode
-        default: up
-        type: choice
-        options:
-          - up
-          - provision
-          - deploy
+    # -- this parm should work, but there are some variable issues when trying to do a deploy without a provision...
+    # inputs:
+    #   azdMode:
+    #     description: AZD Mode
+    #     default: up
+    #     type: choice
+    #     options:
+    #       - up
+    #       - provision
+    #       - deploy
   ## Uncomment this to run when commits are pushed to mainline branch (main or master)
   # push:
   #   branches:
@@ -66,25 +67,25 @@ jobs:
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - name: AZD Provision Infrastructure
-        if: ${{ inputs.azdMode == 'up' || inputs.azdMode == 'provision' }}
+        # if: $ { {  inputs.azdMode == 'up' || inputs.azdMode == 'provision' }}
         run: azd provision --no-prompt
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
 
-      - name: Resolve Container Registry Endpoint (deploy-only mode)
-        if: ${{ inputs.azdMode == 'deploy' }}
-        run: |
-          $endpoint = az acr list --resource-group "$Env:AZURE_RESOURCE_GROUP" --query "[0].loginServer" -o tsv
-          if (-not $endpoint) {
-            Write-Error "Could not find a container registry in resource group '$Env:AZURE_RESOURCE_GROUP'. Run 'azd provision' first."
-            exit 1
-          }
-          echo "AZURE_CONTAINER_REGISTRY_ENDPOINT=$endpoint" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Host "Resolved AZURE_CONTAINER_REGISTRY_ENDPOINT=$endpoint"
-        shell: pwsh
+      # - name: Resolve Container Registry Endpoint (deploy-only mode)
+      #   if: $ { { inputs.azdMode == 'deploy' }}
+      #   run: |
+      #     $endpoint = az acr list --resource-group "$Env:AZURE_RESOURCE_GROUP" --query "[0].loginServer" -o tsv
+      #     if (-not $endpoint) {
+      #       Write-Error "Could not find a container registry in resource group '$Env:AZURE_RESOURCE_GROUP'. Run 'azd provision' first."
+      #       exit 1
+      #     }
+      #     echo "AZURE_CONTAINER_REGISTRY_ENDPOINT=$endpoint" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+      #     Write-Host "Resolved AZURE_CONTAINER_REGISTRY_ENDPOINT=$endpoint"
+      #   shell: pwsh
 
       - name: AZD Deploy Application
-        if: ${{ inputs.azdMode == 'up' || inputs.azdMode == 'deploy' }}
+        # if: $ { { inputs.azdMode == 'up' || inputs.azdMode == 'deploy' }}
         run: azd deploy --no-prompt
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
