@@ -1,11 +1,24 @@
+name: Deploy to Azure Container App
+run-name: 'Deploy to Azure ACA by @${{ github.actor }}'
+
 # Run when commits are pushed to ado-pipeline
 on:
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  push:
-    # Run when commits are pushed to mainline branch (main or master)
-    # Set this to the mainline branch you are using
-    branches:
-      - main
+    # -- this parm should work, but there are some variable issues when trying to do a deploy without a provision...
+    # inputs:
+    #   azdMode:
+    #     description: AZD Mode
+    #     default: up
+    #     type: choice
+    #     options:
+    #       - up
+    #       - provision
+    #       - deploy
+  ## Uncomment this to run when commits are pushed to mainline branch (main or master)
+  # push:
+  #   branches:
+  #     - main
 
 # Set up permissions for deploying with secretless Azure federated credentials
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
@@ -13,9 +26,8 @@ permissions:
   id-token: write
   contents: read
 
-
 jobs:
-  build:
+  azd-deploy:
     runs-on: ubuntu-latest
     env:
       AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
@@ -30,12 +42,16 @@ jobs:
       AZURE_AUTHENTICATION_ENABLED: ${{ vars.AZURE_AUTHENTICATION_ENABLED }}
       AZURE_AUTHENTICATION_CLIENT_ID: ${{ secrets.AZURE_AUTHENTICATION_CLIENT_ID }}
       AZURE_AUTHENTICATION_OPEN_ID_ISSUER: ${{ vars.AZURE_AUTHENTICATION_OPEN_ID_ISSUER }}
+      GRAFANA_USERNAME: ${{ vars.GRAFANA_USERNAME }}
+      GRAFANA_PASSWORD: ${{ secrets.GRAFANA_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Install azd
         uses: Azure/setup-azd@v2
-      - name: Log in with Azure (Federated Credentials)
+
+      - name: AZD Login with Azure (Federated Credentials)
         run: |
           azd auth login `
             --client-id "$Env:AZURE_CLIENT_ID" `
@@ -50,13 +66,26 @@ jobs:
           tenant-id: ${{ env.AZURE_TENANT_ID }}
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Provision Infrastructure
+      - name: AZD Provision Infrastructure
+        # if: $ { {  inputs.azdMode == 'up' || inputs.azdMode == 'provision' }}
         run: azd provision --no-prompt
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
 
-      - name: Deploy Application
+      # - name: Resolve Container Registry Endpoint (deploy-only mode)
+      #   if: $ { { inputs.azdMode == 'deploy' }}
+      #   run: |
+      #     $endpoint = az acr list --resource-group "$Env:AZURE_RESOURCE_GROUP" --query "[0].loginServer" -o tsv
+      #     if (-not $endpoint) {
+      #       Write-Error "Could not find a container registry in resource group '$Env:AZURE_RESOURCE_GROUP'. Run 'azd provision' first."
+      #       exit 1
+      #     }
+      #     echo "AZURE_CONTAINER_REGISTRY_ENDPOINT=$endpoint" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+      #     Write-Host "Resolved AZURE_CONTAINER_REGISTRY_ENDPOINT=$endpoint"
+      #   shell: pwsh
+
+      - name: AZD Deploy Application
+        # if: $ { { inputs.azdMode == 'up' || inputs.azdMode == 'deploy' }}
         run: azd deploy --no-prompt
         env:
           GITHUB_PAT: ${{ secrets.GH_PAT }}
-

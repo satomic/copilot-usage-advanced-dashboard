@@ -5784,7 +5784,7 @@
                     "type": "count"
                   }
                 ],
-                "query": "organization_slug: (${organization_name:lucene})",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -5875,7 +5875,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: (${organization_name:lucene})",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -5953,7 +5953,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: (${organization_name:lucene})",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6037,7 +6037,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: (${organization_name:lucene})",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6238,7 +6238,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "organization_slug: (${organization_name:lucene})",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6258,12 +6258,12 @@
                     "Cardinality day": "Days Active",
                     "Count": "Events Logged",
                     "Sum code_acceptance_activity_count": "Acceptances",
-                    "Sum code_generation_activity_count": "Completions", 
+                    "Sum code_generation_activity_count": "Completions",
                     "Sum used_agent": "Agent Usage",
                     "Sum used_chat": "Chat Usage",
                     "Sum user_initiated_interaction_count": "Interactions",
                     "Sum loc_suggested_to_add_sum": "LoC Suggested",
-                    "Sum loc_added_sum": "LoC Added", 
+                    "Sum loc_added_sum": "LoC Added",
                     "Sum loc_deleted_sum": "LoC Deleted",
                     "Unique count day": "Days Active",
                     "user_login": "User",
@@ -6493,7 +6493,7 @@
                     "type": "cardinality"
                   }
                 ],
-                "query": "organization_slug: (${organization_name:lucene})",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6568,7 +6568,7 @@
               "x": 12,
               "y": 18
             },
-            "id": 107,
+            "id": 109,
             "options": {
               "legend": {
                 "calcs": [],
@@ -6607,7 +6607,7 @@
                     "type": "sum"
                   }
                 ],
-                "query": "*",
+                "query": "organization_slug: (${organization_name:lucene}) AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "day"
               }
@@ -6734,7 +6734,7 @@
                     "field": "adoption_pct"
                   }
                 ],
-                "query": "organization_slug: (${organization_name:lucene}) AND bucket_type:user",
+                "query": "organization_slug: (${organization_name:lucene}) AND bucket_type:user AND assignee_team_slug: (${assignee_team_name:lucene}) AND user_login: (${assignee_login:lucene})",
                 "refId": "A",
                 "timeField": "@timestamp"
               }
@@ -6752,9 +6752,21 @@
               },
               {
                 "id": "sortBy",
-                "options": { "fields": [ { "field": "Adoption %", "desc": true } ] }
+                "options": {
+                  "fields": [
+                    {
+                      "field": "Adoption %",
+                      "desc": true
+                    }
+                  ]
+                }
               },
-              { "id": "limit", "options": { "limit": 10 } }
+              {
+                "id": "limit",
+                "options": {
+                  "limit": 10
+                }
+              }
             ],
             "type": "barchart"
           }
@@ -6925,16 +6937,15 @@
           },
           "datasource": {
             "type": "elasticsearch",
-            "uid": "elasticsearch-seat-assignments-uid"
+            "uid": "elasticsearch-user-metrics-uid"
           },
-          "definition": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_login:*\"}",
+          "definition": "{\"find\": \"terms\", \"field\": \"user_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
           "includeAll": true,
-          "allValue": "*",
           "label": "User",
           "multi": true,
           "name": "assignee_login",
           "options": [],
-          "query": "{\"find\": \"terms\", \"field\":  \"assignee_login\", \"query\": \"assignee_login:*\"}",
+          "query": "{\"find\": \"terms\", \"field\": \"user_login\", \"query\": \"assignee_team_slug:(${assignee_team_name:lucene})\"}",
           "refresh": 2,
           "regex": "",
           "type": "query"

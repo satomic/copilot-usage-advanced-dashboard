@@ -1,0 +1,45 @@
+{
+  "mappings": {
+    "properties": {
+      "day": {
+        "type": "date"
+      },
+      "last_updated_at": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "organization_slug": {
+        "type": "keyword"
+      },
+      "team_slug": {
+        "type": "keyword"
+      },
+      "position_in_tree": {
+        "type": "keyword"
+      },
+      "repository": {
+        "type": "keyword"
+      },
+      "model": {
+        "type": "keyword"
+      },
+      "pr_summaries_created": {
+        "type": "long"
+      },
+      "unique_hash": {
+        "type": "keyword"
+      }
+    }
+  },
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  }
+}

@@ -1,61 +1,94 @@
-# Run when commits are pushed to main
-trigger:
-  - main
+name: $(date:yyyy).$(date:MM).$(date:dd)$(rev:.r) Deploy to Azure Container App
+
+# # Run when commits are pushed to main
+# trigger:
+#   - main
+
+# -- this parm should work, but there are some variable issues when trying to do a deploy without a provision...
+# parameters:
+#   - name: azdMode
+#     displayName: AZD Mode
+#     type: string
+#     values:
+#       - up
+#       - provision
+#       - deploy
+#     default: up
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-  # setup-azd@0 needs to be manually installed in your organization
-  # if you can't install it, you can use the below bash script to install azd
-  # and remove this step
-  - task: setup-azd@1
-    displayName: Install azd
+variables:
+  - group: CopilotUsageDashboardSecrets
+  - name: serviceConnectionName
+    value: 'DEV Service Connection'  # DevOpsAzureRMConnection
 
-  # If you can't install above task in your organization, you can comment it and uncomment below task to install azd
-  # - task: Bash@3
-  #   displayName: Install azd
-  #   inputs:
-  #     targetType: 'inline'
-  #     script: |
-  #       curl -fsSL https://aka.ms/install-azd.sh | bash
+stages:
+- stage: RunAzdDeployStage
+  displayName: AZD Deploy to ACA
+  jobs:
+  - job: AzdDeployJob
+    displayName: Run AZD Deploy
+    steps:
+      # setup-azd task needs to be manually installed in your organization
+      # You may get this error message:  
+      #   A task is missing. The pipeline references a task called 'setup-azd'. 
+      # This usually indicates the azd task isn't installed - install it from the Marketplace:
+      # https://marketplace.visualstudio.com/items?itemName=ms-azuretools.azd
+      # if you can't install it, you can use the below bash script to install azd
+      # and remove this step
+      - task: setup-azd@1
+        displayName: Install azd
 
-  # azd delegate auth to az to use service connection with AzureCLI@2
-  - pwsh: |
-      azd config set auth.useAzCliAuth "true"
-    displayName: Configure AZD to Use AZ CLI Authentication.
-  - task: AzureCLI@2
-    displayName: Provision Infrastructure
-    inputs:
-      azureSubscription: DevOpsAzureRMConnection
-      scriptType: bash
-      scriptLocation: inlineScript
-      keepAzSessionActive: true
-      inlineScript: |
-        azd provision --no-prompt
-    env:
-      AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
-      AZURE_TENANT_ID: $(AZURE_TENANT_ID)
-      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
-      AZURE_ENV_NAME: $(AZURE_ENV_NAME)
-      AZURE_LOCATION: $(AZURE_LOCATION)
-      GITHUB_ORGANIZATION_SLUGS: $(GH_ORGANIZATION_SLUGS)
-      AZURE_RESOURCE_GROUP: $(AZURE_RESOURCE_GROUP)
-      GITHUB_PAT: $(GH_PAT)
-      AZURE_AUTHENTICATION_ENABLED: $(AZURE_AUTHENTICATION_ENABLED)
-      AZURE_AUTHENTICATION_CLIENT_ID: $(AZURE_AUTHENTICATION_CLIENT_ID)
-      AZURE_AUTHENTICATION_OPEN_ID_ISSUER: $(AZURE_AUTHENTICATION_OPEN_ID_ISSUER)
+      # If you can't install above task in your organization, you can comment it and uncomment below task to install azd
+      # - task: Bash@3
+      #   displayName: Install azd
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+      #       curl -fsSL https://aka.ms/install-azd.sh | bash
 
-  - task: AzureCLI@2
-    displayName: Deploy Application
-    inputs:
-      azureSubscription: DevOpsAzureRMConnection
-      scriptType: bash
-      scriptLocation: inlineScript
-      keepAzSessionActive: true
-      inlineScript: |
-        azd deploy --no-prompt
-    env:
-      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
-      AZURE_ENV_NAME: $(AZURE_ENV_NAME)
-      AZURE_LOCATION: $(AZURE_LOCATION)
+      # azd delegate auth to az to use service connection with AzureCLI@2
+      - pwsh: |
+          azd config set auth.useAzCliAuth "true"
+        displayName: AZD AZ CLI Auth
+        
+      # - ${{ if or(eq(parameters.azdMode, 'up'), eq(parameters.azdMode, 'provision')) }}:
+      - task: AzureCLI@2
+        displayName: AZD Provision Infrastructure
+        inputs:
+          azureSubscription: $(serviceConnectionName)
+          scriptType: bash
+          scriptLocation: inlineScript
+          keepAzSessionActive: true
+          inlineScript: |
+            azd provision --no-prompt
+        env:
+          AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
+          AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+          AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+          AZURE_ENV_NAME: $(AZURE_ENV_NAME)
+          AZURE_LOCATION: $(AZURE_LOCATION)
+          AZURE_RESOURCE_GROUP: $(AZURE_RESOURCE_GROUP)
+          GITHUB_PAT: $(GH_PAT)
+          GITHUB_ORGANIZATION_SLUGS: $(GH_ORGANIZATION_SLUGS)
+          GRAFANA_USERNAME: $(GRAFANA_USERNAME)
+          GRAFANA_PASSWORD: $(GRAFANA_PASSWORD)
+          AZURE_AUTHENTICATION_ENABLED: $(AZURE_AUTHENTICATION_ENABLED)
+          AZURE_AUTHENTICATION_CLIENT_ID: $(AZURE_AUTHENTICATION_CLIENT_ID)
+          AZURE_AUTHENTICATION_OPEN_ID_ISSUER: $(AZURE_AUTHENTICATION_OPEN_ID_ISSUER)
+
+      #- ${{ if or(eq(parameters.azdMode, 'up'), eq(parameters.azdMode, 'deploy')) }}:
+      - task: AzureCLI@2
+        displayName: AZD Deploy Application
+        inputs:
+          azureSubscription: $(serviceConnectionName)
+          scriptType: bash
+          scriptLocation: inlineScript
+          keepAzSessionActive: true
+          inlineScript: |
+            azd deploy --no-prompt
+        env:
+          AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+          AZURE_ENV_NAME: $(AZURE_ENV_NAME)
+          AZURE_LOCATION: $(AZURE_LOCATION)

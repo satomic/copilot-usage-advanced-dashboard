@@ -7,6 +7,7 @@ services:
         docker:
             path: Dockerfile
             remoteBuild: true
+            registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
     grafana:
         project: src/grafana
         host: containerapp
@@ -14,7 +15,19 @@ services:
         docker:
             path: Dockerfile
             remoteBuild: true
+            registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
 hooks:
+    preprovision:
+        windows:
+            shell: pwsh
+            run: ./scripts/Preprovision.ps1
+            continueOnError: false
+            interactive: true
+        posix:
+            shell: sh
+            run: ./scripts/preprovision.sh
+            continueOnError: false
+            interactive: true
     postdeploy:
         windows:
             shell: pwsh
